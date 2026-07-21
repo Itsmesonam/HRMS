@@ -1,124 +1,71 @@
-
-Those should **not** be in an HTML/PHP file.
-
-Use this corrected version:
-
-```html
 <!DOCTYPE html>
 <html>
 <head>
     <title>House Rental Management System</title>
-    <style>
-        body{
-            font-family: Arial, sans-serif;
-            margin:0;
-            padding:0;
-            background:#f4f4f4;
-        }
-
-        header{
-            background:#2c3e50;
-            color:white;
-            text-align:center;
-            padding:20px;
-        }
-
-        nav{
-            background:#34495e;
-            padding:10px;
-            text-align:center;
-        }
-
-        nav a{
-            color:white;
-            text-decoration:none;
-            margin:15px;
-        }
-
-        .container{
-            width:80%;
-            margin:auto;
-            padding:20px;
-        }
-
-        .section{
-            background:white;
-            margin:20px 0;
-            padding:20px;
-            border-radius:8px;
-        }
-
-        footer{
-            background:#2c3e50;
-            color:white;
-            text-align:center;
-            padding:15px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header>
-    <h1>House Rental Management System</h1>
-    <p>Find, Rent and Manage Properties Easily</p>
-</header>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="logo">
+            House Rental Management System
+        </div>
 
-<nav>
-    <a href="index.php">Home</a>
-    <a href="properties.php">Properties</a>
-    <a href="tenant.php">Tenant</a>
-    <a href="landlord.php">Landlord</a>
-    <a href="login.php">Login</a>
-    <a href="register.php">Register</a>
-</nav>
-
-<div class="container">
-
-    <div class="section">
-        <h2>About the System</h2>
-        <p>
-            This House Rental Management System helps tenants find rental
-            properties and allows landlords to manage their houses online.
-        </p>
-    </div>
-
-    <div class="section">
-        <h2>Tenant Services</h2>
         <ul>
-            <li>Register as Tenant</li>
-            <li>Search Available Houses</li>
-            <li>View Property Details</li>
-            <li>Send Rental Requests</li>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Houses</a></li>
+            <li><a href="#">Owners</a></li>
+            <li><a href="#">Tenants</a></li>
+            <li><a href="#">Booking</a></li>
+            <li><a href="#">Admin</a></li>
         </ul>
+    </nav>
+
+    <!-- Welcome Message -->
+    <div class="welcome">
+        <h2>Welcome User</h2>
     </div>
 
-    <div class="section">
-        <h2>Landlord Services</h2>
-        <ul>
-            <li>Register as Landlord</li>
-            <li>Add New Property</li>
-            <li>Edit Property Details</li>
-            <li>Manage Rental Requests</li>
-        </ul>
+    <!-- Cards Section -->
+    <div class="container">
+
+        <div class="card">
+            <img src="images/house.jpg" alt="House">
+            <h3>Houses</h3>
+            <p>View and manage available rental houses.</p>
+            <a href="#" class="btn">See Details</a>
+        </div>
+
+        <div class="card">
+            <img src="images/owner.jpg" alt="Owner">
+            <h3>Owners</h3>
+            <p>Manage landlord information and properties.</p>
+            <a href="#" class="btn">See Details</a>
+        </div>
+
+        <div class="card">
+            <img src="images/tenant.jpg" alt="Tenant">
+            <h3>Tenants</h3>
+            <p>Manage tenant details and rental records.</p>
+            <a href="#" class="btn">See Details</a>
+        </div>
+
+        <div class="card">
+            <img src="images/booking.jpg" alt="Booking">
+            <h3>Booking</h3>
+            <p>Handle house booking and reservations.</p>
+            <a href="#" class="btn">See Details</a>
+        </div>
+
+        <div class="card">
+            <img src="images/admin.jpg" alt="Admin">
+            <h3>Admin</h3>
+            <p>Control users, houses and system reports.</p>
+            <a href="#" class="btn">See Details</a>
+        </div>
+
     </div>
-
-    <div class="section">
-        <h2>Featured Properties</h2>
-
-        <h3>Property 1</h3>
-        <p>Location: Bhaktapur</p>
-        <p>Rent: NPR 15,000/month</p>
-
-        <h3>Property 2</h3>
-        <p>Location: Kathmandu</p>
-        <p>Rent: NPR 20,000/month</p>
-    </div>
-
-</div>
-
-<footer>
-    <p>&copy; 2026 House Rental Management System</p>
-</footer>
 
 </body>
 </html>
