@@ -1,0 +1,50 @@
+HouseRentalManagementSystem/
+│
+├── index.php
+├── login.php
+├── register.php
+├── logout.php
+│
+├── config/
+│   └── db.php
+│
+├── assets/
+│   ├── css/
+│   │   └── style.css
+│   ├── js/
+│   │   └── script.js
+│   └── images/
+│
+├── admin/
+│   ├── dashboard.php
+│   ├── manage_users.php
+│   ├── manage_properties.php
+│   ├── rental_requests.php
+│   └── reports.php
+│
+├── landlord/
+│   ├── dashboard.php
+│   ├── add_property.php
+│   ├── edit_property.php
+│   ├── delete_property.php
+│   ├── my_properties.php
+│   └── rental_requests.php
+│
+├── tenant/
+│   ├── dashboard.php
+│   ├── search_property.php
+│   ├── property_details.php
+│   ├── send_request.php
+│   └── my_requests.php
+│
+├── includes/
+│   ├── header.php
+│   ├── navbar.php
+│   ├── footer.php
+│   └── auth.php
+│
+├── uploads/
+│   └── properties/
+│
+└── database/
+    └── house_rental.sql

@@ -10,10 +10,16 @@
 
 <div class="login-form">
     <h2> Welcome</h2>
-
+<form action="" method="POST">
 
 <input type="text" placeholder="Username"><br><br>
 <input type="password" placeholder="Password"><br><br>
+<select>
+    <option>select</option>
+    <option>Admin</option>
+    <option>Landlord</option>
+    <option>Tenant</option>
+</select><br><br>
 <div class="forget password"><a href="#" class="link">forget password ?</a></div>
 <input type="submit" value="Login" class="btn">
 

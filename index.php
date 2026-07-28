@@ -15,7 +15,7 @@
         <ul>
             <li><a href="#">Home</a></li>
             <li><a href="#">Houses</a></li>
-            <li><a href="#">Owners</a></li>
+            <li><a href="#">Landlords</a></li>
             <li><a href="#">Tenants</a></li>
             <li><a href="#">Booking</a></li>
             <li><a href="#">Admin</a></li>
@@ -38,8 +38,8 @@
         </div>
 
         <div class="card">
-            <img src="images/owner.jpg" alt="Owner">
-            <h3>Owners</h3>
+            <img src="images/landlord.jpg" alt="Landlord">
+            <h3>Landlords</h3>
             <p>Manage landlord information and properties.</p>
             <a href="#" class="btn">See Details</a>
         </div>
