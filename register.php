@@ -85,6 +85,13 @@ if(isset($_POST['register']))
 				<option>Female</option>
 			</select>
 		</div>
+		<div class="input_field">
+			<label>Role</label>
+			<select>
+				<option>select</option>
+				<option>Admin</option>
+				<option>Landlord</option>
+				<option>Tenant</option>
 	<div class="form">
 		<div class="input_field">
 			<label>Email</label>
