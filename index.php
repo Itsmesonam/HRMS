@@ -4,8 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>House Rental Management System</title>
-<link rel="stylesheet" href="css/index_style.css">
-</head>
+<link rel="stylesheet" href="css/index_style.css"></head>
 <body>
 
 <nav>

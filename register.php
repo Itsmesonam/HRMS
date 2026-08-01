@@ -45,8 +45,7 @@ if(isset($_POST['register']))
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="stylesheet" href="css/register.css">
-	<title>HRMS </title>
+<link rel="stylesheet" href="css/register_style.css">	<title>HRMS </title>
 </head>
 <body>
 	<div class="container">
