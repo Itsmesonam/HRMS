@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 	<meta  name="viewport" content="width=device-width, initial-scale">
-	
+<link rel="stylesheet" href="css/login_style.css">
 <title>Login</title>
 </head>
 <body>
