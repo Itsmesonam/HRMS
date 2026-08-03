@@ -180,14 +180,14 @@ nav ul li a:hover{
 
 .search-box input,
 .search-box select{
-    padding: 12px;
+    padding: 50px;
     width: 220px;
     border: none;
     border-radius: 5px;
 }
 
 .search-box button{
-    padding: 12px 25px;
+    padding: 50px 125px;
     border: none;
     background: #f39c12;
     color: white;
