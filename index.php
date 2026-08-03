@@ -7,30 +7,33 @@
 <link rel="stylesheet" href="css/index_style.css"></head>
 <body>
 
-<nav>
+<nav> class="navbar">
+
     <div class="logo">House Rental Management System</div>
 
     <ul>
         <li><a href="#">Home</a></li>
-        <li><a href="#">Houses</a></li>
-        <li><a href="#">Landlords</a></li>
-        <li><a href="#">Tenants</a></li>
-        <li><a href="#">Booking</a></li>
-        <li><a href="#">Admin</a></li>
+        <li><a href="#">properties</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Login</a></li>
+        
     </ul>
 </nav>
-
-<div class="welcome">
-    <h2>Welcome User</h2>
-    <p>Find and manage rental properties easily.</p>
+<section class="hero">
+    <div class="hero-content">
+    <h1>Welcome to House Rental Management System</h1>
+    <p>Find your perfect rental property with ease.</p>
+    <a href="#" class="btn">Get Started</a> 
 </div>
+
 
 <div class="container">
 
     <div class="card">
         <img src="images/house.jpg" alt="House">
-        <h3>Houses</h3>
-        <p>View and manage available rental houses.</p>
+        <h3>Properties</h3>
+        <p>View and manage available rental properties.</p>
         <a href="#" class="btn">See Details</a>
     </div>
 
