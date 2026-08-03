@@ -22,16 +22,23 @@
         </ul>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <img src="images/building copy.jpg" alt="Building">
+   <section class="hero">
+    <div class="overlay">
+        <h1>Find Your Dream Rental Home</h1>
+        <p>Search houses, apartments and rooms across Nepal</p>
 
-        <div class="hero-content">
-            <h1>Welcome to House Rental Management System</h1>
-            <p>Find your perfect rental property with ease.</p>
-            <a href="#" class="btn">Get Started</a>
-        </div>
-    </section>
+        <form class="search-box">
+            <input type="text" placeholder="Location">
+            <select>
+                <option>Property Type</option>
+                <option>House</option>
+                <option>Apartment</option>
+                <option>Room</option>
+            </select>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+</section>
 
     <!-- Welcome Section -->
     <section class="welcome">
