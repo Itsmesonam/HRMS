@@ -7,9 +7,8 @@
 <link rel="stylesheet" href="css/index_style.css"></head>
 <body>
 
-<nav clasa="navbar"></nav>
-    <div class="logo">House Rental Management System</div>
-
+ <nav class="navbar">
+        <div class="logo">HRMS</div>
     <ul>
         <li><a href="#">Home</a></li>
         <li><a href="#">properties</a></li>
