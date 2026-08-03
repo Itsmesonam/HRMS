@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>House Rental Management System</title>
 <link rel="stylesheet" href="css/index_style.css"></head>
+
 <body>
 
  <nav class="navbar">
@@ -19,6 +20,7 @@
     </ul>
 </nav>
 <section class="hero">
+    <img src="images/hero.jpg" alt="Hero Image">
     <div class="hero-content">
     <h1>Welcome to House Rental Management System</h1>
     <p>Find your perfect rental property with ease.</p>
