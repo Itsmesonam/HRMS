@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="css/index_style.css"></head>
 <body>
 
-
+<nav clasa="navbar"></nav>
     <div class="logo">House Rental Management System</div>
 
     <ul>
