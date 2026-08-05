@@ -7,12 +7,13 @@
 </head>
 <body>
 
-<div class="login-form">
-    <h2> Welcome</h2>
+<div class="login-box">
+    <h2> login</h2>
 <form action="" method="POST">
 
 <input type="text" placeholder="Username"><br><br>
 <input type="password" placeholder="Password"><br><br>
+<button onclick="Login()">Login</button><br><br>
 <select>
     <option>select</option>
     <option>Admin</option>
