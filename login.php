@@ -13,7 +13,7 @@
 
 <input type="text" placeholder="Username"><br><br>
 <input type="password" placeholder="Password"><br><br>
-<button onclick="Login()">Login</button><br><br>
+
 <select>
     <option>select</option>
     <option>Admin</option>
