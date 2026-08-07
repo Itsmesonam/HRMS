@@ -7,26 +7,24 @@
 </head>
 <body>
 
-<div class="login-box">
-    <h2> login</h2>
-<form action="" method="POST">
 
-<input type="text" placeholder="Username"><br><br>
-<input type="password" placeholder="Password"><br><br>
-
-<select>
-    <option>select</option>
-    <option>Admin</option>
-    <option>Landlord</option>
-    <option>Tenant</option>
-</select><br><br>
-<div class="forget password"><a href="#" class="link">forget password ?</a></div>
-<input type="submit" value="Login" class="btn">
+<div class="background">
+    <div class="shape"></div>
 
 </div>
-<div class="signup">New member ? <a href=""class="link">Signup now</a></div>
-</div>
+<form>
+    <h3>Login here</h3>
 
-</div>
+    <label for="username">Username</label>
+    <input type="text" placeholder="Email or phone" id="username" >
+    <label for="password">Password</label>
+    <input type="password" placeholder="Password" id="password" >
+    <button>Log In</button>
+    <div class="social">
+        <div class="go"><i class="fab fa-google"></i>  Google</div>
+        <div class="fb"><i class="fab fa-facebook"></i>  Facebook</div>
+    </div>
+
+</form>
 </body>
 </html>
