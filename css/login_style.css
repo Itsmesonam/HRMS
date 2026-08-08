@@ -7,95 +7,113 @@
 }
 
 
-/* BODY */
+/* =========================
+   BODY / BACKGROUND
+========================= */
 
 body {
     min-height: 100vh;
-    background: #f5f7fb;
+
+    background: linear-gradient(
+        135deg,
+        #e8f5e9,
+        #c8e6c9
+    );
+
     font-family: 'Poppins', sans-serif;
 }
 
 
-/* DECORATIVE CIRCLE */
-
-.shape:first-child {
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    background: #1E3A8A;
-    border-radius: 50%;
-    top: -100px;
-    left: -100px;
-}
-
-
-/* LOGIN FORM */
+/* =========================
+   LOGIN FORM
+========================= */
 
 form {
     width: 400px;
     min-height: 600px;
 
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: rgba(255, 255, 255, 0.96);
 
     position: absolute;
+
     transform: translate(-50%, -50%);
+
     top: 50%;
     left: 50%;
 
-    border-radius: 10px;
+    border-radius: 12px;
 
-    backdrop-filter: blur(10px);
+    border: 1px solid #d7e8d9;
 
-    border: 2px solid rgba(255, 255, 255, 0.1);
-
-    box-shadow: 0 0 40px rgba(8, 7, 16, 0.25);
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
 
     padding: 40px 35px;
 }
 
 
-/* FORM ELEMENTS */
+/* =========================
+   FORM ELEMENTS
+========================= */
 
 form * {
     font-family: 'Poppins', sans-serif;
+
     letter-spacing: 0.5px;
+
     outline: none;
 }
 
 
-/* HEADING */
+/* =========================
+   HEADING
+========================= */
 
 form h3 {
     font-size: 32px;
-    font-weight: 500;
+
+    font-weight: 600;
+
     line-height: 42px;
+
     text-align: center;
-    color: #1E3A8A;
+
+    color: #1b5e20;
+
     margin-bottom: 25px;
 }
 
 
-/* LABEL */
+/* =========================
+   LABEL
+========================= */
 
 label {
     display: block;
+
     margin-bottom: 5px;
+
     font-size: 14px;
+
     font-weight: 500;
+
     color: #333333;
 }
 
 
-/* INPUT */
+/* =========================
+   INPUT
+========================= */
 
 input {
     display: block;
+
     height: 50px;
+
     width: 100%;
 
-    background-color: #f3f4f6;
+    background-color: #f5faf6;
 
-    border: 1px solid #d1d5db;
+    border: 1px solid #b8ccb9;
 
     border-radius: 5px;
 
@@ -104,6 +122,7 @@ input {
     margin-bottom: 20px;
 
     font-size: 14px;
+
     font-weight: 400;
 
     color: #333333;
@@ -113,7 +132,8 @@ input {
 /* INPUT FOCUS */
 
 input:focus {
-    border: 1px solid #1E3A8A;
+    border: 1px solid #4caf50;
+
     background-color: #ffffff;
 }
 
@@ -133,11 +153,12 @@ select {
     display: block;
 
     height: 50px;
+
     width: 100%;
 
-    background-color: #f3f4f6;
+    background-color: #f5faf6;
 
-    border: 1px solid #d1d5db;
+    border: 1px solid #b8ccb9;
 
     border-radius: 5px;
 
@@ -153,23 +174,27 @@ select {
 }
 
 
-/* ROLE SELECT FOCUS */
+/* SELECT FOCUS */
 
 select:focus {
-    border: 1px solid #1E3A8A;
-    outline: none;
+    border: 1px solid #4caf50;
+
     background-color: #ffffff;
+
+    outline: none;
 }
 
 
-/* LOGIN BUTTON */
+/* =========================
+   LOGIN BUTTON
+========================= */
 
 button {
     margin-top: 5px;
 
     width: 100%;
 
-    background-color: #1E3A8A;
+    background-color: #2e7d32;
 
     color: #ffffff;
 
@@ -184,13 +209,15 @@ button {
     cursor: pointer;
 
     border: none;
+
+    transition: 0.3s;
 }
 
 
 /* BUTTON HOVER */
 
 button:hover {
-    background-color: #162d6b;
+    background-color: #1b5e20;
 }
 
 
@@ -265,7 +292,7 @@ button:hover {
 }
 
 .social .fb i {
-    color: #1877F2 !important;
+    color: #1877f2 !important;
 }
 
 
@@ -276,16 +303,19 @@ button:hover {
 }
 
 .social .google i {
-    color: #DB4437 !important;
+    color: #db4437 !important;
 }
 
 
-/* MOBILE */
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
 
 @media (max-width: 500px) {
 
     form {
         width: 90%;
+
         padding: 35px 25px;
     }
 
