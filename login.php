@@ -21,9 +21,14 @@
     <input type="password" placeholder="Password" id="password" >
     <button>Log In</button>
     <div class="social">
-        <div class="go"><i class="fab fa-google"></i>  Google</div>
-        <div class="fb"><i class="fab fa-facebook"></i>  Facebook</div>
+    <div class="fb">
+        <i class="fab fa-facebook-f"></i> Facebook
     </div>
+
+    <div class="google">
+        <i class="fab fa-google"></i> Google
+    </div>
+</div>
 
 </form>
 </body>
