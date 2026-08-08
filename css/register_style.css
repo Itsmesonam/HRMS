@@ -1,81 +1,245 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body{
-    background: blueviolet;
+
+/* =========================
+   BODY / BACKGROUND
+========================= */
+
+body {
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
     padding: 0 10px;
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', Arial, sans-serif;
+    min-height: 100vh;
 }
 
-.container{
-    border: 2px solid black;
+
+/* =========================
+   REGISTER CONTAINER
+========================= */
+
+.container {
+    border: 1px solid #d7e8d9;
+
     max-width: 700px;
     width: 100%;
-    background-color: #fff;
-    margin: 100px auto;
+
+    background-color: #ffffff;
+
+    margin: 50px auto;
+
     padding: 30px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+
+    border-radius: 12px;
+
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
 }
 
-.container .title{
-    font-size: 25px;
-    font-weight: 500;
+
+/* =========================
+   TITLE
+========================= */
+
+.container .title {
+    font-size: 28px;
+
+    font-weight: 600;
+
     margin-bottom: 25px;
+
     text-align: center;
+
+    color: #1b5e20;
 }
 
-.form{
+
+/* =========================
+   FORM
+========================= */
+
+.form {
     width: 100%;
 }
 
-.input_field{
-    margin-bottom: 15px;
+
+/* =========================
+   INPUT FIELD
+========================= */
+
+.input_field {
+    margin-bottom: 18px;
 }
 
-.input_field label{
+
+/* LABEL */
+
+.input_field label {
     display: block;
-    margin-bottom: 5px;
+
+    margin-bottom: 6px;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    color: #333333;
 }
 
-.input{
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
 
-.input_field select{
+/* =========================
+   TEXT INPUT
+========================= */
+
+.input_field input {
     width: 100%;
+
+    height: 45px;
+
     padding: 10px;
-    border: 1px solid #ccc;
+
+    border: 1px solid #b8ccb9;
+
     border-radius: 5px;
+
+    background-color: #f5faf6;
+
+    font-size: 14px;
+
+    color: #333333;
+
     outline: none;
-    background: #fff;
 }
 
-.input_field textarea{
+
+/* INPUT FOCUS */
+
+.input_field input:focus {
+    border-color: #4caf50;
+
+    background-color: #ffffff;
+}
+
+
+/* =========================
+   SELECT / ROLE
+========================= */
+
+.input_field select {
     width: 100%;
-    height: 100px;
+
+    height: 45px;
+
     padding: 10px;
-    border: 1px solid #ccc;
+
+    border: 1px solid #b8ccb9;
+
     border-radius: 5px;
-    resize: none;
-    font-family: Arial, sans-serif;
-}
 
-.btn{
-    width: 100%;
-    padding: 10px;
-    border: none;
-    background: green;
-    color: white;
+    outline: none;
+
+    background-color: #f5faf6;
+
+    color: #333333;
+
+    font-size: 14px;
+
     cursor: pointer;
-    border-radius: 5px;
 }
 
-.btn:hover{
-    background: darkgreen;
+
+.input_field select:focus {
+    border-color: #4caf50;
+
+    background-color: #ffffff;
+}
+
+
+/* =========================
+   TEXTAREA
+========================= */
+
+.input_field textarea {
+    width: 100%;
+
+    height: 100px;
+
+    padding: 10px;
+
+    border: 1px solid #b8ccb9;
+
+    border-radius: 5px;
+
+    resize: none;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 14px;
+
+    background-color: #f5faf6;
+
+    color: #333333;
+
+    outline: none;
+}
+
+
+.input_field textarea:focus {
+    border-color: #4caf50;
+
+    background-color: #ffffff;
+}
+
+
+/* =========================
+   REGISTER BUTTON
+========================= */
+
+.btn {
+    width: 100%;
+
+    padding: 12px;
+
+    border: none;
+
+    background: #2e7d32;
+
+    color: white;
+
+    cursor: pointer;
+
+    border-radius: 5px;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    transition: 0.3s;
+}
+
+
+/* BUTTON HOVER */
+
+.btn:hover {
+    background: #1b5e20;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .container {
+        margin: 30px auto;
+
+        padding: 20px;
+    }
+
+    .container .title {
+        font-size: 24px;
+    }
 }
