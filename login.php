@@ -18,7 +18,7 @@
 
 <body>
 
-    <div class="shape"></div>
+    
 
     <form>
 
