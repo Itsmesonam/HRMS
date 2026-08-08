@@ -33,6 +33,16 @@
         <input type="password"
                placeholder="Password"
                id="password">
+               <label for="role">Login As</label>
+
+<select id="role" name="role" required>
+    <option value="" disabled selected>Select your role</option>
+    <option value="admin">Admin</option>
+    <option value="landlord">Landlord</option>
+    <option value="tenant">Tenant</option>
+</select>
+
+<button type="submit">Log In</button>
 
         <button type="submit">Log In</button>
 
