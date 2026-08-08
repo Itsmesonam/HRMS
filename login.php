@@ -42,7 +42,6 @@
     <option value="tenant">Tenant</option>
 </select>
 
-<button type="submit">Log In</button>
 
         <button type="submit">Log In</button>
 
