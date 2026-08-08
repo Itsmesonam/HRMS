@@ -1,40 +1,56 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<meta charset="utf-8">
-	<meta  name="viewport" content="width=device-width, initial-scale">
-<link rel="stylesheet" href="css/login_style.css"><title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login - House Rental Management System</title>
+
+    <!-- Login CSS -->
+    <link rel="stylesheet" href="css/login_style.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 </head>
+
 <body>
 
-
-<div class="background">
     <div class="shape"></div>
 
-</div>
-<form>
-    <h3>Login here</h3>
+    <form>
 
-    <label for="username">Username</label>
-    <input type="text" placeholder="Email or phone" id="username" >
-    <label for="password">Password</label>
-    <input type="password" placeholder="Password" id="password" >
-    <button>Log In</button>
-    <div class="social">
+        <h3>Login Here</h3>
 
-    <div class="fb">
-        <i class="fab fa-facebook-f"></i>
-        <span>Facebook</span>
-    </div>
+        <label for="username">Username</label>
+        <input type="text"
+               placeholder="Email or phone"
+               id="username">
 
-    <div class="google">
-        <i class="fab fa-google"></i>
-        <span>Google</span>
-    </div>
+        <label for="password">Password</label>
+        <input type="password"
+               placeholder="Password"
+               id="password">
 
-</div>
-</div>
+        <button type="submit">Log In</button>
 
-</form>
+        <div class="social">
+
+            <div class="fb">
+                <i class="fab fa-facebook-f"></i>
+                <span>Facebook</span>
+            </div>
+
+            <div class="google">
+                <i class="fab fa-google"></i>
+                <span>Google</span>
+            </div>
+
+        </div>
+
+    </form>
+
 </body>
 </html>
