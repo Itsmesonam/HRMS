@@ -97,57 +97,50 @@ button:hover{
 
 .social {
     display: flex;
-    width: 100%;
     gap: 15px;
+    width: 100%;
     margin-top: 20px;
 }
 
 .social div {
-    flex: 1;
-    height: 45px;
+    width: 50%;
+    height: 48px;
+
     display: flex;
     align-items: center;
     justify-content: center;
 
-    background-color: #ffffff;
-    color: #333333;
+    background-color: #ffffff !important;
+    color: #333333 !important;
 
-    border: 1px solid #bdbdbd;
-    border-radius: 5px;
+    border: 1px solid #999999 !important;
+    border-radius: 6px;
 
+    font-family: 'Poppins', sans-serif;
     font-size: 14px;
     font-weight: 500;
 
     cursor: pointer;
-    transition: 0.3s;
 }
 
 .social div:hover {
-    background-color: #f1f1f1;
+    background-color: #eeeeee !important;
 }
 
-
-/* Facebook */
-
-.social .fb {
-    margin-left: 0;
+.social i {
+    margin-right: 8px;
+    font-size: 17px;
 }
 
 .social .fb i {
-    color: #1877F2;
-    margin-right: 8px;
-    font-size: 17px;
-}
-
-
-/* Google */
-
-.social .google {
-    margin-left: 0;
+    color: #1877F2 !important;
 }
 
 .social .google i {
-    color: #DB4437;
-    margin-right: 8px;
-    font-size: 17px;
+    color: #DB4437 !important;
+}
+
+.social .fb,
+.social .google {
+    margin-left: 0 !important;
 }
