@@ -30,7 +30,7 @@ body {
 
 form {
     width: 400px;
-    min-height: 600px;
+    min-height: 620px;
 
     background-color: rgba(255, 255, 255, 0.96);
 
@@ -57,9 +57,7 @@ form {
 
 form * {
     font-family: 'Poppins', sans-serif;
-
     letter-spacing: 0.5px;
-
     outline: none;
 }
 
@@ -70,11 +68,8 @@ form * {
 
 form h3 {
     font-size: 32px;
-
     font-weight: 600;
-
     line-height: 42px;
-
     text-align: center;
 
     color: #1b5e20;
@@ -93,7 +88,6 @@ label {
     margin-bottom: 5px;
 
     font-size: 14px;
-
     font-weight: 500;
 
     color: #333333;
@@ -108,7 +102,6 @@ input {
     display: block;
 
     height: 50px;
-
     width: 100%;
 
     background-color: #f5faf6;
@@ -122,7 +115,6 @@ input {
     margin-bottom: 20px;
 
     font-size: 14px;
-
     font-weight: 400;
 
     color: #333333;
@@ -153,7 +145,6 @@ select {
     display: block;
 
     height: 50px;
-
     width: 100%;
 
     background-color: #f5faf6;
@@ -249,11 +240,11 @@ button:hover {
 
     justify-content: center;
 
-    background-color: #ffffff !important;
+    background-color: #ffffff;
 
-    color: #333333 !important;
+    color: #333333;
 
-    border: 1px solid #999999 !important;
+    border: 1px solid #999999;
 
     border-radius: 6px;
 
@@ -272,7 +263,7 @@ button:hover {
 /* SOCIAL HOVER */
 
 .social div:hover {
-    background-color: #eeeeee !important;
+    background-color: #eeeeee;
 }
 
 
@@ -287,23 +278,52 @@ button:hover {
 
 /* FACEBOOK */
 
-.social .fb {
-    margin-left: 0 !important;
-}
-
 .social .fb i {
-    color: #1877f2 !important;
+    color: #1877f2;
 }
 
 
 /* GOOGLE */
 
-.social .google {
-    margin-left: 0 !important;
+.social .google i {
+    color: #db4437;
 }
 
-.social .google i {
-    color: #db4437 !important;
+
+/* =========================
+   REGISTER / SIGN UP
+========================= */
+
+.register-link {
+    display: block;
+
+    width: 100%;
+
+    text-align: center;
+
+    margin-top: 20px;
+
+    font-size: 14px;
+
+    color: #555555;
+}
+
+
+.register-link a {
+    color: #2e7d32;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    margin-left: 5px;
+}
+
+
+.register-link a:hover {
+    color: #1b5e20;
+
+    text-decoration: underline;
 }
 
 
@@ -319,28 +339,13 @@ button:hover {
         padding: 35px 25px;
     }
 
+
     .social {
         flex-direction: column;
     }
 
+
     .social div {
         width: 100%;
     }
-}
-.register-link {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 14px;
-    color: #555555;
-}
-
-.register-link a {
-    color: #2e7d32;
-    font-weight: 600;
-    text-decoration: none;
-}
-
-.register-link a:hover {
-    color: #1b5e20;
-    text-decoration: underline;
 }

@@ -1,59 +1,74 @@
-<head>
+<h3>Login Here</h3>
 
-    <meta charset="UTF-8">
+<label for="username">Username</label>
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+<input
+    type="text"
+    placeholder="Email or phone"
+    id="username"
+    name="username"
+    required
+>
 
-    <title>Login - House Rental Management System</title>
 
-    <!-- Login CSS -->
-    <link rel="stylesheet"
-          href="css/login_style.css">
+<label for="password">Password</label>
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<input
+    type="password"
+    placeholder="Password"
+    id="password"
+    name="password"
+    required
+>
 
-</head>
-<form>
 
-    <h3>Login Here</h3>
+<label for="role">Login As</label>
 
-    <label for="username">Username</label>
-    <input type="text"
-           placeholder="Email or phone"
-           id="username">
+<select
+    id="role"
+    name="role"
+    required
+>
+    <option value="" disabled selected>
+        Select your role
+    </option>
 
-    <label for="password">Password</label>
-    <input type="password"
-           placeholder="Password"
-           id="password">
-           <label for="role">Login As</label>
+    <option value="admin">Admin</option>
 
-    <button type="submit">Log In</button>
+    <option value="landlord">Landlord</option>
 
-    <div class="social">
+    <option value="tenant">Tenant</option>
+</select>
 
-        <div class="fb">
-            <i class="fab fa-facebook-f"></i>
-            <span>Facebook</span>
-        </div>
 
-        <div class="google">
-            <i class="fab fa-google"></i>
-            <span>Google</span>
-        </div>
-        <!-- Register Link -->
-    <div class="register-link">
+<button type="submit">
+    Log In
+</button>
 
-        Don't have an account?
 
-        <a href="register.php">
-            Sign Up
-        </a>
+<!-- Social Login -->
 
+<div class="social">
+
+    <div class="fb">
+        <i class="fab fa-facebook-f"></i>
+        <span>Facebook</span>
     </div>
 
+    <div class="google">
+        <i class="fab fa-google"></i>
+        <span>Google</span>
+    </div>
 
-</form>
+</div> <!-- IMPORTANT: closes social -->
+
+
+<!-- Register Link -->
+
+<div class="register-link">
+
+    Don't have an account?
+
+    <a href="register.php">Sign Up</a>
+
+</div>
