@@ -56,6 +56,10 @@
                 <i class="fab fa-google"></i>
                 <span>Google</span>
             </div>
+            <div class="register-link">
+            Don't have an account?
+    <a href="register.php">Sign Up</a>
+</div>
 
         </div>
 
