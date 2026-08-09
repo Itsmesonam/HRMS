@@ -1,62 +1,38 @@
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Login - House Rental Management System</title>
+
+    <!-- Login CSS -->
+    <link rel="stylesheet"
+          href="css/login_style.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
 <form>
 
     <h3>Login Here</h3>
 
-    <!-- Username -->
     <label for="username">Username</label>
+    <input type="text"
+           placeholder="Email or phone"
+           id="username">
 
-    <input
-        type="text"
-        placeholder="Email or phone"
-        id="username"
-        name="username"
-        required
-    >
-
-
-    <!-- Password -->
     <label for="password">Password</label>
+    <input type="password"
+           placeholder="Password"
+           id="password">
+           <label for="role">Login As</label>
 
-    <input
-        type="password"
-        placeholder="Password"
-        id="password"
-        name="password"
-        required
-    >
+    <button type="submit">Log In</button>
 
-
-    <!-- Role -->
-    <label for="role">Login As</label>
-
-    <select id="role" name="role" required>
-
-        <option value="" disabled selected>
-            Select your role
-        </option>
-
-        <option value="admin">
-            Admin
-        </option>
-
-        <option value="landlord">
-            Landlord
-        </option>
-
-        <option value="tenant">
-            Tenant
-        </option>
-
-    </select>
-
-
-    <!-- Login Button -->
-    <button type="submit">
-        Log In
-    </button>
-
-
-    <!-- Social Login -->
     <div class="social">
 
         <div class="fb">
@@ -68,11 +44,7 @@
             <i class="fab fa-google"></i>
             <span>Google</span>
         </div>
-
-    </div>
-
-
-    <!-- Register Link -->
+        <!-- Register Link -->
     <div class="register-link">
 
         Don't have an account?
@@ -82,5 +54,6 @@
         </a>
 
     </div>
+
 
 </form>
