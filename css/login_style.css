@@ -349,3 +349,14 @@ button:hover {
         width: 100%;
     }
 }
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh !important;
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9) !important;
+    font-family: 'Poppins', sans-serif;
+}
