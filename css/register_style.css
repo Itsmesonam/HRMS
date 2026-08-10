@@ -9,10 +9,23 @@
    BODY / BACKGROUND
 ========================= */
 
+html,
 body {
-    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
-    padding: 0 10px;
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    background: linear-gradient(
+        135deg,
+        #e8f5e9,
+        #c8e6c9
+    );
+
+    padding: 30px 10px;
+
     font-family: 'Poppins', Arial, sans-serif;
+
     min-height: 100vh;
 }
 
@@ -22,18 +35,18 @@ body {
 ========================= */
 
 .container {
-    border: 1px solid #d7e8d9;
-
-    max-width: 700px;
-    width: 100%;
+    width: 400px;
+    max-width: 100%;
 
     background-color: #ffffff;
 
-    margin: 50px auto;
+    margin: 20px auto;
 
-    padding: 30px;
+    padding: 40px 35px;
 
     border-radius: 12px;
+
+    border: 1px solid #d7e8d9;
 
     box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
 }
@@ -44,7 +57,9 @@ body {
 ========================= */
 
 .container .title {
-    font-size: 28px;
+    width: 100%;
+
+    font-size: 32px;
 
     font-weight: 600;
 
@@ -70,16 +85,18 @@ body {
 ========================= */
 
 .input_field {
-    margin-bottom: 18px;
+    margin-bottom: 16px;
 }
 
 
-/* LABEL */
+/* =========================
+   LABEL
+========================= */
 
 .input_field label {
     display: block;
 
-    margin-bottom: 6px;
+    margin-bottom: 5px;
 
     font-size: 14px;
 
@@ -90,7 +107,7 @@ body {
 
 
 /* =========================
-   TEXT INPUT
+   INPUT
 ========================= */
 
 .input_field input {
@@ -98,7 +115,7 @@ body {
 
     height: 45px;
 
-    padding: 10px;
+    padding: 0 10px;
 
     border: 1px solid #b8ccb9;
 
@@ -124,7 +141,7 @@ body {
 
 
 /* =========================
-   SELECT / ROLE
+   SELECT
 ========================= */
 
 .input_field select {
@@ -132,7 +149,7 @@ body {
 
     height: 45px;
 
-    padding: 10px;
+    padding: 0 10px;
 
     border: 1px solid #b8ccb9;
 
@@ -149,6 +166,8 @@ body {
     cursor: pointer;
 }
 
+
+/* SELECT FOCUS */
 
 .input_field select:focus {
     border-color: #4caf50;
@@ -164,7 +183,7 @@ body {
 .input_field textarea {
     width: 100%;
 
-    height: 100px;
+    height: 80px;
 
     padding: 10px;
 
@@ -172,7 +191,7 @@ body {
 
     border-radius: 5px;
 
-    resize: none;
+    resize: vertical;
 
     font-family: Arial, sans-serif;
 
@@ -186,10 +205,51 @@ body {
 }
 
 
+/* TEXTAREA FOCUS */
+
 .input_field textarea:focus {
     border-color: #4caf50;
 
     background-color: #ffffff;
+}
+
+
+/* =========================
+   TERMS CHECKBOX
+========================= */
+
+.input_field.terms {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 5px;
+
+    margin-bottom: 20px;
+}
+
+.input_field.terms input[type="checkbox"] {
+    width: 16px;
+
+    height: 16px;
+
+    margin: 0;
+
+    cursor: pointer;
+}
+
+.input_field.terms label {
+    margin: 0;
+}
+
+.input_field.terms p {
+    margin: 0;
+
+    font-size: 13px;
+
+    color: #555555;
 }
 
 
@@ -200,7 +260,7 @@ body {
 .btn {
     width: 100%;
 
-    padding: 12px;
+    padding: 13px;
 
     border: none;
 
@@ -212,7 +272,7 @@ body {
 
     border-radius: 5px;
 
-    font-size: 16px;
+    font-size: 17px;
 
     font-weight: 600;
 
@@ -228,18 +288,53 @@ body {
 
 
 /* =========================
+   LOGIN LINK
+========================= */
+
+.login-link {
+    text-align: center;
+
+    margin-top: 20px;
+
+    font-size: 14px;
+
+    color: #555555;
+}
+
+.login-link a {
+    color: #2e7d32;
+
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    color: #1b5e20;
+
+    text-decoration: underline;
+}
+
+
+/* =========================
    MOBILE
 ========================= */
 
-@media (max-width: 600px) {
+@media (max-width: 500px) {
+
+    body {
+        padding: 15px 10px;
+    }
 
     .container {
-        margin: 30px auto;
+        width: 100%;
 
-        padding: 20px;
+        padding: 30px 25px;
+
+        margin: 10px auto;
     }
 
     .container .title {
-        font-size: 24px;
+        font-size: 28px;
     }
 }
