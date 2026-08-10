@@ -1,3 +1,7 @@
+/* =========================
+   RESET
+========================= */
+
 *,
 *::before,
 *::after {
@@ -8,7 +12,7 @@
 
 
 /* =========================
-   BODY / BACKGROUND
+   HTML & BODY
 ========================= */
 
 html,
@@ -20,6 +24,7 @@ body {
 body {
     min-height: 100vh;
 
+    /* LIGHT GREEN BACKGROUND */
     background: linear-gradient(
         135deg,
         #e8f5e9,
@@ -28,6 +33,7 @@ body {
 
     font-family: 'Poppins', sans-serif;
 
+    /* CENTER LOGIN FORM */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -64,40 +70,34 @@ form {
 
     border: 1px solid #d7e8d9;
 
-    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.15);
 
     padding: 40px 35px;
 }
 
 
 /* =========================
-   FORM ELEMENTS
-========================= */
-
-form * {
-    font-family: 'Poppins', sans-serif;
-
-    letter-spacing: 0.5px;
-
-    outline: none;
-}
-
-
-/* =========================
-   HEADING
+   LOGIN HEADING
 ========================= */
 
 form h3 {
-     
     display: block;
+
     width: 100%;
+
     text-align: center;
+
     font-size: 32px;
+
     font-weight: 600;
+
+    line-height: 42px;
+
     color: #1b5e20;
+
     margin-bottom: 25px;
 }
-
 
 
 /* =========================
@@ -124,9 +124,13 @@ label {
 input {
     display: block;
 
+    width: 100%;
+
     height: 50px;
 
-    width: 100%;
+    padding: 0 10px;
+
+    margin-bottom: 20px;
 
     background-color: #f5faf6;
 
@@ -134,24 +138,24 @@ input {
 
     border-radius: 5px;
 
-    padding: 0 10px;
-
-    margin-bottom: 20px;
-
     font-size: 14px;
-
-    font-weight: 400;
 
     color: #333333;
 }
 
 
+/* INPUT FOCUS */
+
 input:focus {
-    border: 1px solid #4caf50;
+    outline: none;
+
+    border-color: #4caf50;
 
     background-color: #ffffff;
 }
 
+
+/* PLACEHOLDER */
 
 input::placeholder {
     color: #777777;
@@ -165,19 +169,19 @@ input::placeholder {
 select {
     display: block;
 
+    width: 100%;
+
     height: 50px;
 
-    width: 100%;
+    padding: 0 10px;
+
+    margin-bottom: 20px;
 
     background-color: #f5faf6;
 
     border: 1px solid #b8ccb9;
 
     border-radius: 5px;
-
-    padding: 0 10px;
-
-    margin-bottom: 20px;
 
     font-size: 14px;
 
@@ -187,12 +191,14 @@ select {
 }
 
 
+/* SELECT FOCUS */
+
 select:focus {
-    border: 1px solid #4caf50;
+    outline: none;
+
+    border-color: #4caf50;
 
     background-color: #ffffff;
-
-    outline: none;
 }
 
 
@@ -201,29 +207,33 @@ select:focus {
 ========================= */
 
 button {
-    margin-top: 5px;
+    display: block;
 
     width: 100%;
+
+    padding: 15px 0;
+
+    margin-top: 5px;
 
     background-color: #2e7d32;
 
     color: #ffffff;
 
-    padding: 15px 0;
+    border: none;
+
+    border-radius: 5px;
 
     font-size: 18px;
 
     font-weight: 600;
 
-    border-radius: 5px;
-
     cursor: pointer;
-
-    border: none;
 
     transition: 0.3s;
 }
 
+
+/* BUTTON HOVER */
 
 button:hover {
     background-color: #1b5e20;
@@ -237,13 +247,15 @@ button:hover {
 .social {
     display: flex;
 
-    gap: 15px;
-
     width: 100%;
+
+    gap: 15px;
 
     margin-top: 20px;
 }
 
+
+/* SOCIAL BUTTON */
 
 .social div {
     width: 50%;
@@ -274,12 +286,14 @@ button:hover {
 }
 
 
+/* SOCIAL HOVER */
+
 .social div:hover {
     background-color: #eeeeee;
 }
 
 
-/* SOCIAL ICONS */
+/* SOCIAL ICON */
 
 .social i {
     margin-right: 8px;
@@ -288,14 +302,14 @@ button:hover {
 }
 
 
-/* FACEBOOK */
+/* FACEBOOK ICON */
 
 .social .fb i {
     color: #1877f2;
 }
 
 
-/* GOOGLE */
+/* GOOGLE ICON */
 
 .social .google i {
     color: #db4437;
@@ -321,6 +335,8 @@ button:hover {
 }
 
 
+/* SIGN UP LINK */
+
 .register-link a {
     color: #2e7d32;
 
@@ -332,6 +348,8 @@ button:hover {
 }
 
 
+/* SIGN UP HOVER */
+
 .register-link a:hover {
     color: #1b5e20;
 
@@ -340,13 +358,17 @@ button:hover {
 
 
 /* =========================
-   MOBILE
+   MOBILE RESPONSIVE
 ========================= */
 
 @media (max-width: 500px) {
 
+    body {
+        padding: 15px;
+    }
+
     form {
-        width: 90%;
+        width: 100%;
 
         padding: 35px 25px;
     }
