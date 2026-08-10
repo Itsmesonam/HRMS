@@ -1,4 +1,17 @@
-<h3>Login Here</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" 
+    content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="css/login_style.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <h2>Login here</h2>
+            <form action="login_process.php" method="POST">
 
 <label for="username">Username</label>
 
@@ -40,7 +53,7 @@
     <option value="tenant">Tenant</option>
 </select>
 
-
+<!--login button-->
 <button type="submit">
     Log In
 </button>

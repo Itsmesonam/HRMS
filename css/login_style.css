@@ -6,7 +6,10 @@
     box-sizing: border-box;
 }
 
-/* BODY / BACKGROUND */
+
+/* =========================
+   BODY / BACKGROUND
+========================= */
 
 html,
 body {
@@ -24,23 +27,38 @@ body {
     );
 
     font-family: 'Poppins', sans-serif;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 30px;
 }
 
 
-/* LOGIN FORM */
+/* =========================
+   LOGIN CONTAINER
+========================= */
+
+.login-container {
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+}
+
+
+/* =========================
+   LOGIN FORM
+========================= */
 
 form {
     width: 400px;
-    min-height: 620px;
 
     background-color: #ffffff;
-
-    position: absolute;
-
-    transform: translate(-50%, -50%);
-
-    top: 50%;
-    left: 50%;
 
     border-radius: 12px;
 
@@ -52,21 +70,30 @@ form {
 }
 
 
-/* FORM ELEMENTS */
+/* =========================
+   FORM ELEMENTS
+========================= */
 
 form * {
     font-family: 'Poppins', sans-serif;
+
     letter-spacing: 0.5px;
+
     outline: none;
 }
 
 
-/* HEADING */
+/* =========================
+   HEADING
+========================= */
 
 form h3 {
     font-size: 32px;
+
     font-weight: 600;
+
     line-height: 42px;
+
     text-align: center;
 
     color: #1b5e20;
@@ -75,7 +102,9 @@ form h3 {
 }
 
 
-/* LABEL */
+/* =========================
+   LABEL
+========================= */
 
 label {
     display: block;
@@ -83,18 +112,22 @@ label {
     margin-bottom: 5px;
 
     font-size: 14px;
+
     font-weight: 500;
 
     color: #333333;
 }
 
 
-/* INPUT */
+/* =========================
+   INPUT
+========================= */
 
 input {
     display: block;
 
     height: 50px;
+
     width: 100%;
 
     background-color: #f5faf6;
@@ -108,13 +141,12 @@ input {
     margin-bottom: 20px;
 
     font-size: 14px;
+
     font-weight: 400;
 
     color: #333333;
 }
 
-
-/* INPUT FOCUS */
 
 input:focus {
     border: 1px solid #4caf50;
@@ -123,19 +155,20 @@ input:focus {
 }
 
 
-/* PLACEHOLDER */
-
 input::placeholder {
     color: #777777;
 }
 
 
-/* ROLE SELECT */
+/* =========================
+   ROLE SELECT
+========================= */
 
 select {
     display: block;
 
     height: 50px;
+
     width: 100%;
 
     background-color: #f5faf6;
@@ -165,7 +198,9 @@ select:focus {
 }
 
 
-/* LOGIN BUTTON */
+/* =========================
+   LOGIN BUTTON
+========================= */
 
 button {
     margin-top: 5px;
@@ -197,7 +232,9 @@ button:hover {
 }
 
 
-/* SOCIAL LOGIN */
+/* =========================
+   SOCIAL LOGIN
+========================= */
 
 .social {
     display: flex;
@@ -209,8 +246,6 @@ button:hover {
     margin-top: 20px;
 }
 
-
-/* SOCIAL BUTTONS */
 
 .social div {
     width: 50%;
@@ -230,8 +265,6 @@ button:hover {
     border: 1px solid #999999;
 
     border-radius: 6px;
-
-    font-family: 'Poppins', sans-serif;
 
     font-size: 14px;
 
@@ -271,7 +304,9 @@ button:hover {
 }
 
 
-/* REGISTER / SIGN UP */
+/* =========================
+   SIGN UP
+========================= */
 
 .register-link {
     display: block;
@@ -306,7 +341,9 @@ button:hover {
 }
 
 
-/* MOBILE RESPONSIVE */
+/* =========================
+   MOBILE
+========================= */
 
 @media (max-width: 500px) {
 
