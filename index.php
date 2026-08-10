@@ -5,6 +5,7 @@
     <div class="overlay">
         <h1>Find Your Dream Rental Home</h1>
         <p>Search houses, apartments and rooms across Nepal</p>
+        <a href="login.php">Login</a>
 
         <form class="search-box">
             <input type="text" placeholder="Location">
