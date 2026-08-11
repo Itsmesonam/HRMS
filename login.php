@@ -19,12 +19,12 @@ if (!$conn) {
 
 if (isset($_POST['login'])) {
 
-    $username = trim($_POST['username']);
+    $email = trim($_POST['username']);
     $password = $_POST['password'];
     $role = $_POST['role'];
 
 
-    // Check that a role was selected
+    // Check role
     if (empty($role)) {
 
         echo "<script>
@@ -33,7 +33,7 @@ if (isset($_POST['login'])) {
 
     } else {
 
-        // Find user by email
+        // Find user
         $query = mysqli_prepare(
             $conn,
             "SELECT id, firstname, lastname, password, role
@@ -44,7 +44,7 @@ if (isset($_POST['login'])) {
         mysqli_stmt_bind_param(
             $query,
             "ss",
-            $username,
+            $email,
             $role
         );
 
@@ -53,22 +53,16 @@ if (isset($_POST['login'])) {
         $result = mysqli_stmt_get_result($query);
 
 
-        // ===============================
-        // CHECK USER
-        // ===============================
-
+        // Check user exists
         if (mysqli_num_rows($result) == 1) {
 
             $user = mysqli_fetch_assoc($result);
 
 
-            // ===============================
-            // CHECK PASSWORD
-            // ===============================
-
+            // Check password
             if (password_verify($password, $user['password'])) {
 
-                // Store user information in session
+                // Create session
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['firstname'] = $user['firstname'];
                 $_SESSION['lastname'] = $user['lastname'];
@@ -76,7 +70,7 @@ if (isset($_POST['login'])) {
 
 
                 // ===============================
-                // REDIRECT BASED ON ROLE
+                // ROLE BASED REDIRECT
                 // ===============================
 
                 if ($user['role'] == 'landlord') {
@@ -88,7 +82,6 @@ if (isset($_POST['login'])) {
 
                     header("Location: tenant.php");
                     exit();
-
                 }
 
             } else {
@@ -111,7 +104,6 @@ if (isset($_POST['login'])) {
 }
 
 ?>
-
 
 <!DOCTYPE html>
 
