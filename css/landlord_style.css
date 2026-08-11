@@ -1,0 +1,317 @@
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   BODY
+========================= */
+
+body {
+    min-height: 100vh;
+
+    background: linear-gradient(
+        135deg,
+        #e8f5e9,
+        #c8e6c9
+    );
+
+    font-family: 'Poppins', Arial, sans-serif;
+
+    color: #333333;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+    width: 100%;
+
+    background-color: #2e7d32;
+
+    color: white;
+
+    padding: 18px 40px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+
+/* LOGO */
+
+.logo {
+    font-size: 21px;
+
+    font-weight: 600;
+}
+
+
+/* HEADER RIGHT */
+
+.header-right {
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+}
+
+
+/* USER NAME */
+
+.user-name {
+    font-size: 14px;
+
+    font-weight: 500;
+}
+
+
+/* LOGOUT */
+
+.logout {
+    background-color: white;
+
+    color: #2e7d32;
+
+    padding: 9px 18px;
+
+    border-radius: 5px;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    transition: 0.3s;
+}
+
+
+.logout:hover {
+    background-color: #e8f5e9;
+}
+
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.container {
+    width: 90%;
+
+    max-width: 1100px;
+
+    margin: 40px auto;
+}
+
+
+/* =========================
+   WELCOME
+========================= */
+
+.welcome {
+    background-color: white;
+
+    padding: 30px;
+
+    border-radius: 12px;
+
+    border: 1px solid #d7e8d9;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.10);
+
+    margin-bottom: 30px;
+}
+
+
+.welcome h1 {
+    color: #1b5e20;
+
+    font-size: 28px;
+
+    margin-bottom: 10px;
+}
+
+
+.welcome p {
+    color: #555555;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================
+   CARDS
+========================= */
+
+.cards {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 22px;
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.card {
+    background-color: white;
+
+    padding: 28px 22px;
+
+    border-radius: 12px;
+
+    border: 1px solid #d7e8d9;
+
+    text-align: center;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.10);
+
+    transition: 0.3s;
+}
+
+
+.card:hover {
+    transform: translateY(-5px);
+
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+
+/* CARD ICON */
+
+.card-icon {
+    font-size: 35px;
+
+    margin-bottom: 12px;
+}
+
+
+/* CARD TITLE */
+
+.card h3 {
+    color: #2e7d32;
+
+    font-size: 19px;
+
+    margin-bottom: 10px;
+}
+
+
+/* CARD TEXT */
+
+.card p {
+    color: #666666;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    min-height: 63px;
+
+    margin-bottom: 20px;
+}
+
+
+/* CARD BUTTON */
+
+.card a {
+    display: inline-block;
+
+    background-color: #2e7d32;
+
+    color: white;
+
+    padding: 10px 18px;
+
+    border-radius: 5px;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    transition: 0.3s;
+}
+
+
+.card a:hover {
+    background-color: #1b5e20;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 850px) {
+
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .header {
+        padding: 15px 20px;
+
+        flex-direction: column;
+
+        gap: 12px;
+
+        text-align: center;
+    }
+
+
+    .header-right {
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+
+    .container {
+        width: 92%;
+
+        margin: 25px auto;
+    }
+
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+
+    .welcome {
+        padding: 22px;
+    }
+
+
+    .welcome h1 {
+        font-size: 24px;
+    }
+
+}
