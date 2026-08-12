@@ -1,16 +1,18 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>House Rental Management System</title>
 
     <!-- Index CSS -->
-    <link rel="stylesheet" href="css/index_style.css">
+    <link rel="stylesheet" href="Assets/css/index_style.css">
 
 </head>
 
@@ -19,8 +21,8 @@
 
 
 <!-- =========================
-     NAVIGATION BAR
-========================= -->
+     NAVIGATION
+========================== -->
 
 <nav>
 
@@ -39,11 +41,11 @@
         </li>
 
         <li>
-            <a href="landlords.php">Landlords</a>
+            <a href="landlord.php">Landlords</a>
         </li>
 
         <li>
-            <a href="tenants.php">Tenants</a>
+            <a href="tenant.php">Tenants</a>
         </li>
 
         <li>
@@ -66,7 +68,7 @@
 
 <!-- =========================
      HERO SECTION
-========================= -->
+========================== -->
 
 <section class="hero">
 
@@ -83,7 +85,11 @@
 
         <!-- SEARCH BOX -->
 
-        <form class="search-box" action="properties.php" method="GET">
+        <form
+            class="search-box"
+            action="properties.php"
+            method="GET"
+        >
 
             <input
                 type="text"
@@ -127,7 +133,7 @@
 
 <!-- =========================
      FEATURED SERVICES
-========================= -->
+========================== -->
 
 <section class="welcome">
 
@@ -138,6 +144,11 @@
 </section>
 
 
+
+<!-- =========================
+     CARDS
+========================== -->
+
 <div class="container">
 
 
@@ -146,7 +157,7 @@
     <div class="card">
 
         <img
-            src="images/house.jpg"
+            src="Assets/images/house.jpg"
             alt="House"
         >
 
@@ -174,7 +185,7 @@
     <div class="card">
 
         <img
-            src="images/landlord.jpg"
+            src="Assets/images/landlord.jpg"
             alt="Landlord"
         >
 
@@ -187,7 +198,7 @@
         </p>
 
         <a
-            href="landlords.php"
+            href="landlord.php"
             class="btn"
         >
             See Details
@@ -202,7 +213,7 @@
     <div class="card">
 
         <img
-            src="images/tenant.jpg"
+            src="Assets/images/tenant.jpg"
             alt="Tenant"
         >
 
@@ -215,7 +226,7 @@
         </p>
 
         <a
-            href="tenants.php"
+            href="tenant.php"
             class="btn"
         >
             See Details
@@ -230,7 +241,7 @@
     <div class="card">
 
         <img
-            src="images/booking.jpg"
+            src="Assets/images/booking.jpg"
             alt="Booking"
         >
 
@@ -258,7 +269,7 @@
     <div class="card">
 
         <img
-            src="images/admin.jpg"
+            src="Assets/images/admin.jpg"
             alt="Admin"
         >
 
@@ -271,7 +282,7 @@
         </p>
 
         <a
-            href="admin/login.php"
+            href="admin_page.php"
             class="btn"
         >
             See Details
@@ -279,14 +290,13 @@
 
     </div>
 
-
 </div>
 
 
 
 <!-- =========================
      FOOTER
-========================= -->
+========================== -->
 
 <footer>
 

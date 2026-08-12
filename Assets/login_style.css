@@ -1,383 +1,93 @@
-/* =========================
-   RESET
-========================= */
-
-*,
-*::before,
-*::after {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-
-/* =========================
-   HTML & BODY
-========================= */
-
-html,
 body {
-    width: 100%;
-    min-height: 100%;
-}
-
-body {
+    font-family: Arial, sans-serif;
+    background: #e8f5e9;
     min-height: 100vh;
 
-    /* LIGHT GREEN BACKGROUND */
-    background: linear-gradient(
-        135deg,
-        #e8f5e9,
-        #c8e6c9
-    );
-
-    font-family: 'Poppins', sans-serif;
-
-    /* CENTER LOGIN FORM */
     display: flex;
     justify-content: center;
     align-items: center;
-
-    padding: 30px;
 }
-
-
-/* =========================
-   LOGIN CONTAINER
-========================= */
 
 .login-container {
-    width: 100%;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-}
-
-
-/* =========================
-   LOGIN FORM
-========================= */
-
-form {
     width: 400px;
-
-    background-color: #ffffff;
-
+    background: white;
+    padding: 30px;
     border-radius: 12px;
-
-    border: 1px solid #d7e8d9;
-
-    box-shadow:
-        0 10px 35px rgba(0, 0, 0, 0.15);
-
-    padding: 40px 35px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
 }
 
-
-/* =========================
-   LOGIN HEADING
-========================= */
-
-form h3 {
-    display: block;
-
-    width: 100%;
-
+.login-container h3 {
     text-align: center;
-
-    font-size: 32px;
-
-    font-weight: 600;
-
-    line-height: 42px;
-
-    color: #1b5e20;
-
     margin-bottom: 25px;
+    font-size: 28px;
 }
 
-
-/* =========================
-   LABEL
-========================= */
-
-label {
+.login-container label {
     display: block;
-
-    margin-bottom: 5px;
-
-    font-size: 14px;
-
-    font-weight: 500;
-
-    color: #333333;
+    margin-top: 15px;
+    margin-bottom: 6px;
+    font-weight: bold;
 }
 
-
-/* =========================
-   INPUT
-========================= */
-
-input {
-    display: block;
-
+.login-container input,
+.login-container select {
     width: 100%;
-
-    height: 50px;
-
-    padding: 0 10px;
-
-    margin-bottom: 20px;
-
-    background-color: #f5faf6;
-
-    border: 1px solid #b8ccb9;
-
-    border-radius: 5px;
-
-    font-size: 14px;
-
-    color: #333333;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
 }
 
-
-/* INPUT FOCUS */
-
-input:focus {
-    outline: none;
-
-    border-color: #4caf50;
-
-    background-color: #ffffff;
-}
-
-
-/* PLACEHOLDER */
-
-input::placeholder {
-    color: #777777;
-}
-
-
-/* =========================
-   ROLE SELECT
-========================= */
-
-select {
-    display: block;
-
+.login-container button {
     width: 100%;
-
-    height: 50px;
-
-    padding: 0 10px;
-
-    margin-bottom: 20px;
-
-    background-color: #f5faf6;
-
-    border: 1px solid #b8ccb9;
-
-    border-radius: 5px;
-
-    font-size: 14px;
-
-    color: #333333;
-
-    cursor: pointer;
-}
-
-
-/* SELECT FOCUS */
-
-select:focus {
-    outline: none;
-
-    border-color: #4caf50;
-
-    background-color: #ffffff;
-}
-
-
-/* =========================
-   LOGIN BUTTON
-========================= */
-
-button {
-    display: block;
-
-    width: 100%;
-
-    padding: 15px 0;
-
-    margin-top: 5px;
-
-    background-color: #2e7d32;
-
-    color: #ffffff;
-
+    padding: 12px;
+    margin-top: 20px;
     border: none;
-
-    border-radius: 5px;
-
-    font-size: 18px;
-
-    font-weight: 600;
-
+    border-radius: 6px;
+    background: #2e7d32;
+    color: white;
+    font-size: 16px;
     cursor: pointer;
-
-    transition: 0.3s;
 }
-
-
-/* BUTTON HOVER */
-
-button:hover {
-    background-color: #1b5e20;
-}
-
-
-/* =========================
-   SOCIAL LOGIN
-========================= */
 
 .social {
     display: flex;
-
-    width: 100%;
-
-    gap: 15px;
-
+    gap: 10px;
     margin-top: 20px;
 }
 
-
-/* SOCIAL BUTTON */
-
-.social div {
-    width: 50%;
-
-    height: 48px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    background-color: #ffffff;
-
-    color: #333333;
-
-    border: 1px solid #999999;
-
+.fb,
+.google {
+    flex: 1;
+    padding: 10px;
     border-radius: 6px;
-
-    font-size: 14px;
-
-    font-weight: 500;
-
+    text-align: center;
     cursor: pointer;
-
-    transition: 0.3s;
 }
 
-
-/* SOCIAL HOVER */
-
-.social div:hover {
-    background-color: #eeeeee;
+.fb {
+    background: #1877f2;
+    color: white;
 }
 
-
-/* SOCIAL ICON */
-
-.social i {
-    margin-right: 8px;
-
-    font-size: 17px;
+.google {
+    background: #f1f1f1;
+    color: #333;
 }
-
-
-/* FACEBOOK ICON */
-
-.social .fb i {
-    color: #1877f2;
-}
-
-
-/* GOOGLE ICON */
-
-.social .google i {
-    color: #db4437;
-}
-
-
-/* =========================
-   SIGN UP
-========================= */
 
 .register-link {
-    display: block;
-
-    width: 100%;
-
     text-align: center;
-
     margin-top: 20px;
-
-    font-size: 14px;
-
-    color: #555555;
 }
-
-
-/* SIGN UP LINK */
 
 .register-link a {
     color: #2e7d32;
-
-    font-weight: 600;
-
+    font-weight: bold;
     text-decoration: none;
-
-    margin-left: 5px;
-}
-
-
-/* SIGN UP HOVER */
-
-.register-link a:hover {
-    color: #1b5e20;
-
-    text-decoration: underline;
-}
-
-
-/* =========================
-   MOBILE RESPONSIVE
-========================= */
-
-@media (max-width: 500px) {
-
-    body {
-        padding: 15px;
-    }
-
-    form {
-        width: 100%;
-
-        padding: 35px 25px;
-    }
-
-    .social {
-        flex-direction: column;
-    }
-
-    .social div {
-        width: 100%;
-    }
 }

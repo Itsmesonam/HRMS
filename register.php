@@ -1,4 +1,3 @@
-```php
 <?php
 
 // ===============================
@@ -156,7 +155,7 @@ if (isset($_POST['register'])) {
     <!-- Registration CSS -->
 
     <link rel="stylesheet"
-          href="css/register_style.css">
+          href="Assets/css/register_style.css">
 
 </head>
 
@@ -396,4 +395,3 @@ if (isset($_POST['register'])) {
 </body>
 
 </html>
-```

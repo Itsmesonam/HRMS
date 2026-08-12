@@ -2,6 +2,7 @@
 
 session_start();
 
+
 // ===============================
 // DATABASE CONNECTION
 // ===============================
@@ -73,7 +74,12 @@ if (isset($_POST['login'])) {
                 // ROLE BASED REDIRECT
                 // ===============================
 
-                if ($user['role'] == 'landlord') {
+                if ($user['role'] == 'admin') {
+
+                    header("Location: admin_page.php");
+                    exit();
+
+                } elseif ($user['role'] == 'landlord') {
 
                     header("Location: landlord.php");
                     exit();
@@ -82,6 +88,7 @@ if (isset($_POST['login'])) {
 
                     header("Location: tenant.php");
                     exit();
+
                 }
 
             } else {
@@ -105,6 +112,7 @@ if (isset($_POST['login'])) {
 
 ?>
 
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -122,7 +130,7 @@ if (isset($_POST['login'])) {
     <!-- Login CSS -->
 
     <link rel="stylesheet"
-          href="css/login_style.css">
+          href="Assets/css/login_style.css">
 
 
     <!-- Font Awesome -->
@@ -136,120 +144,133 @@ if (isset($_POST['login'])) {
 <body>
 
 
-<form action="" method="POST">
-
-    <h3>Login Here</h3>
+<div class="login-container">
 
 
-    <!-- USERNAME -->
-
-    <label for="username">
-        Username
-    </label>
-
-    <input
-        type="text"
-        name="username"
-        placeholder="Email"
-        id="username"
-        required
-    >
+    <h3>
+        Login Here
+    </h3>
 
 
-    <!-- PASSWORD -->
-
-    <label for="password">
-        Password
-    </label>
-
-    <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        id="password"
-        required
-    >
+    <form action="" method="POST">
 
 
-    <!-- ROLE -->
+        <!-- USERNAME -->
 
-    <label for="role">
-        Login As
-    </label>
+        <label for="username">
+            Username
+        </label>
 
-    <select
-        name="role"
-        id="role"
-        required
-    >
-
-        <option value="">
-            Select your role
-        </option>
-
-        <option value="landlord">
-            Landlord
-        </option>
-
-        <option value="tenant">
-            Tenant
-        </option>
-
-    </select>
+        <input
+            type="text"
+            name="username"
+            placeholder="Email"
+            id="username"
+            required
+        >
 
 
-    <!-- LOGIN BUTTON -->
+        <!-- PASSWORD -->
 
-    <button
-        type="submit"
-        name="login"
-    >
-        Log In
-    </button>
+        <label for="password">
+            Password
+        </label>
+
+        <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            id="password"
+            required
+        >
 
 
-    <!-- SOCIAL LOGIN -->
+        <!-- ROLE -->
 
-    <div class="social">
+        <label for="role">
+            Login As
+        </label>
 
-        <div class="fb">
+        <select
+            name="role"
+            id="role"
+            required
+        >
 
-            <i class="fab fa-facebook-f"></i>
+            <option value="">
+                Select your role
+            </option>
 
-            <span>
-                Facebook
-            </span>
+            <option value="admin">
+                Admin
+            </option>
+
+            <option value="landlord">
+                Landlord
+            </option>
+
+            <option value="tenant">
+                Tenant
+            </option>
+
+        </select>
+
+
+        <!-- LOGIN BUTTON -->
+
+        <button
+            type="submit"
+            name="login"
+        >
+            Log In
+        </button>
+
+
+        <!-- SOCIAL LOGIN -->
+
+        <div class="social">
+
+            <div class="fb">
+
+                <i class="fab fa-facebook-f"></i>
+
+                <span>
+                    Facebook
+                </span>
+
+            </div>
+
+
+            <div class="google">
+
+                <i class="fab fa-google"></i>
+
+                <span>
+                    Google
+                </span>
+
+            </div>
 
         </div>
 
 
-        <div class="google">
+        <!-- REGISTER LINK -->
 
-            <i class="fab fa-google"></i>
+        <div class="register-link">
 
-            <span>
-                Google
-            </span>
+            Don't have an account?
+
+            <a href="register.php">
+                Sign Up
+            </a>
 
         </div>
 
-    </div>
+
+    </form>
 
 
-    <!-- REGISTER LINK -->
-
-    <div class="register-link">
-
-        Don't have an account?
-
-        <a href="register.php">
-            Sign Up
-        </a>
-
-    </div>
-
-
-</form>
+</div>
 
 
 </body>
