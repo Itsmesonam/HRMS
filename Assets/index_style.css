@@ -1,5 +1,5 @@
 /* =========================
-   RESET
+RESET
 ========================= */
 
 * {
@@ -11,7 +11,7 @@
 
 
 /* =========================
-   BODY
+BODY
 ========================= */
 
 body {
@@ -20,7 +20,7 @@ body {
 
 
 /* =========================
-   NAVIGATION BAR
+NAVIGATION BAR
 ========================= */
 
 nav {
@@ -75,11 +75,10 @@ nav ul li a:hover {
 
 
 /* =========================
-   HERO SECTION
+HERO SECTION
 ========================= */
 
 .hero {
-
     height: 80vh;
 
     background: linear-gradient(
@@ -96,11 +95,10 @@ nav ul li a:hover {
 
 
 /* =========================
-   OVERLAY
+OVERLAY
 ========================= */
 
 .overlay {
-
     position: absolute;
 
     top: 0;
@@ -139,7 +137,7 @@ nav ul li a:hover {
 
 
 /* =========================
-   SEARCH BOX
+SEARCH BOX
 ========================= */
 
 .search-box {
@@ -152,7 +150,6 @@ nav ul li a:hover {
 
 .search-box input,
 .search-box select {
-
     padding: 15px;
 
     width: 220px;
@@ -172,7 +169,6 @@ nav ul li a:hover {
 /* SEARCH BUTTON */
 
 .search-box button {
-
     padding: 15px 30px;
 
     border: none;
@@ -199,11 +195,10 @@ nav ul li a:hover {
 
 
 /* =========================
-   WELCOME SECTION
+WELCOME SECTION
 ========================= */
 
 .welcome {
-
     text-align: center;
 
     padding: 40px 20px;
@@ -213,7 +208,6 @@ nav ul li a:hover {
 
 
 .welcome h2 {
-
     color: #1E3A8A;
 
     font-size: 32px;
@@ -221,11 +215,10 @@ nav ul li a:hover {
 
 
 /* =========================
-   CARDS CONTAINER
+CARDS CONTAINER
 ========================= */
 
 .container {
-
     width: 90%;
 
     margin: 40px auto;
@@ -241,11 +234,10 @@ nav ul li a:hover {
 
 
 /* =========================
-   CARD
+CARD
 ========================= */
 
 .card {
-
     width: 300px;
 
     background: white;
@@ -266,7 +258,6 @@ nav ul li a:hover {
 /* CARD HOVER */
 
 .card:hover {
-
     transform: translateY(-8px);
 }
 
@@ -274,7 +265,6 @@ nav ul li a:hover {
 /* CARD IMAGE */
 
 .card img {
-
     width: 100%;
 
     height: 200px;
@@ -286,7 +276,6 @@ nav ul li a:hover {
 /* CARD TITLE */
 
 .card h3 {
-
     color: #1E3A8A;
 
     margin-top: 15px;
@@ -296,7 +285,6 @@ nav ul li a:hover {
 /* CARD DESCRIPTION */
 
 .card p {
-
     padding: 10px 15px;
 
     color: #555;
@@ -306,11 +294,10 @@ nav ul li a:hover {
 
 
 /* =========================
-   BUTTON
+BUTTON
 ========================= */
 
 .btn {
-
     display: inline-block;
 
     margin: 15px 0 20px;
@@ -332,17 +319,15 @@ nav ul li a:hover {
 /* BUTTON HOVER */
 
 .btn:hover {
-
     background-color: #162d6b;
 }
 
 
 /* =========================
-   FOOTER
+FOOTER
 ========================= */
 
 footer {
-
     background-color: #1E3A8A;
 
     color: white;
@@ -361,13 +346,12 @@ footer p {
 
 
 /* =========================
-   RESPONSIVE
+RESPONSIVE
 ========================= */
 
 @media (max-width: 768px) {
 
     nav {
-
         flex-direction: column;
 
         text-align: center;
@@ -375,7 +359,6 @@ footer p {
 
 
     nav ul {
-
         flex-wrap: wrap;
 
         justify-content: center;
@@ -385,25 +368,21 @@ footer p {
 
 
     nav ul li {
-
         margin: 8px;
     }
 
 
     .overlay h1 {
-
         font-size: 38px;
     }
 
 
     .overlay p {
-
         font-size: 18px;
     }
 
 
     .search-box {
-
         flex-direction: column;
 
         width: 90%;
@@ -415,13 +394,11 @@ footer p {
     .search-box input,
     .search-box select,
     .search-box button {
-
         width: 100%;
     }
 
 
     .card {
-
         width: 90%;
     }
 

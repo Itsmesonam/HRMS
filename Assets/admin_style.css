@@ -1,69 +1,319 @@
+/* =========================
+RESET
+========================= */
+
 * {
-    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    outline: none;
-    border: none;
-    text-decoration: none;
 }
+
+
+/* =========================
+BODY
+========================= */
+
+body {
+    min-height: 100vh;
+
+    background: linear-gradient(
+        135deg,
+        #e8f5e9,
+        #c8e6c9
+    );
+
+    font-family: Arial, sans-serif;
+
+    color: #333;
+}
+
+
+/* =========================
+HEADER
+========================= */
+
+.header {
+    width: 100%;
+
+    background-color: #1b5e20;
+
+    color: white;
+
+    padding: 18px 40px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+
+/* LOGO */
+
+.logo {
+    font-size: 22px;
+
+    font-weight: bold;
+}
+
+
+/* HEADER RIGHT */
+
+.header-right {
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+}
+
+
+/* ADMIN NAME */
+
+.admin-name {
+    font-size: 14px;
+
+    font-weight: 500;
+}
+
+
+/* LOGOUT */
+
+.logout {
+    background-color: white;
+
+    color: #1b5e20;
+
+    padding: 9px 18px;
+
+    border-radius: 5px;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    transition: 0.3s;
+}
+
+
+.logout:hover {
+    background-color: #e8f5e9;
+}
+
+
+/* =========================
+MAIN CONTAINER
+========================= */
 
 .container {
+    width: 90%;
+
     max-width: 1200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    min-height: 100vh;
-    padding: 20px;
-    margin: 0 auto;
+
+    margin: 40px auto;
 }
 
-.container .content {
+
+/* =========================
+WELCOME
+========================= */
+
+.welcome {
+    background-color: white;
+
+    padding: 30px;
+
+    border-radius: 12px;
+
+    border: 1px solid #d7e8d9;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.10);
+
+    margin-bottom: 30px;
+
     text-align: center;
 }
 
-.container .content h3 {
+
+.welcome h1 {
+    color: #1b5e20;
+
     font-size: 30px;
-    color: #fff;
+
+    margin-bottom: 10px;
 }
 
-.container .content h3 span {
-    background: crimson;
-    color: #fff;
-    border-radius: 5px;
-    padding: 0 15px;
+
+.welcome p {
+    color: #555;
+
+    font-size: 15px;
+
+    line-height: 1.6;
 }
 
-.container .content h1 {
-    font-size: 50px;
-    color: #fff;
+
+/* =========================
+DASHBOARD CARDS
+========================= */
+
+.cards {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 22px;
 }
 
-.container .content h1 span {
-    color: crimson;
+
+/* =========================
+CARD
+========================= */
+
+.card {
+    background-color: white;
+
+    padding: 28px 22px;
+
+    border-radius: 12px;
+
+    border: 1px solid #d7e8d9;
+
+    text-align: center;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.10);
+
+    transition: 0.3s;
 }
 
-.container .content p {
-    font-size: 25px;
-    margin-top: 20px;
-    color: #fff;
+
+.card:hover {
+    transform: translateY(-5px);
+
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
 }
 
-.container .content .btn {
+
+/* CARD ICON */
+
+.card-icon {
+    font-size: 38px;
+
+    margin-bottom: 12px;
+}
+
+
+/* CARD TITLE */
+
+.card h3 {
+    color: #2e7d32;
+
+    font-size: 19px;
+
+    margin-bottom: 10px;
+}
+
+
+/* CARD DESCRIPTION */
+
+.card p {
+    color: #666;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    min-height: 60px;
+
+    margin-bottom: 20px;
+}
+
+
+/* CARD BUTTON */
+
+.card a {
     display: inline-block;
-    margin-top: 20px;
-    background: crimson;
-    color: #fff;
-    font-size: 20px;
-    padding: 10px 30px;
-    text-transform: capitalize;
+
+    background-color: #2e7d32;
+
+    color: white;
+
+    padding: 10px 18px;
+
     border-radius: 5px;
-    cursor: pointer;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    transition: 0.3s;
 }
 
-.container .content .btn:hover {
-    background: #fff;
-    color: crimson;
-    border: 1px solid crimson;
+
+.card a:hover {
+    background-color: #1b5e20;
+}
+
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media (max-width: 850px) {
+
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .header {
+        padding: 15px 20px;
+
+        flex-direction: column;
+
+        gap: 12px;
+
+        text-align: center;
+    }
+
+
+    .header-right {
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+
+    .container {
+        width: 92%;
+
+        margin: 25px auto;
+    }
+
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+
+    .welcome {
+        padding: 22px;
+    }
+
+
+    .welcome h1 {
+        font-size: 25px;
+    }
+
 }
