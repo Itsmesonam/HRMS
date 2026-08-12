@@ -1,5 +1,5 @@
 /* =========================
-RESET
+   RESET
 ========================= */
 
 * {
@@ -10,7 +10,7 @@ RESET
 
 
 /* =========================
-BODY / BACKGROUND
+   BODY / BACKGROUND
 ========================= */
 
 html,
@@ -35,7 +35,7 @@ body {
 
 
 /* =========================
-REGISTER CONTAINER
+   REGISTER CONTAINER
 ========================= */
 
 .container {
@@ -57,7 +57,7 @@ REGISTER CONTAINER
 
 
 /* =========================
-TITLE
+   TITLE
 ========================= */
 
 .container .title {
@@ -76,16 +76,16 @@ TITLE
 
 
 /* =========================
-FORM
+   FORM
 ========================= */
 
-.form {
+form {
     width: 100%;
 }
 
 
 /* =========================
-INPUT FIELD
+   INPUT FIELD
 ========================= */
 
 .input_field {
@@ -94,7 +94,7 @@ INPUT FIELD
 
 
 /* =========================
-LABEL
+   LABEL
 ========================= */
 
 .input_field label {
@@ -111,7 +111,7 @@ LABEL
 
 
 /* =========================
-INPUT
+   INPUT
 ========================= */
 
 .input_field input {
@@ -145,7 +145,7 @@ INPUT
 
 
 /* =========================
-SELECT
+   SELECT
 ========================= */
 
 .input_field select {
@@ -181,7 +181,7 @@ SELECT
 
 
 /* =========================
-TEXTAREA
+   TEXTAREA
 ========================= */
 
 .input_field textarea {
@@ -219,7 +219,7 @@ TEXTAREA
 
 
 /* =========================
-TERMS CHECKBOX
+   TERMS CHECKBOX
 ========================= */
 
 .input_field.terms {
@@ -234,6 +234,7 @@ TERMS CHECKBOX
     margin-bottom: 20px;
 }
 
+
 .input_field.terms input[type="checkbox"] {
     width: 16px;
 
@@ -244,9 +245,11 @@ TERMS CHECKBOX
     cursor: pointer;
 }
 
+
 .input_field.terms label {
     margin: 0;
 }
+
 
 .input_field.terms p {
     margin: 0;
@@ -258,7 +261,7 @@ TERMS CHECKBOX
 
 
 /* =========================
-REGISTER BUTTON
+   REGISTER BUTTON
 ========================= */
 
 .btn {
@@ -292,7 +295,7 @@ REGISTER BUTTON
 
 
 /* =========================
-LOGIN LINK
+   LOGIN LINK
 ========================= */
 
 .login-link {
@@ -305,6 +308,7 @@ LOGIN LINK
     color: #555555;
 }
 
+
 .login-link a {
     color: #2e7d32;
 
@@ -312,6 +316,7 @@ LOGIN LINK
 
     text-decoration: none;
 }
+
 
 .login-link a:hover {
     color: #1b5e20;
@@ -321,7 +326,7 @@ LOGIN LINK
 
 
 /* =========================
-MOBILE
+   MOBILE
 ========================= */
 
 @media (max-width: 500px) {
@@ -341,4 +346,5 @@ MOBILE
     .container .title {
         font-size: 28px;
     }
+
 }

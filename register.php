@@ -17,7 +17,6 @@ if (!$conn) {
 
 if (isset($_POST['register'])) {
 
-    // Get form values
     $firstname = trim($_POST['firstname']);
     $lastname = trim($_POST['lastname']);
 
@@ -149,7 +148,9 @@ if (isset($_POST['register'])) {
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Registration - House Rental Management System</title>
+    <title>
+        Registration - House Rental Management System
+    </title>
 
 
     <!-- Registration CSS -->
@@ -162,6 +163,10 @@ if (isset($_POST['register'])) {
 
 <body>
 
+
+<!-- ===============================
+     REGISTER CONTAINER
+================================ -->
 
 <div class="container">
 
@@ -186,7 +191,9 @@ if (isset($_POST['register'])) {
 
         <div class="input_field">
 
-            <label>First Name</label>
+            <label>
+                First Name
+            </label>
 
             <input
                 type="text"
@@ -202,7 +209,9 @@ if (isset($_POST['register'])) {
 
         <div class="input_field">
 
-            <label>Last Name</label>
+            <label>
+                Last Name
+            </label>
 
             <input
                 type="text"
@@ -218,7 +227,9 @@ if (isset($_POST['register'])) {
 
         <div class="input_field">
 
-            <label>Password</label>
+            <label>
+                Password
+            </label>
 
             <input
                 type="password"
@@ -234,7 +245,9 @@ if (isset($_POST['register'])) {
 
         <div class="input_field">
 
-            <label>Confirm Password</label>
+            <label>
+                Confirm Password
+            </label>
 
             <input
                 type="password"
@@ -250,7 +263,9 @@ if (isset($_POST['register'])) {
 
         <div class="input_field">
 
-            <label>Gender</label>
+            <label>
+                Gender
+            </label>
 
             <select
                 name="gender"
@@ -278,7 +293,9 @@ if (isset($_POST['register'])) {
 
         <div class="input_field">
 
-            <label>Role</label>
+            <label>
+                Role
+            </label>
 
             <select
                 name="role"
@@ -306,7 +323,9 @@ if (isset($_POST['register'])) {
 
         <div class="input_field">
 
-            <label>Email</label>
+            <label>
+                Email
+            </label>
 
             <input
                 type="email"
@@ -322,7 +341,9 @@ if (isset($_POST['register'])) {
 
         <div class="input_field">
 
-            <label>Phone</label>
+            <label>
+                Phone
+            </label>
 
             <input
                 type="text"
@@ -338,7 +359,9 @@ if (isset($_POST['register'])) {
 
         <div class="input_field">
 
-            <label>Address</label>
+            <label>
+                Address
+            </label>
 
             <textarea
                 name="address"
@@ -361,8 +384,6 @@ if (isset($_POST['register'])) {
                     class="checkbox"
                     required
                 >
-
-                <span class="checkmarks"></span>
 
             </label>
 
@@ -387,7 +408,21 @@ if (isset($_POST['register'])) {
         </div>
 
 
+        <!-- LOGIN LINK -->
+
+        <div class="login-link">
+
+            Already have an account?
+
+            <a href="login.php">
+                Login
+            </a>
+
+        </div>
+
+
     </form>
+
 
 </div>
 

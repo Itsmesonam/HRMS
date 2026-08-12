@@ -2,21 +2,11 @@
 
 session_start();
 
-
-// ===============================
-// DATABASE CONNECTION
-// ===============================
-
-$conn = mysqli_connect("localhost", "root", "", "HRMS");
+$conn = mysqli_connect("localhost", "root", "", "hrms");
 
 if (!$conn) {
     die("Database connection failed: " . mysqli_connect_error());
 }
-
-
-// ===============================
-// LOGIN AUTHENTICATION
-// ===============================
 
 if (isset($_POST['login'])) {
 
@@ -24,8 +14,6 @@ if (isset($_POST['login'])) {
     $password = $_POST['password'];
     $role = $_POST['role'];
 
-
-    // Check role
     if (empty($role)) {
 
         echo "<script>
@@ -34,7 +22,6 @@ if (isset($_POST['login'])) {
 
     } else {
 
-        // Find user
         $query = mysqli_prepare(
             $conn,
             "SELECT id, firstname, lastname, password, role
@@ -53,33 +40,18 @@ if (isset($_POST['login'])) {
 
         $result = mysqli_stmt_get_result($query);
 
-
-        // Check user exists
         if (mysqli_num_rows($result) == 1) {
 
             $user = mysqli_fetch_assoc($result);
 
-
-            // Check password
             if (password_verify($password, $user['password'])) {
 
-                // Create session
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['firstname'] = $user['firstname'];
                 $_SESSION['lastname'] = $user['lastname'];
                 $_SESSION['role'] = $user['role'];
 
-
-                // ===============================
-                // ROLE BASED REDIRECT
-                // ===============================
-
-                if ($user['role'] == 'admin') {
-
-                    header("Location: admin_page.php");
-                    exit();
-
-                } elseif ($user['role'] == 'landlord') {
+                if ($user['role'] == 'landlord') {
 
                     header("Location: landlord.php");
                     exit();
@@ -88,7 +60,6 @@ if (isset($_POST['login'])) {
 
                     header("Location: tenant.php");
                     exit();
-
                 }
 
             } else {
@@ -105,16 +76,13 @@ if (isset($_POST['login'])) {
                   </script>";
         }
 
-
         mysqli_stmt_close($query);
     }
 }
 
 ?>
 
-
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -127,13 +95,13 @@ if (isset($_POST['login'])) {
     <title>Login - House Rental Management System</title>
 
 
-    <!-- Login CSS -->
+    <!-- LOGIN CSS -->
 
     <link rel="stylesheet"
           href="Assets/css/login_style.css">
 
 
-    <!-- Font Awesome -->
+    <!-- FONT AWESOME -->
 
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -143,6 +111,8 @@ if (isset($_POST['login'])) {
 
 <body>
 
+
+<!-- LOGIN CONTAINER -->
 
 <div class="login-container">
 
@@ -199,10 +169,6 @@ if (isset($_POST['login'])) {
 
             <option value="">
                 Select your role
-            </option>
-
-            <option value="admin">
-                Admin
             </option>
 
             <option value="landlord">
