@@ -109,4 +109,39 @@ if (isset($_POST['login'])) {
             id="role"
             required
         >
-            <option value="">Select your role</opt
+            <option value="">Select your role</option>
+            <option value="landlord">Landlord</option>
+            <option value="tenant">Tenant</option>
+        </select>
+
+        <!-- LOGIN BUTTON -->
+        <button type="submit" name="login">
+            Log In
+        </button>
+
+        <!-- SOCIAL LOGIN BUTTONS -->
+        <div class="social">
+            <!-- FACEBOOK LOGIN -->
+            <a href="facebook_login.php" class="fb">
+                <i class="fab fa-facebook-f"></i>
+                <span>Login with Facebook</span>
+            </a>
+
+            <!-- GOOGLE LOGIN -->
+            <a href="google_login.php" class="google">
+                <i class="fab fa-google"></i>
+                <span>Login with Google</span>
+            </a>
+        </div>
+
+        <!-- REGISTER LINK -->
+        <div class="register-link">
+            Don't have an account?
+            <a href="register.php">Sign Up</a>
+        </div>
+
+    </form>
+</div>
+
+</body>
+</html>
