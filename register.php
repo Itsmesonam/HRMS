@@ -124,7 +124,7 @@ if (isset($_POST['register'])) {
     <title>Registration - House Rental Management System</title>
 
     <!-- Registration CSS (your file) -->
-    <link rel="stylesheet" href="Assets/css/register_style.css">
+    <link rel="stylesheet" href="Assets/register_style.css">
 </head>
 <body>
 

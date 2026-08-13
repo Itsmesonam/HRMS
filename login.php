@@ -69,7 +69,7 @@ if (isset($_POST['login'])) {
     <title>Login - House Rental Management System</title>
 
     <!-- LOGIN CSS (external file) -->
-    <link rel="stylesheet" href="Assets/css/login_style.css">
+    <link rel="stylesheet" href="Assets/login_style.css">
 
     <!-- FONT AWESOME (for social icons) -->
     <link rel="stylesheet"
