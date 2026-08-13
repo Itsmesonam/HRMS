@@ -31,7 +31,7 @@ $lastname = $_SESSION['lastname'];
     <title>Landlord Dashboard - HRMS</title>
 
     <!-- Landlord CSS -->
-    <link rel="stylesheet" href="css/landlord_style.css">
+    <link rel="stylesheet" href="Assets/landlord_style.css">
 
 </head>
 

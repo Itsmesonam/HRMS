@@ -12,7 +12,7 @@
     <title>House Rental Management System</title>
 
     <!-- Index CSS -->
-    <link rel="stylesheet" href="Assets/css/index_style.css">
+    <link rel="stylesheet" href="Assets/index_style.css">
 
 </head>
 
