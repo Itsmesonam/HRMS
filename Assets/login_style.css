@@ -8,31 +8,19 @@
     box-sizing: border-box;
 }
 
-
 /* =========================
    BODY
 ========================= */
 
 body {
     font-family: Arial, sans-serif;
-
-    background: linear-gradient(
-        135deg,
-        #e8f5e9,
-        #c8e6c9
-    );
-
+    background: #e8f5e9; /* light green, similar to registration page */
     min-height: 100vh;
-
     display: flex;
-
     justify-content: center;
-
     align-items: center;
-
     padding: 20px;
 }
-
 
 /* =========================
    LOGIN CONTAINER
@@ -40,20 +28,13 @@ body {
 
 .login-container {
     width: 400px;
-
     max-width: 100%;
-
     background: white;
-
     padding: 35px 30px;
-
     border-radius: 12px;
-
     border: 1px solid #d7e8d9;
-
     box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
 }
-
 
 /* =========================
    TITLE
@@ -61,14 +42,10 @@ body {
 
 .login-container h3 {
     text-align: center;
-
     margin-bottom: 25px;
-
     font-size: 28px;
-
     color: #1b5e20;
 }
-
 
 /* =========================
    LABEL
@@ -76,16 +53,11 @@ body {
 
 .login-container label {
     display: block;
-
     margin-top: 15px;
-
     margin-bottom: 6px;
-
     font-weight: bold;
-
     color: #333;
 }
-
 
 /* =========================
    INPUT + SELECT
@@ -94,30 +66,20 @@ body {
 .login-container input,
 .login-container select {
     width: 100%;
-
     height: 45px;
-
     padding: 0 12px;
-
     border: 1px solid #b8ccb9;
-
     border-radius: 6px;
-
     background: #f5faf6;
-
     font-size: 15px;
-
     outline: none;
 }
-
 
 .login-container input:focus,
 .login-container select:focus {
     border-color: #4caf50;
-
     background: white;
 }
-
 
 /* =========================
    LOGIN BUTTON
@@ -125,33 +87,21 @@ body {
 
 .login-container button {
     width: 100%;
-
     padding: 13px;
-
     margin-top: 22px;
-
     border: none;
-
     border-radius: 6px;
-
     background: #2e7d32;
-
     color: white;
-
     font-size: 16px;
-
     font-weight: bold;
-
     cursor: pointer;
-
     transition: 0.3s;
 }
-
 
 .login-container button:hover {
     background: #1b5e20;
 }
-
 
 /* =========================
    SOCIAL LOGIN
@@ -159,52 +109,36 @@ body {
 
 .social {
     display: flex;
-
     gap: 10px;
-
     margin-top: 20px;
 }
-
 
 .fb,
 .google {
     flex: 1;
-
     padding: 11px;
-
     border-radius: 6px;
-
     text-align: center;
-
     cursor: pointer;
-
     font-size: 14px;
-
     font-weight: bold;
 }
 
-
 .fb {
     background: #1877f2;
-
     color: white;
 }
 
-
 .google {
     background: #f1f1f1;
-
     color: #333;
-
     border: 1px solid #ddd;
 }
-
 
 .fb i,
 .google i {
     margin-right: 7px;
 }
-
 
 /* =========================
    REGISTER LINK
@@ -212,41 +146,29 @@ body {
 
 .register-link {
     text-align: center;
-
     margin-top: 20px;
-
     font-size: 14px;
-
     color: #555;
 }
 
-
 .register-link a {
     color: #2e7d32;
-
     font-weight: bold;
-
     text-decoration: none;
 }
 
-
 .register-link a:hover {
     color: #1b5e20;
-
     text-decoration: underline;
 }
-
 
 /* =========================
    MOBILE
 ========================= */
 
 @media (max-width: 500px) {
-
     .login-container {
         width: 100%;
-
         padding: 30px 22px;
     }
-
 }
