@@ -88,27 +88,29 @@ nav ul li a:hover {
    HERO
 ========================= */
 
+/* =========================
+   HERO BACKGROUND
+========================= */
+
 .hero {
-    height: 100vh;
     min-height: 650px;
 
-    background-image: url("../images/hero.jpg");
+    background-image:
+        linear-gradient(
+            rgba(0, 20, 50, 0.45),
+            rgba(0, 20, 50, 0.45)
+        ),
+        url("../images/building.jpg");
 
     background-size: cover;
-
     background-position: center;
-
     background-repeat: no-repeat;
 
-    position: relative;
-
     display: flex;
-
     justify-content: center;
-
     align-items: center;
 
-    text-align: center;
+    position: relative;
 }
 
 
