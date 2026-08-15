@@ -15,7 +15,9 @@
 
 body {
     font-family: Arial, sans-serif;
+
     color: #333;
+
     background: #f5faf6;
 }
 
@@ -28,15 +30,18 @@ nav {
     width: 100%;
     height: 70px;
 
-    background: #2e7d32;
+    background: rgba(27, 94, 32, 0.95);
 
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 
     padding: 0 50px;
 
     position: absolute;
+
     top: 0;
     left: 0;
 
@@ -44,16 +49,22 @@ nav {
 }
 
 
-/* LOGO */
+/* =========================
+   LOGO
+========================= */
 
 .logo {
     color: white;
+
     font-size: 25px;
+
     font-weight: bold;
 }
 
 
-/* NAVIGATION LIST */
+/* =========================
+   NAVIGATION LIST
+========================= */
 
 nav ul {
     display: flex;
@@ -64,7 +75,9 @@ nav ul {
 }
 
 
-/* NAVIGATION LINKS */
+/* =========================
+   NAVIGATION LINKS
+========================= */
 
 nav ul li a {
     color: white;
@@ -88,46 +101,40 @@ nav ul li a:hover {
    HERO
 ========================= */
 
-/* =========================
-   HERO BACKGROUND
-========================= */
-
 .hero {
     min-height: 650px;
 
     background-image:
         linear-gradient(
-            rgba(0, 20, 50, 0.45),
-            rgba(0, 20, 50, 0.45)
+            rgba(0, 20, 50, 0.35),
+            rgba(0, 20, 50, 0.35)
         ),
         url("../images/building.jpg");
 
     background-size: cover;
+
     background-position: center;
+
     background-repeat: no-repeat;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
     position: relative;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
 }
 
 
 /* =========================
-   HERO OVERLAY
+   HERO CONTENT
 ========================= */
 
 .overlay {
     width: 100%;
-    height: 100%;
 
-    position: absolute;
-
-    top: 0;
-    left: 0;
-
-    background: rgba(0, 0, 0, 0.45);
+    min-height: 650px;
 
     display: flex;
 
@@ -136,6 +143,8 @@ nav ul li a:hover {
     justify-content: center;
 
     align-items: center;
+
+    text-align: center;
 
     padding: 20px;
 }
@@ -153,6 +162,9 @@ nav ul li a:hover {
     font-weight: 700;
 
     margin-bottom: 15px;
+
+    text-shadow:
+        2px 2px 8px rgba(0, 0, 0, 0.6);
 }
 
 
@@ -166,6 +178,9 @@ nav ul li a:hover {
     font-size: 20px;
 
     margin-bottom: 30px;
+
+    text-shadow:
+        1px 1px 5px rgba(0, 0, 0, 0.6);
 }
 
 
@@ -184,11 +199,14 @@ nav ul li a:hover {
 
     border-radius: 8px;
 
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.25);
 }
 
 
-/* SEARCH INPUT */
+/* =========================
+   SEARCH INPUT
+========================= */
 
 .search-box input,
 .search-box select {
@@ -205,10 +223,26 @@ nav ul li a:hover {
     font-size: 14px;
 
     outline: none;
+
+    background: white;
+
+    color: #333;
 }
 
 
-/* SEARCH BUTTON */
+/* =========================
+   SEARCH INPUT FOCUS
+========================= */
+
+.search-box input:focus,
+.search-box select:focus {
+    border-color: #4caf50;
+}
+
+
+/* =========================
+   SEARCH BUTTON
+========================= */
 
 .search-box button {
     height: 45px;
@@ -255,6 +289,8 @@ nav ul li a:hover {
     color: #1b5e20;
 
     font-size: 32px;
+
+    margin-bottom: 10px;
 }
 
 
@@ -271,7 +307,8 @@ nav ul li a:hover {
 
     display: grid;
 
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns:
+        repeat(3, 1fr);
 
     gap: 25px;
 }
@@ -290,7 +327,8 @@ nav ul li a:hover {
 
     border: 1px solid #d7e8d9;
 
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.10);
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.10);
 
     text-align: center;
 
@@ -300,10 +338,15 @@ nav ul li a:hover {
 }
 
 
+/* =========================
+   CARD HOVER
+========================= */
+
 .card:hover {
     transform: translateY(-5px);
 
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.15);
 }
 
 
@@ -411,16 +454,25 @@ footer {
         padding: 0 25px;
     }
 
+
     nav ul {
         gap: 15px;
     }
+
 
     .overlay h1 {
         font-size: 38px;
     }
 
+
+    .overlay p {
+        font-size: 18px;
+    }
+
+
     .container {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:
+            repeat(2, 1fr);
     }
 }
 
@@ -441,6 +493,7 @@ footer {
         gap: 12px;
     }
 
+
     nav ul {
         flex-wrap: wrap;
 
@@ -449,17 +502,28 @@ footer {
         gap: 12px;
     }
 
+
     .hero {
         min-height: 700px;
     }
+
+
+    .overlay {
+        min-height: 700px;
+    }
+
 
     .overlay h1 {
         font-size: 30px;
     }
 
+
     .overlay p {
         font-size: 16px;
+
+        line-height: 1.5;
     }
+
 
     .search-box {
         width: 90%;
@@ -467,11 +531,13 @@ footer {
         flex-direction: column;
     }
 
+
     .search-box input,
     .search-box select,
     .search-box button {
         width: 100%;
     }
+
 
     .container {
         grid-template-columns: 1fr;
