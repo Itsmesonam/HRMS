@@ -94,7 +94,7 @@ if (isset($_POST['admin_login'])) {
     <title>Admin Login - HRMS</title>
 
     <link rel="stylesheet"
-          href="Assets/css/admin_login_style.css">
+          href="Assets/css/admin_style.css">
 
 </head>
 
