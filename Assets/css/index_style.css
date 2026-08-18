@@ -1,6 +1,4 @@
-/* =========================
-   RESET
-========================= */
+/* Reset */
 
 * {
     margin: 0;
@@ -9,9 +7,7 @@
 }
 
 
-/* =========================
-   BODY
-========================= */
+/* body */
 
 body {
     font-family: Arial, sans-serif;
@@ -22,9 +18,7 @@ body {
 }
 
 
-/* =========================
-   NAVIGATION
-========================= */
+/*navigation */
 
 nav {
     width: 100%;
@@ -49,9 +43,7 @@ nav {
 }
 
 
-/* =========================
-   LOGO
-========================= */
+/* LOGO */
 
 .logo {
     color: white;
@@ -62,9 +54,7 @@ nav {
 }
 
 
-/* =========================
-   NAVIGATION LIST
-========================= */
+/*navigation list*/
 
 nav ul {
     display: flex;
@@ -75,9 +65,7 @@ nav ul {
 }
 
 
-/* =========================
-   NAVIGATION LINKS
-========================= */
+/* navigation links */
 
 nav ul li a {
     color: white;
@@ -97,9 +85,7 @@ nav ul li a:hover {
 }
 
 
-/* =========================
-   HERO
-========================= */
+/* HERO */
 
 .hero {
     min-height: 650px;
@@ -127,9 +113,7 @@ nav ul li a:hover {
 }
 
 
-/* =========================
-   HERO CONTENT
-========================= */
+/* hero content */
 
 .overlay {
     width: 100%;
@@ -150,9 +134,7 @@ nav ul li a:hover {
 }
 
 
-/* =========================
-   HERO TITLE
-========================= */
+/* hero title */
 
 .overlay h1 {
     color: white;
@@ -168,9 +150,7 @@ nav ul li a:hover {
 }
 
 
-/* =========================
-   HERO TEXT
-========================= */
+/* hero text */
 
 .overlay p {
     color: white;
@@ -184,9 +164,7 @@ nav ul li a:hover {
 }
 
 
-/* =========================
-   SEARCH BOX
-========================= */
+/* search box */
 
 .search-box {
     display: flex;
@@ -204,9 +182,7 @@ nav ul li a:hover {
 }
 
 
-/* =========================
-   SEARCH INPUT
-========================= */
+/* search inputs */
 
 .search-box input,
 .search-box select {
@@ -230,9 +206,7 @@ nav ul li a:hover {
 }
 
 
-/* =========================
-   SEARCH INPUT FOCUS
-========================= */
+/* search inputs focus */
 
 .search-box input:focus,
 .search-box select:focus {
@@ -240,9 +214,7 @@ nav ul li a:hover {
 }
 
 
-/* =========================
-   SEARCH BUTTON
-========================= */
+/* search button */
 
 .search-box button {
     height: 45px;
@@ -272,9 +244,7 @@ nav ul li a:hover {
 }
 
 
-/* =========================
-   FEATURED SERVICES
-========================= */
+/* featured focus */
 
 .welcome {
     padding: 60px 20px 30px;
@@ -294,9 +264,7 @@ nav ul li a:hover {
 }
 
 
-/* =========================
-   CARDS CONTAINER
-========================= */
+/* cards container */
 
 .container {
     width: 90%;
@@ -314,9 +282,7 @@ nav ul li a:hover {
 }
 
 
-/* =========================
-   CARD
-========================= */
+/* card */
 
 .card {
     background: white;
@@ -338,9 +304,7 @@ nav ul li a:hover {
 }
 
 
-/* =========================
-   CARD HOVER
-========================= */
+/* card hover */
 
 .card:hover {
     transform: translateY(-5px);
@@ -350,9 +314,7 @@ nav ul li a:hover {
 }
 
 
-/* =========================
-   CARD IMAGE
-========================= */
+/* card image */
 
 .card img {
     width: 100%;
@@ -365,9 +327,7 @@ nav ul li a:hover {
 }
 
 
-/* =========================
-   CARD TITLE
-========================= */
+/* card title */
 
 .card h3 {
     color: #2e7d32;
@@ -378,9 +338,7 @@ nav ul li a:hover {
 }
 
 
-/* =========================
-   CARD TEXT
-========================= */
+/* card text */
 
 .card p {
     color: #666;
@@ -397,9 +355,7 @@ nav ul li a:hover {
 }
 
 
-/* =========================
-   CARD BUTTON
-========================= */
+/* card button */
 
 .card .btn {
     display: inline-block;
@@ -427,9 +383,7 @@ nav ul li a:hover {
 }
 
 
-/* =========================
-   FOOTER
-========================= */
+/* footer */
 
 footer {
     background: #1b5e20;
@@ -444,9 +398,7 @@ footer {
 }
 
 
-/* =========================
-   TABLET
-========================= */
+/* tablet */
 
 @media (max-width: 900px) {
 
@@ -477,9 +429,7 @@ footer {
 }
 
 
-/* =========================
-   MOBILE
-========================= */
+/* mobile */
 
 @media (max-width: 600px) {
 

@@ -2,9 +2,7 @@
 
 session_start();
 
-// ===============================
 // DATABASE CONNECTION
-// ===============================
 
 $conn = mysqli_connect("localhost", "root", "", "hrms");
 
@@ -12,10 +10,7 @@ if (!$conn) {
     die("Database connection failed: " . mysqli_connect_error());
 }
 
-
-// ===============================
 // LOGIN AUTHENTICATION
-// ===============================
 
 if (isset($_POST['login'])) {
 
@@ -32,10 +27,9 @@ if (isset($_POST['login'])) {
 
     } else {
 
-        // ===============================
+        
         // FIND USER
-        // ===============================
-
+        
         $query = mysqli_prepare(
             $conn,
             "SELECT id, firstname, lastname, password, role
@@ -55,19 +49,17 @@ if (isset($_POST['login'])) {
         $result = mysqli_stmt_get_result($query);
 
 
-        // ===============================
+        
         // CHECK USER
-        // ===============================
-
+       
         if (mysqli_num_rows($result) == 1) {
 
             $user = mysqli_fetch_assoc($result);
 
 
-            // ===============================
+            
             // CHECK PASSWORD
-            // ===============================
-
+            
             if (password_verify($password, $user['password'])) {
 
                 // Create session
@@ -77,9 +69,9 @@ if (isset($_POST['login'])) {
                 $_SESSION['role'] = $user['role'];
 
 
-                // ===============================
+               
                 // ROLE BASED REDIRECT
-                // ===============================
+                
 
                 if ($user['role'] == 'landlord') {
 
@@ -144,25 +136,19 @@ if (isset($_POST['login'])) {
 <body>
 
 
-<!-- ===============================
-     LOGIN CONTAINER
-================================ -->
+<!-- LOGIN CONTAINER -->
 
 <div class="login-container">
 
 
-    <!-- ===============================
-         TITLE
-    ================================ -->
+    <!-- title -->
 
     <h3>
         Login Here
     </h3>
 
 
-    <!-- ===============================
-         LOGIN FORM
-    ================================ -->
+    <!-- LOGIN FORM -->
 
     <form action="" method="POST">
 
@@ -234,9 +220,7 @@ if (isset($_POST['login'])) {
         </button>
 
 
-        <!-- ===============================
-             SOCIAL LOGIN
-        ================================ -->
+        <!-- SOCIAL LOGIN -->
 
         <div class="social">
 
@@ -270,9 +254,7 @@ if (isset($_POST['login'])) {
         </div>
 
 
-        <!-- ===============================
-             REGISTER LINK
-        ================================ -->
+        <!--   REGISTER LINK -->
 
         <div class="register-link">
 
