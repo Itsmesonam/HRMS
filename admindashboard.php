@@ -57,7 +57,7 @@ $totalLandlords = mysqli_fetch_assoc($landlordQuery)['total'];
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
 
     <!-- Admin Dashboard CSS -->
-    <link rel="stylesheet" href="/HRMS/Assets/admindashboard.css">
+    <link rel="stylesheet" href="/HRMS/Assets/css/admindashboard.css">
 </head>
 
 <body>
