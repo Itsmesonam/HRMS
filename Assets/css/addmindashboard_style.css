@@ -16,7 +16,10 @@ body {
     font-family: Arial, sans-serif;
     background: #f5f7fb;
     color: #222;
+
+    /* Keep dashboard in landscape/wide layout */
     min-width: 1200px;
+
     overflow-x: auto;
 }
 
@@ -34,19 +37,25 @@ aside {
     height: 100vh;
     background: #ffffff;
     border-right: 1px solid #e5e7eb;
+
     position: fixed;
     left: 0;
     top: 0;
+
     z-index: 100;
+
     overflow-y: auto;
 }
 
 .top {
     height: 75px;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     padding: 0 22px;
+
     border-bottom: 1px solid #eee;
 }
 
@@ -67,12 +76,19 @@ aside {
 .sidebar a {
     display: flex;
     align-items: center;
+
     gap: 14px;
+
     text-decoration: none;
+
     color: #555;
+
     padding: 12px 14px;
+
     margin-bottom: 5px;
+
     border-radius: 10px;
+
     transition: 0.3s;
 }
 
@@ -101,8 +117,11 @@ aside {
 
 main {
     margin-left: 240px;
+
     width: calc(100% - 240px);
+
     min-height: 100vh;
+
     padding: 25px 30px;
 }
 
@@ -111,9 +130,12 @@ main {
 
 .top-header {
     width: 100%;
+
     display: flex;
+
     justify-content: space-between;
     align-items: center;
+
     margin-bottom: 22px;
 }
 
@@ -131,6 +153,7 @@ main {
 .admin-profile {
     display: flex;
     align-items: center;
+
     gap: 13px;
 }
 
@@ -159,12 +182,14 @@ main {
 
 .stats {
     width: 100%;
+
     display: grid;
 
-    /* 6 cards in one horizontal row */
+    /* ALWAYS keep 6 cards in one row */
     grid-template-columns: repeat(6, minmax(0, 1fr));
 
     gap: 16px;
+
     margin-bottom: 20px;
 }
 
@@ -173,11 +198,20 @@ main {
 
 .card {
     background: #ffffff;
+
     padding: 18px;
+
     border-radius: 15px;
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+
+    box-shadow:
+        0 3px 15px rgba(0, 0, 0, 0.05);
+
     min-height: 135px;
+
     transition: 0.3s;
+
+    /* Prevent cards from becoming too narrow */
+    min-width: 0;
 }
 
 .card:hover {
@@ -186,24 +220,31 @@ main {
 
 .card > span {
     display: block;
+
     font-size: 27px;
+
     color: #2e9d63;
+
     margin-bottom: 12px;
 }
 
 .card h3 {
     font-size: 13px;
+
     color: #777;
+
     margin-bottom: 7px;
 }
 
 .card h2 {
     font-size: 21px;
+
     margin-bottom: 6px;
 }
 
 .card p {
     color: #2e9d63;
+
     font-size: 11px;
 }
 
@@ -212,12 +253,14 @@ main {
 
 .dashboard-content {
     width: 100%;
+
     display: grid;
 
-    /* Wide revenue + smaller booking panel */
+    /* Wide revenue + smaller booking */
     grid-template-columns: 2.2fr 1fr;
 
     gap: 20px;
+
     margin-bottom: 20px;
 }
 
@@ -226,15 +269,23 @@ main {
 
 .panel {
     background: #ffffff;
+
     border-radius: 15px;
+
     padding: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+
+    box-shadow:
+        0 2px 10px rgba(0, 0, 0, 0.05);
+
+    min-width: 0;
 }
 
 .panel-header {
     display: flex;
+
     justify-content: space-between;
     align-items: center;
+
     margin-bottom: 18px;
 }
 
@@ -245,9 +296,13 @@ main {
 
 select {
     padding: 7px 11px;
+
     border: 1px solid #ddd;
+
     border-radius: 8px;
+
     background: #ffffff;
+
     cursor: pointer;
 }
 
@@ -256,9 +311,12 @@ select {
 
 .chart-placeholder {
     height: 210px;
+
     display: flex;
+
     align-items: center;
     justify-content: center;
+
     color: #aaa;
 }
 
@@ -268,7 +326,9 @@ select {
 .circle-chart {
     width: 175px;
     height: 175px;
+
     border-radius: 50%;
+
     margin: 20px auto;
 
     background: conic-gradient(
@@ -279,6 +339,7 @@ select {
     );
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 }
@@ -286,20 +347,26 @@ select {
 .circle-chart div {
     width: 110px;
     height: 110px;
+
     border-radius: 50%;
+
     background: #ffffff;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
+
     flex-direction: column;
 
     font-size: 23px;
+
     font-weight: bold;
 }
 
 .circle-chart small {
     font-size: 11px;
+
     color: #888;
 }
 
@@ -308,44 +375,66 @@ select {
 
 .tables {
     width: 100%;
+
     display: grid;
+
     grid-template-columns: 1fr 1fr;
+
     gap: 20px;
+
     margin-bottom: 20px;
 }
 
 button {
     background: #ffffff;
+
     border: 1px solid #2e9d63;
+
     color: #2e9d63;
+
     padding: 6px 12px;
+
     border-radius: 7px;
+
     cursor: pointer;
+
     transition: 0.3s;
+
     font-size: 12px;
 }
 
 button:hover {
     background: #2e9d63;
+
     color: #ffffff;
 }
 
 table {
     width: 100%;
+
     border-collapse: collapse;
+
+    /* Prevent table from destroying layout */
+    table-layout: auto;
 }
 
 th {
     text-align: left;
+
     font-size: 11px;
+
     color: #888;
+
     padding: 10px 7px;
+
     border-bottom: 1px solid #eee;
 }
 
 td {
     padding: 11px 7px;
+
     font-size: 12px;
+
     border-bottom: 1px solid #f1f1f1;
 }
 
@@ -354,18 +443,23 @@ td {
 
 .status {
     padding: 4px 9px;
+
     border-radius: 20px;
+
     font-size: 10px;
+
     white-space: nowrap;
 }
 
 .approved {
     background: #e5f7ec;
+
     color: #249653;
 }
 
 .pending {
     background: #fff3d9;
+
     color: #d68b00;
 }
 
@@ -374,20 +468,28 @@ td {
 
 .bottom-section {
     width: 100%;
+
     display: grid;
+
     grid-template-columns: repeat(3, 1fr);
+
     gap: 20px;
+
     margin-bottom: 20px;
 }
 
 .bottom-section p {
     padding: 10px 0;
+
     border-bottom: 1px solid #eee;
+
     font-size: 13px;
 }
 
 
-/*-- Large Landscape Screen */
+/*==================================================
+  LARGE LANDSCAPE SCREEN
+==================================================*/
 
 @media (min-width: 1600px) {
 
@@ -396,7 +498,9 @@ td {
     }
 
     .stats {
-        grid-template-columns: repeat(6, minmax(0, 1fr));
+        grid-template-columns:
+            repeat(6, minmax(0, 1fr));
+
         gap: 18px;
     }
 
@@ -410,7 +514,16 @@ td {
 }
 
 
-/*-- Medium Landscape Screen */
+/*==================================================
+  MEDIUM LANDSCAPE SCREEN
+==================================================*/
+
+/*
+   IMPORTANT:
+   We DO NOT change the statistics cards to 3 columns.
+   They remain 6 columns so the dashboard stays
+   in landscape/wide form.
+*/
 
 @media (max-width: 1399px) {
 
@@ -418,19 +531,88 @@ td {
         min-width: 1200px;
     }
 
+    main {
+        min-width: 960px;
+    }
+
+    /* Keep 6 cards in one row */
     .stats {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns:
+            repeat(6, minmax(0, 1fr));
+
+        gap: 12px;
     }
 
+    .card {
+        padding: 14px;
+        min-height: 130px;
+    }
+
+    .card > span {
+        font-size: 24px;
+    }
+
+    .card h3 {
+        font-size: 12px;
+    }
+
+    .card h2 {
+        font-size: 18px;
+    }
+
+    .card p {
+        font-size: 10px;
+    }
+
+    /* Keep revenue and booking side-by-side */
     .dashboard-content {
-        grid-template-columns: 1.7fr 1fr;
+        grid-template-columns: 2.2fr 1fr;
     }
 
+    /* Keep tables side-by-side */
     .tables {
         grid-template-columns: 1fr 1fr;
     }
 
+    /* Keep bottom sections side-by-side */
     .bottom-section {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+}
+
+
+/*==================================================
+  SMALLER DESKTOP / LAPTOP
+==================================================*/
+
+@media (max-width: 1250px) {
+
+    body {
+        min-width: 1200px;
+    }
+
+    main {
+        padding: 20px;
+    }
+
+    .stats {
+        gap: 10px;
+    }
+
+    .card {
+        padding: 12px;
+    }
+
+    .card h2 {
+        font-size: 17px;
+    }
+
+    .card h3 {
+        font-size: 11px;
+    }
+
+    .card p {
+        font-size: 9px;
     }
 }
