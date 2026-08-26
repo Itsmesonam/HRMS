@@ -199,13 +199,13 @@ $totalLandlords = mysqli_fetch_assoc($landlordQuery)['total'];
 
             <a href="logout.php" class="logout">
 
-                <span class="material-symbols-outlined">
-                    logout
-                </span>
+             <span class="material-symbols-outlined">
+             logout
+        </span>
 
-                <h3>Logout</h3>
+        <h3>Logout</h3>
 
-            </a>
+    </a>
 
         </div>
 
