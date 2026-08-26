@@ -169,8 +169,9 @@ body {
 
     line-height: normal;
 
-    appearance: auto;
+    
     -webkit-appearance: auto;
+    appearance: auto;
 }
 
 
