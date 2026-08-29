@@ -1,4 +1,6 @@
-/* RESET */
+/* =========================
+   RESET
+========================= */
 
 * {
     margin: 0;
@@ -7,15 +9,26 @@
 }
 
 
-/* BODY */
+/* =========================
+   HTML / BODY
+========================= */
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+
+/* =========================
+   BODY
+========================= */
 
 body {
     min-height: 100vh;
 
     display: flex;
-
     justify-content: center;
-
     align-items: center;
 
     padding: 20px;
@@ -30,14 +43,15 @@ body {
 }
 
 
-/* ADMIN LOGIN BOX */
+/* =========================
+   ADMIN LOGIN BOX
+========================= */
 
 .admin-login-container {
     width: 400px;
-
     max-width: 100%;
 
-    background: white;
+    background: #ffffff;
 
     padding: 40px 35px;
 
@@ -52,7 +66,9 @@ body {
 }
 
 
-/* TITLE */
+/* =========================
+   TITLE
+========================= */
 
 .admin-login-container h2 {
     color: #1b5e20;
@@ -63,10 +79,12 @@ body {
 }
 
 
-/* SUBTITLE */
+/* =========================
+   SUBTITLE
+========================= */
 
 .subtitle {
-    color: #666;
+    color: #666666;
 
     font-size: 14px;
 
@@ -74,10 +92,14 @@ body {
 }
 
 
-/* LABEL */
+/* =========================
+   LABEL
+========================= */
 
 .admin-login-container label {
     display: block;
+
+    width: 100%;
 
     text-align: left;
 
@@ -85,7 +107,7 @@ body {
 
     margin-bottom: 6px;
 
-    color: #333;
+    color: #333333;
 
     font-weight: bold;
 
@@ -93,42 +115,77 @@ body {
 }
 
 
-/* INPUT */
+/* =========================
+   INPUT
+========================= */
 
-.admin-login-container input {
-    width: 100%;
+.admin-login-container input[type="email"],
+.admin-login-container input[type="password"] {
 
-    height: 45px;
+    display: block;
 
-    padding: 0 12px;
+    width: 100% !important;
 
-    border: 1px solid #b8ccb9;
+    height: 45px !important;
 
-    border-radius: 6px;
+    min-width: 0 !important;
 
-    background: #f5faf6;
+    max-width: 100% !important;
 
-    font-size: 14px;
+    padding: 0 12px !important;
+
+    margin: 0 !important;
+
+    border: 1px solid #b8ccb9 !important;
+
+    border-radius: 6px !important;
+
+    background: #f5faf6 !important;
+
+    color: #333333;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 15px;
+
+    line-height: normal;
 
     outline: none;
+
+    box-sizing: border-box !important;
 }
 
 
-.admin-login-container input:focus {
-    border-color: #4caf50;
+/* =========================
+   INPUT FOCUS
+========================= */
 
-    background: white;
+.admin-login-container input[type="email"]:focus,
+.admin-login-container input[type="password"]:focus {
+
+    border-color: #4caf50 !important;
+
+    background: #ffffff !important;
+
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.08);
 }
 
 
-/* LOGIN BUTTON */
+/* =========================
+   LOGIN BUTTON
+========================= */
 
 .admin-login-container button {
-    width: 100%;
 
-    padding: 13px;
+    display: block;
+
+    width: 100% !important;
+
+    height: 45px !important;
 
     margin-top: 25px;
+
+    padding: 0 12px;
 
     border: none;
 
@@ -136,7 +193,9 @@ body {
 
     background: #2e7d32;
 
-    color: white;
+    color: #ffffff;
+
+    font-family: Arial, sans-serif;
 
     font-size: 16px;
 
@@ -144,18 +203,30 @@ body {
 
     cursor: pointer;
 
-    transition: 0.3s;
+    transition: background-color 0.3s ease;
+
+    box-sizing: border-box !important;
 }
 
 
+/* =========================
+   BUTTON HOVER
+========================= */
+
 .admin-login-container button:hover {
+
     background: #1b5e20;
 }
 
 
-/* ERROR */
+/* =========================
+   ERROR MESSAGE
+========================= */
 
 .error {
+
+    width: 100%;
+
     background: #ffebee;
 
     color: #c62828;
@@ -169,12 +240,17 @@ body {
     font-size: 14px;
 
     margin-bottom: 15px;
+
+    text-align: center;
 }
 
 
-/* BACK HOME */
+/* =========================
+   BACK HOME
+========================= */
 
 .back-home {
+
     display: inline-block;
 
     margin-top: 20px;
@@ -190,16 +266,33 @@ body {
 
 
 .back-home:hover {
+
+    color: #1b5e20;
+
     text-decoration: underline;
 }
 
 
-/* MOBILE */
+/* =========================
+   MOBILE
+========================= */
 
 @media (max-width: 500px) {
 
+    body {
+        padding: 15px;
+    }
+
     .admin-login-container {
+
+        width: 100%;
+
         padding: 30px 22px;
+    }
+
+    .admin-login-container h2 {
+
+        font-size: 26px;
     }
 
 }

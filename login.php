@@ -224,19 +224,7 @@ if (isset($_POST['login'])) {
         rel="stylesheet"
         href="Assets/css/login_style.css"
     >
-
-
-    <!-- =====================================
-         FONT AWESOME
-    ====================================== -->
-
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    >
-
 </head>
-
 
 <body>
 
@@ -348,45 +336,6 @@ if (isset($_POST['login'])) {
         >
             Log In
         </button>
-
-
-
-        <!-- =================================
-             SOCIAL LOGIN
-        ================================== -->
-
-        <div class="social">
-
-
-            <!-- Facebook -->
-
-            <div class="fb">
-
-                <i class="fab fa-facebook-f"></i>
-
-                <span>
-                    Facebook
-                </span>
-
-            </div>
-
-
-            <!-- Google -->
-
-            <div class="google">
-
-                <i class="fab fa-google"></i>
-
-                <span>
-                    Google
-                </span>
-
-            </div>
-
-
-        </div>
-
-
 
         <!-- =================================
              REGISTER LINK
