@@ -20,7 +20,9 @@
 <body>
 
 
-<!-- navigation -->
+<!-- =========================
+     NAVIGATION
+========================= -->
 
 <nav>
 
@@ -31,31 +33,68 @@
     <ul>
 
         <li>
-            <a href="index.php">Home</a>
+            <a href="index.php">
+                Home
+            </a>
         </li>
 
-        <li>
-            <a href="properties.php">Properties</a>
-        </li>
 
         <li>
-            <a href="landlord.php">Landlords</a>
+            <a href="properties.php">
+                Properties
+            </a>
         </li>
 
-        <li>
-            <a href="tenant.php">Tenants</a>
-        </li>
+
+        <!-- LANDLORDS → LOGIN -->
 
         <li>
-            <a href="booking.php">Booking</a>
+            <a href="login.php">
+                Landlords
+            </a>
         </li>
 
-        <li>
-            <a href="login.php">Login</a>
-        </li>
+
+        <!-- TENANTS → LOGIN -->
 
         <li>
-            <a href="register.php">Register</a>
+            <a href="login.php">
+                Tenants
+            </a>
+        </li>
+
+
+        <li>
+            <a href="booking.php">
+                Booking
+            </a>
+        </li>
+
+
+        <!-- USER LOGIN -->
+
+        <li>
+            <a href="login.php">
+                Login
+            </a>
+        </li>
+
+
+        <!-- USER REGISTER -->
+
+        <li>
+            <a href="register.php">
+                Register
+            </a>
+        </li>
+
+
+        <!-- ADMIN LOGIN -->
+
+        <li>
+            <a href="adminlogin.php">
+                Admin
+            </a>
         </li>
 
     </ul>
@@ -64,7 +103,9 @@
 
 
 
-<!-- HERO section -->
+<!-- =========================
+     HERO SECTION
+========================= -->
 
 <section class="hero">
 
@@ -127,7 +168,9 @@
 
 
 
-<!-- WELCOME -->
+<!-- =========================
+     WELCOME / SERVICES
+========================= -->
 
 <section class="welcome">
 
@@ -139,12 +182,16 @@
 
 
 
-<!-- cards -->
+<!-- =========================
+     CARDS
+========================= -->
 
 <div class="container">
 
 
-    <!-- PROPERTIES -->
+    <!-- =====================
+         PROPERTIES
+    ====================== -->
 
     <div class="card">
 
@@ -172,7 +219,9 @@
 
 
 
-    <!-- LANDLORDS -->
+    <!-- =====================
+         LANDLORDS
+    ====================== -->
 
     <div class="card">
 
@@ -189,18 +238,22 @@
             Manage landlord information and properties.
         </p>
 
+        <!-- LANDLORD → LOGIN -->
+
         <a
-            href="landlord.php"
+            href="login.php"
             class="btn"
         >
-            See Details
+            Landlord Login
         </a>
 
     </div>
 
 
 
-    <!-- TENANTS -->
+    <!-- =====================
+         TENANTS
+    ====================== -->
 
     <div class="card">
 
@@ -217,18 +270,22 @@
             Manage tenant details and rental records.
         </p>
 
+        <!-- TENANT → LOGIN -->
+
         <a
-            href="tenant.php"
+            href="login.php"
             class="btn"
         >
-            See Details
+            Tenant Login
         </a>
 
     </div>
 
 
 
-    <!-- BOOKING -->
+    <!-- =====================
+         BOOKING
+    ====================== -->
 
     <div class="card">
 
@@ -256,7 +313,9 @@
 
 
 
-    <!-- ADMIN -->
+    <!-- =====================
+         ADMIN
+    ====================== -->
 
     <div class="card">
 
@@ -273,20 +332,25 @@
             Control users, houses, and system reports.
         </p>
 
+        <!-- ADMIN → ADMIN LOGIN -->
+
         <a
-            href="admin_page.php"
+            href="adminlogin.php"
             class="btn"
         >
-            See Details
+            Admin Login
         </a>
 
     </div>
+
 
 </div>
 
 
 
-<!-- FOOTER -->
+<!-- =========================
+     FOOTER
+========================= -->
 
 <footer>
 
