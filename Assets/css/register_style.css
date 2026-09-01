@@ -7,7 +7,7 @@
 }
 
 
-/*  BODY / BACKGROUND */
+/*  BODY / BACKGROUND --*/
 
 html,
 body {
@@ -30,7 +30,7 @@ body {
 }
 
 
-/* REGISTER CONTAINER */
+/*-- REGISTER CONTAINER-- */
 
 .container {
     width: 400px;
@@ -50,7 +50,7 @@ body {
 }
 
 
-/*  TITLE */
+/* -- TITLE --*/
 
 .container .title {
     width: 100%;
@@ -67,21 +67,21 @@ body {
 }
 
 
-/* FORM */
+/* --FORM --*/
 
 form {
     width: 100%;
 }
 
 
-/* INPUT FIELD */
+/* --INPUT FIELD-- */
 
 .input_field {
     margin-bottom: 16px;
 }
 
 
-/* LABEL */
+/*-- LABEL-- */
 
 .input_field > label {
     display: block;
@@ -96,7 +96,7 @@ form {
 }
 
 
-/* INPUT FIELDS */
+/* --INPUT FIELDS-- */
 
 .input_field input[type="text"],
 .input_field input[type="email"],
@@ -122,7 +122,7 @@ form {
 }
 
 
-/* INPUT FOCUS */
+/* --INPUT FOCUS-- */
 
 .input_field input[type="text"]:focus,
 .input_field input[type="email"]:focus,
@@ -134,7 +134,7 @@ form {
 }
 
 
-/* SELECT */
+/* --SELECT-- */
 
 .input_field select {
 
@@ -160,7 +160,7 @@ form {
 }
 
 
-/* SELECT FOCUS */
+/* --SELECT FOCUS-- */
 
 .input_field select:focus {
 
@@ -170,7 +170,7 @@ form {
 }
 
 
-/* TEXTAREA */
+/* --TEXTAREA-- */
 
 .input_field textarea {
 
@@ -198,7 +198,7 @@ form {
 }
 
 
-/* TEXTAREA FOCUS */
+/* --TEXTAREA FOCUS-- */
 
 .input_field textarea:focus {
 
@@ -208,7 +208,7 @@ form {
 }
 
 
-/* TERMS */
+/* --TERMS */
 
 .input_field.terms {
 
@@ -224,7 +224,7 @@ form {
 }
 
 
-/* CHECKBOX */
+/* --CHECKBOX-- */
 
 .input_field.terms input[type="checkbox"] {
 
@@ -238,7 +238,7 @@ form {
 }
 
 
-/* TERMS LABEL */
+/*-- TERMS LABEL-- */
 
 .input_field.terms .check-label {
 
@@ -250,7 +250,7 @@ form {
 }
 
 
-/* TERMS TEXT */
+/* --TERMS TEXT-- */
 
 .input_field.terms p {
 
@@ -262,7 +262,7 @@ form {
 }
 
 
-/*  NAVIGATION BUTTON */
+/* --NAVIGATION BUTTON-- */
 
 .btn {
 
@@ -288,7 +288,7 @@ form {
 }
 
 
-/* BUTTON HOVER */
+/* --BUTTON HOVER-- */
 
 .btn:hover {
 
@@ -296,7 +296,7 @@ form {
 }
 
 
-/* LOGIN LINK */
+/*-- LOGIN LINK-- */
 
 .login-link {
 
@@ -328,7 +328,7 @@ form {
 }
 
 
-/* MOBILE */
+/* --MOBILE-- */
 
 @media (max-width: 500px) {
 

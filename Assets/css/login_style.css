@@ -1,6 +1,4 @@
-/* =========================
-   RESET
-========================= */
+/* --reset-- */
 
 * {
     margin: 0;
@@ -9,9 +7,7 @@
 }
 
 
-/* =========================
-   BODY / BACKGROUND
-========================= */
+/* --BODY / BACKGROUND-- */
 
 html,
 body {
@@ -38,9 +34,7 @@ body {
 }
 
 
-/* =========================
-   LOGIN CONTAINER
-========================= */
+/* --LOGIN CONTAINER-- */
 
 .login-container {
     width: 400px;
@@ -59,9 +53,7 @@ body {
 }
 
 
-/* =========================
-   TITLE
-========================= */
+/* --TITLE-- */
 
 .login-container h3 {
     text-align: center;
@@ -76,9 +68,7 @@ body {
 }
 
 
-/* =========================
-   LABEL
-========================= */
+/* --LABEL-- */
 
 .login-container label {
     display: block;
@@ -94,9 +84,7 @@ body {
 }
 
 
-/* =========================
-   FORM CONTROLS
-========================= */
+/* --FORM CONTROLS-- */
 
 /*
    Email
@@ -146,9 +134,7 @@ body {
 }
 
 
-/* =========================
-   EMAIL + PASSWORD FOCUS
-========================= */
+/* --EMAIL + PASSWORD FOCUS-- */
 
 .login-container input[type="email"]:focus,
 .login-container input[type="password"]:focus {
@@ -159,9 +145,7 @@ body {
 }
 
 
-/* =========================
-   SELECT
-========================= */
+/* --SELECT-- */
 
 .login-container select {
 
@@ -175,9 +159,7 @@ body {
 }
 
 
-/* =========================
-   SELECT FOCUS
-========================= */
+/* --SELECT FOCUS-- */
 
 .login-container select:focus {
 
@@ -187,9 +169,7 @@ body {
 }
 
 
-/* =========================
-   LOGIN BUTTON
-========================= */
+/* --LOGIN BUTTON-- */
 
 .login-container button {
 
@@ -230,9 +210,7 @@ body {
 }
 
     
-/* =========================
-   REGISTER LINK
-========================= */
+/* --REGISTER LINK-- */
 
 .register-link {
 
@@ -264,9 +242,7 @@ body {
 }
 
 
-/* =========================
-   MOBILE
-========================= */
+/* --MOBILE-- */
 
 @media (max-width: 500px) {
 

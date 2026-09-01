@@ -1,4 +1,4 @@
-/*-- Global */
+/*-- Global --*/
 
 * {
     margin: 0;
@@ -27,7 +27,7 @@ body {
 }
 
 
-/*-- Sidebar */
+/*-- Sidebar-- */
 
 aside {
     width: 240px;
@@ -110,7 +110,7 @@ aside {
 }
 
 
-/*-- Main */
+/*-- Main-- */
 
 main {
     margin-left: 240px;
@@ -120,7 +120,7 @@ main {
 }
 
 
-/*-- Header */
+/*-- Header-- */
 
 .top-header {
     width: 100%;
@@ -171,7 +171,7 @@ main {
 }
 
 
-/*-- Statistics Cards */
+/*-- Statistics Cards-- */
 
 .stats {
     width: 100%;
@@ -187,7 +187,7 @@ main {
 }
 
 
-/*-- Card */
+/*-- Card --*/
 
 .card {
     background: #ffffff;
@@ -239,7 +239,7 @@ main {
 }
 
 
-/*-- Dashboard Content */
+/*-- Dashboard Content --*/
 
 .dashboard-content {
     width: 100%;
@@ -254,7 +254,7 @@ main {
 }
 
 
-/*-- Panel */
+/*-- Panel-- */
 
 .panel {
     background: #ffffff;
@@ -294,7 +294,7 @@ select {
 }
 
 
-/*-- Revenue */
+/*-- Revenue-- */
 
 .chart-placeholder {
     height: 210px;
@@ -308,7 +308,7 @@ select {
 }
 
 
-/*-- Booking Circle */
+/*-- Booking Circle-- */
 
 .circle-chart {
     width: 175px;
@@ -357,7 +357,7 @@ select {
 }
 
 
-/*-- Tables */
+/*-- Tables --*/
 
 .tables {
     width: 100%;
@@ -420,7 +420,7 @@ td {
 }
 
 
-/*-- Status */
+/*-- Status --*/
 
 .status {
     padding: 4px 9px;
@@ -448,7 +448,7 @@ td {
 }
 
 
-/*-- Bottom */
+/*-- Bottom --*/
 
 .bottom-section {
     width: 100%;
@@ -472,7 +472,7 @@ td {
 }
 
 
-/*-- Large Landscape Screen */
+/*-- Large Landscape Screen --*/
 
 @media (min-width: 1600px) {
 
@@ -497,7 +497,7 @@ td {
 }
 
 
-/*-- Medium Landscape Screen */
+/*-- Medium Landscape Screen --*/
 
 @media (max-width: 1399px) {
 

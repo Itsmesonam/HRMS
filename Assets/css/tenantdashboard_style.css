@@ -1,4 +1,4 @@
-/*-- Global */
+/*-- Global -- */
 
 * {
     margin: 0;
@@ -27,7 +27,7 @@ body {
 }
 
 
-/*-- Sidebar */
+/*-- Sidebar-- */
 
 aside {
     width: 240px;
@@ -111,7 +111,7 @@ aside {
 }
 
 
-/*-- Main */
+/*-- Main-- */
 
 main {
     margin-left: 240px;
@@ -124,7 +124,7 @@ main {
 }
 
 
-/*-- Header */
+/*-- Header --*/
 
 .top-header {
     width: 100%;
@@ -184,7 +184,7 @@ main {
 }
 
 
-/*-- Statistics */
+/*-- Statistics --*/
 
 .stats {
     width: 100%;
@@ -200,7 +200,7 @@ main {
 }
 
 
-/*-- Cards */
+/*-- Cards-- */
 
 .card {
     background: #ffffff;
@@ -252,7 +252,7 @@ main {
 }
 
 
-/*-- Dashboard Content */
+/*-- Dashboard Content-- */
 
 .dashboard-content {
     width: 100%;
@@ -267,7 +267,7 @@ main {
 }
 
 
-/*-- Panel */
+/*-- Panel-- */
 
 .panel {
     background: #ffffff;
@@ -307,7 +307,7 @@ select {
 }
 
 
-/*-- Chart */
+/*-- Chart-- */
 
 .chart-placeholder {
     height: 210px;
@@ -321,7 +321,7 @@ select {
 }
 
 
-/*-- Circle */
+/*-- Circle-- */
 
 .circle-chart {
     width: 175px;
@@ -371,7 +371,7 @@ select {
 }
 
 
-/*-- Tables */
+/*-- Tables --*/
 
 .tables {
     width: 100%;
@@ -436,7 +436,7 @@ td {
 }
 
 
-/*-- Status */
+/*-- Status --*/
 
 .status {
     padding: 4px 9px;
@@ -467,7 +467,7 @@ td {
 }
 
 
-/*-- Bottom */
+/*-- Bottom --*/
 
 .bottom-section {
     width: 100%;
@@ -491,7 +491,7 @@ td {
 }
 
 
-/*-- Large Landscape */
+/*-- Large Landscape-- */
 
 @media (min-width: 1600px) {
 
@@ -516,7 +516,7 @@ td {
 }
 
 
-/*-- Medium Landscape */
+/*-- Medium Landscape-- */
 
 @media (max-width: 1399px) {
 

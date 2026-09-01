@@ -1,6 +1,4 @@
-/* =========================
-RESET
-========================= */
+/*--reset css--*/
 
 * {
     margin: 0;
@@ -9,9 +7,7 @@ RESET
 }
 
 
-/* =========================
-BODY
-========================= */
+/*-- body-- */
 
 body {
     min-height: 100vh;
@@ -28,9 +24,7 @@ body {
 }
 
 
-/* =========================
-HEADER
-========================= */
+/* --head--- */
 
 .header {
     width: 100%;
@@ -51,7 +45,7 @@ HEADER
 }
 
 
-/* LOGO */
+/* --LOGO-- */
 
 .logo {
     font-size: 21px;
@@ -60,7 +54,7 @@ HEADER
 }
 
 
-/* HEADER RIGHT */
+/* --HEADER RIGHT-- */
 
 .header-right {
     display: flex;
@@ -71,7 +65,7 @@ HEADER
 }
 
 
-/* USER NAME */
+/* --USER NAME-- */
 
 .user-name {
     font-size: 14px;
@@ -80,7 +74,7 @@ HEADER
 }
 
 
-/* LOGOUT */
+/* --LOGOUT-- */
 
 .logout {
     background-color: white;
@@ -106,9 +100,7 @@ HEADER
 }
 
 
-/* =========================
-MAIN CONTAINER
-========================= */
+/* --CONTAINER-- */
 
 .container {
     width: 90%;
@@ -119,9 +111,7 @@ MAIN CONTAINER
 }
 
 
-/* =========================
-WELCOME
-========================= */
+/* --WELCOME-- */
 
 .welcome {
     background-color: white;
@@ -156,9 +146,7 @@ WELCOME
 }
 
 
-/* =========================
-CARDS
-========================= */
+/* --CARDS-- */
 
 .cards {
     display: grid;
@@ -169,9 +157,7 @@ CARDS
 }
 
 
-/* =========================
-CARD
-========================= */
+/* --CARD-- */
 
 .card {
     background-color: white;
@@ -197,7 +183,7 @@ CARD
 }
 
 
-/* CARD ICON */
+/*-- CARD ICON-- */
 
 .card-icon {
     font-size: 35px;
@@ -206,7 +192,7 @@ CARD
 }
 
 
-/* CARD TITLE */
+/* --CARD TITLE-- */
 
 .card h3 {
     color: #2e7d32;
@@ -217,7 +203,7 @@ CARD
 }
 
 
-/* CARD TEXT */
+/* --CARD TEXT-- */
 
 .card p {
     color: #666666;
@@ -232,7 +218,7 @@ CARD
 }
 
 
-/* CARD BUTTON */
+/* --CARD BUTTON-- */
 
 .card a {
     display: inline-block;
@@ -260,9 +246,7 @@ CARD
 }
 
 
-/* =========================
-RESPONSIVE
-========================= */
+/*-- RESPONSIVE --*/
 
 @media (max-width: 850px) {
 
