@@ -2,9 +2,7 @@
 
 session_start();
 
-/* =========================================
-   CHECK LOGIN
-========================================= */
+/* --CHECK LOGIN-- */
 
 if (!isset($_SESSION['user_id'])) {
 
@@ -14,9 +12,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 
-/* =========================================
-   CHECK TENANT ROLE
-========================================= */
+/* --CHECK TENANT ROLE-- */
 
 if ($_SESSION['role'] !== 'tenant') {
 
@@ -26,9 +22,7 @@ if ($_SESSION['role'] !== 'tenant') {
 }
 
 
-/* =========================================
-   DATABASE CONNECTION
-========================================= */
+/* --DATABASE CONNECTION-- */
 
 $conn = mysqli_connect(
     "localhost",
@@ -47,9 +41,7 @@ if (!$conn) {
 }
 
 
-/* =========================================
-   TENANT INFORMATION
-========================================= */
+/* --TENANT INFORMATION-- */
 
 $tenant_id = $_SESSION['user_id'];
 
@@ -82,9 +74,7 @@ $lastname  = $_SESSION['lastname'];
 <body>
 
 
-<!-- =========================================
-     NAVIGATION
-========================================= -->
+<!-- NAVIGATION -->
 
 <nav>
 
@@ -119,9 +109,7 @@ $lastname  = $_SESSION['lastname'];
 </nav>
 
 
-<!-- =========================================
-     BOOKING CONTAINER
-========================================= -->
+<!-- BOOKING CONTAINER -->
 
 <div class="booking-container">
 
@@ -139,9 +127,7 @@ $lastname  = $_SESSION['lastname'];
     </p>
 
 
-    <!-- =====================================
-         BOOKING FORM
-    ====================================== -->
+    <!-- BOOKING FORM -->
 
     <form
         action=""

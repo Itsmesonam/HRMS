@@ -2,9 +2,7 @@
 
 session_start();
 
-/* =========================================
-   DATABASE CONNECTION
-========================================= */
+/* --DATABASE CONNECTION-- */
 
 $conn = mysqli_connect(
     "localhost",
@@ -21,9 +19,7 @@ if (!$conn) {
 }
 
 
-/* =========================================
-   ADMIN LOGIN
-========================================= */
+/* --ADMIN LOGIN-- */
 
 if (isset($_POST['admin_login'])) {
 
@@ -31,22 +27,20 @@ if (isset($_POST['admin_login'])) {
     $password = $_POST['password'];
 
 
-    /* =====================================
-       FIND ADMIN
-    ===================================== */
+    /* Find admin */
 
     $query = mysqli_prepare(
-        $conn,
+    $conn,
 
-        "SELECT id,
-                firstname,
-                lastname,
-                password
-         FROM users
-         WHERE email = ?
-         AND role = 'admin'
-         LIMIT 1"
-    );
+    "SELECT id,
+            firstname,
+            lastname,
+            password
+     FROM users
+     WHERE email = ?
+       AND role = 'admin'
+     LIMIT 1"
+);
 
 
     if (!$query) {
@@ -74,18 +68,14 @@ if (isset($_POST['admin_login'])) {
     );
 
 
-    /* =====================================
-       CHECK ADMIN
-    ===================================== */
+    /* Check if admin exists */
 
     if (mysqli_num_rows($result) == 1) {
 
         $admin = mysqli_fetch_assoc($result);
 
 
-        /* =================================
-           CHECK PASSWORD
-        ================================= */
+        /* Check password */
 
         if (
             password_verify(
@@ -95,16 +85,12 @@ if (isset($_POST['admin_login'])) {
         ) {
 
 
-            /* ==============================
-               REGENERATE SESSION
-            ============================== */
+            /* Regenerate session ID */
 
             session_regenerate_id(true);
 
 
-            /* ==============================
-               CREATE ADMIN SESSION
-            ============================== */
+            /* Create admin session */
 
             $_SESSION['admin_id'] =
                 $admin['id'];
@@ -115,9 +101,7 @@ if (isset($_POST['admin_login'])) {
                 . $admin['lastname'];
 
 
-            /* ==============================
-               GO TO ADMIN DASHBOARD
-            ============================== */
+            /* Go to admin dashboard */
 
             header(
                 "Location: admindashboard.php"
@@ -179,9 +163,7 @@ if (isset($_POST['admin_login'])) {
 <body>
 
 
-<!-- =========================================
-     ADMIN LOGIN CONTAINER
-========================================= -->
+<!-- admin login container -->
 
 <div class="admin-login-container">
 
@@ -211,9 +193,7 @@ if (isset($_POST['admin_login'])) {
     ?>
 
 
-    <!-- =====================================
-         ADMIN LOGIN FORM
-    ====================================== -->
+    <!-- --ADMIN LOGIN FORM-- -->
 
     <form
         method="POST"

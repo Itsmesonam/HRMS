@@ -37,9 +37,7 @@ $lastname = $_SESSION['lastname'];
 
 <body>
 
-    <!-- =========================
-         HEADER
-    ========================== -->
+    <!-- HEADER -->
 
     <header class="header">
 
@@ -62,9 +60,7 @@ $lastname = $_SESSION['lastname'];
     </header>
 
 
-    <!-- =========================
-         MAIN CONTAINER
-    ========================== -->
+    <!-- main container -->
 
     <main class="container">
 
@@ -85,9 +81,7 @@ $lastname = $_SESSION['lastname'];
         </section>
 
 
-        <!-- =========================
-             DASHBOARD CARDS
-        ========================== -->
+        <!-- DASHBOARD CARDS -->
 
         <section class="cards">
 

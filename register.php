@@ -1,15 +1,11 @@
 <?php
 
-/* =========================================
-   START SESSION
-========================================= */
+/* START SESSION */
 
 session_start();
 
 
-/* =========================================
-   DATABASE CONNECTION
-========================================= */
+/* DATABASE CONNECTION */
 
 $conn = mysqli_connect(
     "localhost",
@@ -26,9 +22,7 @@ if (!$conn) {
 }
 
 
-/* =========================================
-   REGISTRATION
-========================================= */
+/* REGISTRATION */
 
 if (isset($_POST['register'])) {
 
@@ -45,9 +39,7 @@ if (isset($_POST['register'])) {
     $address   = trim($_POST['address']);
 
 
-    /* =====================================
-       CHECK PASSWORD
-    ===================================== */
+    /* CHECK PASSWORDS */
 
     if ($password !== $cpassword) {
 
@@ -58,9 +50,7 @@ if (isset($_POST['register'])) {
     } else {
 
 
-        /* =================================
-           CHECK EXISTING EMAIL
-        ================================= */
+        /* CHECK EXISTING EMAIL */
 
         $check = mysqli_prepare(
             $conn,
@@ -87,9 +77,7 @@ if (isset($_POST['register'])) {
         } else {
 
 
-            /* =================================
-               HASH PASSWORD
-            ================================= */
+            /*HASH PASSWORD*/
 
             $hashedPassword = password_hash(
                 $password,
@@ -97,9 +85,7 @@ if (isset($_POST['register'])) {
             );
 
 
-            /* =================================
-               INSERT USER
-            ================================= */
+            /* INSERT USER */
 
             $query = mysqli_prepare(
                 $conn,
@@ -143,9 +129,7 @@ if (isset($_POST['register'])) {
             );
 
 
-            /* =================================
-               EXECUTE INSERT
-            ================================= */
+            /* execute insert */
 
             if (mysqli_stmt_execute($query)) {
 
@@ -219,18 +203,14 @@ if (isset($_POST['register'])) {
 <div class="container">
 
 
-    <!-- =====================================
-         TITLE
-    ====================================== -->
+    <!-- TITLE -->
 
     <div class="title">
         Registration Form
     </div>
 
 
-    <!-- =====================================
-         FORM
-    ====================================== -->
+    <!-- REGISTRATION FORM -->
 
     <form
         action=""

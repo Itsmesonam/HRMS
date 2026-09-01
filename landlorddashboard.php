@@ -68,7 +68,7 @@ if ($_SESSION['role'] !== 'landlord') {
 <div class="container">
 
 
-    <!-- ================= SIDEBAR ================= -->
+    <!-- sidebar -->
 
     <aside>
 
@@ -245,7 +245,7 @@ if ($_SESSION['role'] !== 'landlord') {
     </aside>
 
 
-    <!-- ================= MAIN ================= -->
+    <!-- Main -->
 
     <main>
 
@@ -296,7 +296,7 @@ if ($_SESSION['role'] !== 'landlord') {
 
 
 
-        <!-- ================= STATISTICS ================= -->
+        <!-- STATISTICS -->
 
         <div class="stats">
 
@@ -467,7 +467,7 @@ if ($_SESSION['role'] !== 'landlord') {
 
 
 
-        <!-- ================= DASHBOARD CONTENT ================= -->
+        <!-- DASHBOARD CONTENT -->
 
         <div class="dashboard-content">
 
@@ -559,7 +559,7 @@ if ($_SESSION['role'] !== 'landlord') {
 
 
 
-        <!-- ================= TABLES ================= -->
+        <!-- TABLES -->
 
         <div class="tables">
 
@@ -737,7 +737,7 @@ if ($_SESSION['role'] !== 'landlord') {
 
 
 
-        <!-- ================= BOTTOM ================= -->
+        <!-- Bottom Section -->
 
         <div class="bottom-section">
 
