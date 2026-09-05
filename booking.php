@@ -1,28 +1,20 @@
+
 <?php
 
 session_start();
 
 /* =========================================
-   CHECK LOGIN
+   CHECK TENANT LOGIN
 ========================================= */
 
 if (!isset($_SESSION['user_id'])) {
-
     header("Location: login.php");
     exit();
-
 }
 
-
-/* =========================================
-   CHECK TENANT ROLE
-========================================= */
-
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'tenant') {
-
     header("Location: index.php");
     exit();
-
 }
 
 
@@ -37,14 +29,8 @@ $conn = mysqli_connect(
     "hrms"
 );
 
-
 if (!$conn) {
-
-    die(
-        "Database connection failed: "
-        . mysqli_connect_error()
-    );
-
+    die("Database connection failed: " . mysqli_connect_error());
 }
 
 
@@ -72,8 +58,6 @@ $error = "";
 
 if (isset($_POST['book'])) {
 
-    /* Get form values */
-
     $house_id = intval($_POST['house_id'] ?? 0);
 
     $booking_date = $_POST['booking_date'] ?? '';
@@ -84,10 +68,14 @@ if (isset($_POST['book'])) {
 
 
     /* =====================================
-       BASIC VALIDATION
+       VALIDATION
     ===================================== */
 
-    if ($house_id <= 0 || empty($booking_date) || empty($move_in_date)) {
+    if (
+        $house_id <= 0 ||
+        empty($booking_date) ||
+        empty($move_in_date)
+    ) {
 
         $error = "Please fill in all required fields.";
 
@@ -102,20 +90,16 @@ if (isset($_POST['book'])) {
     else {
 
         /* =================================
-           CHECK HOUSE EXISTS
+           CHECK HOUSE
         ================================= */
-
-        /*
-           Change `houses` column names here
-           if your actual houses table uses
-           different names.
-        */
 
         $house_check = mysqli_prepare(
             $conn,
-            "SELECT id FROM houses WHERE id = ?"
+            "SELECT id
+             FROM houses
+             WHERE id = ?
+             AND status = 'Available'"
         );
-
 
         mysqli_stmt_bind_param(
             $house_check,
@@ -123,24 +107,23 @@ if (isset($_POST['book'])) {
             $house_id
         );
 
-
         mysqli_stmt_execute($house_check);
 
-
-        $house_result = mysqli_stmt_get_result($house_check);
+        $house_result =
+            mysqli_stmt_get_result($house_check);
 
 
         if (mysqli_num_rows($house_result) == 0) {
 
-            $error = "Selected house does not exist.";
+            $error = "Selected house is not available.";
 
         }
 
         else {
 
-            /* =================================
+            /* =============================
                CHECK EXISTING BOOKING
-            ================================= */
+            ============================= */
 
             $check_booking = mysqli_prepare(
                 $conn,
@@ -152,7 +135,6 @@ if (isset($_POST['book'])) {
                  LIMIT 1"
             );
 
-
             mysqli_stmt_bind_param(
                 $check_booking,
                 "ii",
@@ -160,9 +142,7 @@ if (isset($_POST['book'])) {
                 $house_id
             );
 
-
             mysqli_stmt_execute($check_booking);
-
 
             $booking_result =
                 mysqli_stmt_get_result($check_booking);
@@ -171,18 +151,17 @@ if (isset($_POST['book'])) {
             if (mysqli_num_rows($booking_result) > 0) {
 
                 $error =
-                    "You already have an active booking for this house.";
+                    "You already have an active booking request for this house.";
 
             }
 
             else {
 
-                /* =============================
+                /* =========================
                    INSERT BOOKING
-                ============================= */
+                ========================= */
 
                 $status = "Pending";
-
 
                 $insert = mysqli_prepare(
                     $conn,
@@ -197,7 +176,6 @@ if (isset($_POST['book'])) {
                     )
                     VALUES (?, ?, ?, ?, ?, ?)"
                 );
-
 
                 mysqli_stmt_bind_param(
                     $insert,
@@ -214,24 +192,23 @@ if (isset($_POST['book'])) {
                 if (mysqli_stmt_execute($insert)) {
 
                     $success =
-                        "Booking submitted successfully! Your booking is now pending approval.";
+                        "Booking request submitted successfully! Your request is pending landlord approval.";
 
                 }
 
                 else {
 
                     $error =
-                        "Failed to submit booking: "
-                        . mysqli_error($conn);
+                        "Failed to submit booking.";
 
                 }
 
+                mysqli_stmt_close($insert);
             }
-
         }
 
+        mysqli_stmt_close($house_check);
     }
-
 }
 
 
@@ -246,7 +223,6 @@ $houses = mysqli_query(
      WHERE status = 'Available'
      ORDER BY id DESC"
 );
-
 
 ?>
 
@@ -263,10 +239,7 @@ $houses = mysqli_query(
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Booking - HRMS</title>
-
-
-    <!-- YOUR BOOKING CSS -->
+    <title>Book a House - HRMS</title>
 
     <link
         rel="stylesheet"
@@ -279,9 +252,9 @@ $houses = mysqli_query(
 <body>
 
 
-<!-- =========================================
+<!-- =====================================
      NAVIGATION
-========================================= -->
+===================================== -->
 
 <nav>
 
@@ -289,18 +262,15 @@ $houses = mysqli_query(
         HRMS
     </div>
 
-
     <div class="nav-links">
 
         <a href="tenantdashboard.php">
             Dashboard
         </a>
 
-
         <a href="houses.php">
             Houses
         </a>
-
 
         <a
             href="booking.php"
@@ -309,11 +279,9 @@ $houses = mysqli_query(
             Booking
         </a>
 
-
         <a href="rent.php">
             Rent
         </a>
-
 
         <a href="logout.php">
             Logout
@@ -325,12 +293,11 @@ $houses = mysqli_query(
 
 
 
-<!-- =========================================
+<!-- =====================================
      BOOKING CONTAINER
-========================================= -->
+===================================== -->
 
 <div class="booking-container">
-
 
     <h1>
         Book a House
@@ -340,57 +307,55 @@ $houses = mysqli_query(
     <p class="welcome">
 
         Welcome,
-
         <?php
-
         echo htmlspecialchars(
-            $firstname . " " . $lastname
+            trim($firstname . " " . $lastname)
         );
-
         ?>
 
     </p>
 
 
-
-    <!-- =====================================
+    <!-- =================================
          SUCCESS MESSAGE
-    ====================================== -->
+    ================================== -->
 
     <?php if (!empty($success)) { ?>
 
         <div class="success-message">
 
-            <?php echo htmlspecialchars($success); ?>
+            <?php
+            echo htmlspecialchars($success);
+            ?>
 
         </div>
 
     <?php } ?>
 
 
-
-    <!-- =====================================
+    <!-- =================================
          ERROR MESSAGE
-    ====================================== -->
+    ================================== -->
 
     <?php if (!empty($error)) { ?>
 
         <div class="error-message">
 
-            <?php echo htmlspecialchars($error); ?>
+            <?php
+            echo htmlspecialchars($error);
+            ?>
 
         </div>
 
     <?php } ?>
 
 
-
-    <!-- =====================================
+    <!-- =================================
          BOOKING FORM
-    ====================================== -->
+    ================================== -->
 
     <form
-        action=""
+        action="booking.php"
         method="POST"
     >
 
@@ -398,11 +363,8 @@ $houses = mysqli_query(
         <!-- HOUSE -->
 
         <label for="house_id">
-
             Select House
-
         </label>
-
 
         <select
             name="house_id"
@@ -410,35 +372,38 @@ $houses = mysqli_query(
             required
         >
 
-
             <option value="">
-
                 Select an available house
-
             </option>
 
 
             <?php
 
-            if ($houses && mysqli_num_rows($houses) > 0) {
+            if (
+                $houses &&
+                mysqli_num_rows($houses) > 0
+            ) {
 
-                while ($house = mysqli_fetch_assoc($houses)) {
+                while (
+                    $house =
+                    mysqli_fetch_assoc($houses)
+                ) {
 
             ?>
 
-                    <option
-                        value="<?php echo $house['id']; ?>"
-                    >
+                <option
+                    value="<?php
+                    echo $house['id'];
+                    ?>"
+                >
 
-                        <?php
+                    <?php
+                    echo htmlspecialchars(
+                        $house['house_name']
+                    );
+                    ?>
 
-                        echo htmlspecialchars(
-                            $house['house_name']
-                        );
-
-                        ?>
-
-                    </option>
+                </option>
 
             <?php
 
@@ -451,9 +416,7 @@ $houses = mysqli_query(
             ?>
 
                 <option value="">
-
                     No available houses
-
                 </option>
 
             <?php
@@ -462,7 +425,6 @@ $houses = mysqli_query(
 
             ?>
 
-
         </select>
 
 
@@ -470,11 +432,8 @@ $houses = mysqli_query(
         <!-- BOOKING DATE -->
 
         <label for="booking_date">
-
             Booking Date
-
         </label>
-
 
         <input
             type="date"
@@ -488,11 +447,8 @@ $houses = mysqli_query(
         <!-- MOVE-IN DATE -->
 
         <label for="move_in_date">
-
             Move-in Date
-
         </label>
-
 
         <input
             type="date"
@@ -506,58 +462,46 @@ $houses = mysqli_query(
         <!-- MESSAGE -->
 
         <label for="message">
-
             Message
-
         </label>
-
 
         <textarea
             name="message"
             id="message"
-            placeholder="Enter any additional information"
             rows="4"
+            placeholder="Enter any additional information..."
         ></textarea>
 
 
 
-        <!-- BUTTON -->
+        <!-- SUBMIT -->
 
         <button
             type="submit"
             name="book"
         >
-
             Submit Booking
-
         </button>
-
 
     </form>
 
 
-
-    <!-- =====================================
-         BACK BUTTON
-    ====================================== -->
+    <!-- BACK BUTTON -->
 
     <a
         href="tenantdashboard.php"
         class="back-btn"
     >
-
         ← Back to Dashboard
-
     </a>
-
 
 </div>
 
 
 
-<!-- =========================================
-     DATE VALIDATION
-========================================= -->
+<!-- =====================================
+     JAVASCRIPT DATE VALIDATION
+===================================== -->
 
 <script>
 
@@ -568,28 +512,35 @@ const moveInDate =
     document.getElementById("move_in_date");
 
 
-/* Set today's date as minimum booking date */
+/* Get today's date */
 
 const today =
     new Date().toISOString().split("T")[0];
 
 
+/* Booking cannot be before today */
+
 bookingDate.min = today;
+
+
+/* Move-in cannot be before today */
 
 moveInDate.min = today;
 
 
-/* Make move-in date follow booking date */
+/* Move-in date follows booking date */
 
 bookingDate.addEventListener(
     "change",
     function () {
 
-        moveInDate.min = bookingDate.value;
+        moveInDate.min =
+            bookingDate.value;
 
         if (
             moveInDate.value &&
-            moveInDate.value < bookingDate.value
+            moveInDate.value <
+            bookingDate.value
         ) {
 
             moveInDate.value = "";
@@ -605,3 +556,4 @@ bookingDate.addEventListener(
 </body>
 
 </html>
+
