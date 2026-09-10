@@ -1,0 +1,423 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f7fb;
+    color: #1f2937;
+}
+
+.page-container {
+    min-height: 100vh;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.page-header {
+    background: white;
+
+    padding: 22px 40px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.page-header h1 {
+    margin-bottom: 6px;
+}
+
+.page-header p {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.back-btn {
+    background: #e5e7eb;
+
+    color: #374151;
+
+    text-decoration: none;
+
+    padding: 10px 18px;
+
+    border-radius: 7px;
+}
+
+.back-btn:hover {
+    background: #d1d5db;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+main {
+    max-width: 1200px;
+
+    margin: auto;
+
+    padding: 35px 20px;
+}
+
+
+/* =========================
+   FILTER
+========================= */
+
+.filter-bar {
+    background: white;
+
+    padding: 18px;
+
+    border-radius: 10px;
+
+    margin-bottom: 20px;
+
+    display: flex;
+    justify-content: flex-end;
+}
+
+.filter-bar form {
+    margin: 0;
+}
+
+.filter-bar select {
+    padding: 11px 35px 11px 12px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 7px;
+
+    background: white;
+
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+.filter-bar select:focus {
+    outline: none;
+
+    border-color: #2563eb;
+}
+
+
+/* =========================
+   REQUEST CARD
+========================= */
+
+.requests-card {
+    background: white;
+
+    border-radius: 10px;
+
+    min-height: 400px;
+
+    box-shadow:
+        0 3px 12px rgba(0,0,0,0.05);
+
+    overflow: hidden;
+}
+
+
+/* =========================
+   TABLE
+========================= */
+
+.table-container {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+
+    min-width: 1050px;
+
+    border-collapse: collapse;
+}
+
+thead {
+    background: #f8fafc;
+}
+
+th {
+    padding: 15px;
+
+    text-align: left;
+
+    color: #6b7280;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+td {
+    padding: 16px 15px;
+
+    font-size: 14px;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    vertical-align: middle;
+}
+
+tbody tr:hover {
+    background: #f9fafb;
+}
+
+
+/* =========================
+   TENANT INFO
+========================= */
+
+.tenant-info {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.tenant-info strong {
+    font-size: 14px;
+}
+
+.tenant-info small {
+    color: #6b7280;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   PROPERTY INFO
+========================= */
+
+.property-info {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.property-info strong {
+    font-size: 14px;
+}
+
+.property-info small {
+    color: #6b7280;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+.status {
+    display: inline-block;
+
+    padding: 6px 11px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+
+/* Pending */
+
+.status.pending {
+    background: #fef3c7;
+
+    color: #92400e;
+}
+
+
+/* Confirmed */
+
+.status.confirmed {
+    background: #dcfce7;
+
+    color: #166534;
+}
+
+
+/* Rejected */
+
+.status.rejected {
+    background: #fee2e2;
+
+    color: #991b1b;
+}
+
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+
+.action-buttons {
+    display: flex;
+
+    gap: 7px;
+}
+
+.action-buttons form {
+    margin: 0;
+}
+
+.confirm-btn,
+.reject-btn {
+    border: none;
+
+    padding: 8px 12px;
+
+    border-radius: 6px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+/* Confirm */
+
+.confirm-btn {
+    background: #16a34a;
+
+    color: white;
+}
+
+.confirm-btn:hover {
+    background: #15803d;
+}
+
+
+/* Reject */
+
+.reject-btn {
+    background: #dc2626;
+
+    color: white;
+}
+
+.reject-btn:hover {
+    background: #b91c1c;
+}
+
+
+/* Already processed */
+
+.processed {
+    color: #6b7280;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   SUCCESS / ERROR MESSAGE
+========================= */
+
+.message {
+    padding: 13px 16px;
+
+    margin-bottom: 20px;
+
+    border-radius: 7px;
+
+    font-size: 14px;
+}
+
+.message.success {
+    background: #dcfce7;
+
+    color: #166534;
+
+    border: 1px solid #bbf7d0;
+}
+
+.message.error {
+    background: #fee2e2;
+
+    color: #991b1b;
+
+    border: 1px solid #fecaca;
+}
+
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.empty-state {
+    text-align: center;
+
+    padding: 80px 30px;
+}
+
+.empty-state .icon {
+    font-size: 55px;
+
+    margin-bottom: 15px;
+}
+
+.empty-state h2 {
+    margin-bottom: 8px;
+
+    font-size: 21px;
+}
+
+.empty-state p {
+    color: #6b7280;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 700px) {
+
+    .page-header {
+        padding: 20px;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+    main {
+        padding: 25px 12px;
+    }
+
+    .filter-bar {
+        justify-content: flex-start;
+    }
+
+}

@@ -1,7 +1,4 @@
-/* =========================================
-   BOOKING PAGE
-========================================= */
-
+/*-- Global */
 * {
     margin: 0;
     padding: 0;
@@ -9,390 +6,177 @@
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #f4f7fb;
-    color: #1f2937;
+    font-family: Arial, sans-serif;
+    background: #f4f7f6;
     min-height: 100vh;
+    padding: 50px 20px;
+    color: #333;
 }
 
-
-/* =========================================
-   NAVBAR
-========================================= */
-
-.navbar {
-    width: 100%;
-    height: 70px;
-    background: #ffffff;
-    border-bottom: 1px solid #e5e7eb;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 0 40px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-.navbar .logo {
-    font-size: 24px;
-    font-weight: 700;
-    color: #2563eb;
-    text-decoration: none;
-}
-
-.nav-links {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: #4b5563;
-    font-size: 15px;
-    font-weight: 500;
-    transition: 0.3s;
-}
-
-.nav-links a:hover {
-    color: #2563eb;
-}
-
-.nav-links a.active {
-    color: #2563eb;
-    font-weight: 600;
-}
-
-
-/* =========================================
-   MAIN CONTAINER
-========================================= */
-
+/*-- Main Booking Container */
 .booking-container {
     width: 100%;
-    max-width: 1100px;
-    margin: 50px auto;
-    padding: 0 20px;
-}
-
-
-/* =========================================
-   PAGE HEADER
-========================================= */
-
-.page-header {
-    margin-bottom: 30px;
-}
-
-.page-header h1 {
-    font-size: 30px;
-    font-weight: 700;
-    color: #111827;
-    margin-bottom: 8px;
-}
-
-.page-header p {
-    font-size: 15px;
-    color: #6b7280;
-}
-
-
-/* =========================================
-   BOOKING CARD
-========================================= */
-
-.booking-card {
+    max-width: 750px;
+    margin: 0 auto;
     background: #ffffff;
-    border: 1px solid #e5e7eb;
+    padding: 40px 45px;
     border-radius: 12px;
-
-    padding: 35px;
-
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.10);
 }
 
-.booking-card h2 {
-    font-size: 20px;
-    color: #111827;
-    margin-bottom: 25px;
+/*-- Heading */
+.booking-container h1 {
+    text-align: center;
+    font-size: 28px;
+    color: #1b5e20;
+    margin-bottom: 12px;
 }
 
-
-/* =========================================
-   FORM
-========================================= */
-
-.booking-form {
-    width: 100%;
+/*-- Welcome Text */
+.welcome {
+    text-align: center;
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 35px;
 }
 
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 25px;
-    margin-bottom: 22px;
-}
-
+/*-- Form Group */
 .form-group {
-    display: flex;
-    flex-direction: column;
+    width: 100%;
+    margin-bottom: 24px;
 }
 
-.form-group.full-width {
-    grid-column: 1 / -1;
-}
-
+/*-- Labels */
 .form-group label {
-    font-size: 14px;
+    display: block;
+    font-size: 15px;
     font-weight: 600;
-    color: #374151;
+    color: #333;
     margin-bottom: 8px;
 }
 
+/*-- Inputs and Select */
 .form-group input,
 .form-group select,
 .form-group textarea {
     width: 100%;
-    padding: 12px 14px;
-
-    border: 1px solid #d1d5db;
-    border-radius: 7px;
-
-    background: #ffffff;
-    color: #111827;
-
-    font-size: 14px;
-    font-family: inherit;
-
+    border: 1px solid #d0d7d3;
+    border-radius: 6px;
+    background: #fff;
+    padding: 0 14px;
+    font-size: 15px;
+    font-family: Arial, sans-serif;
     outline: none;
-    transition: 0.2s;
+    transition: 0.2s ease;
 }
 
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-    border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+/*-- Input Height */
+.form-group input,
+.form-group select {
+    height: 48px;
 }
 
-.form-group input:disabled {
-    background: #f3f4f6;
-    color: #6b7280;
-    cursor: not-allowed;
-}
-
+/*-- Textarea */
 .form-group textarea {
-    min-height: 120px;
+    height: 120px;
+    padding: 14px;
     resize: vertical;
 }
 
+/*-- Focus */
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #2e9d63;
+    box-shadow: 0 0 0 2px rgba(46, 157, 99, 0.10);
+}
 
-/* =========================================
-   BUTTON
-========================================= */
-
-.form-actions {
-    margin-top: 10px;
+/*-- Duration Row */
+.duration-row {
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
 }
 
-.btn-book {
-    border: none;
-    background: #2563eb;
-    color: #ffffff;
-
-    padding: 12px 25px;
-
-    border-radius: 7px;
-
-    font-size: 14px;
-    font-weight: 600;
-
-    cursor: pointer;
-    transition: 0.3s;
+.duration-row input {
+    width: 150px;
 }
 
-.btn-book:hover {
-    background: #1d4ed8;
-    transform: translateY(-1px);
-}
-
-.btn-book:active {
-    transform: translateY(0);
-}
-
-
-/* =========================================
-   ALERT MESSAGES
-========================================= */
-
-.alert {
-    width: 100%;
-    padding: 13px 16px;
-    border-radius: 7px;
-    margin-bottom: 25px;
-
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.alert-success {
-    background: #ecfdf5;
-    border: 1px solid #a7f3d0;
-    color: #047857;
-}
-
-.alert-error {
-    background: #fef2f2;
-    border: 1px solid #fecaca;
-    color: #b91c1c;
-}
-
-
-/* =========================================
-   TENANT INFORMATION
-========================================= */
-
-.tenant-info {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-
-    background: #f8fafc;
-    border: 1px solid #e5e7eb;
-
-    padding: 20px;
-    border-radius: 8px;
-
-    margin-bottom: 30px;
-}
-
-.info-item {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.info-label {
-    font-size: 12px;
-    color: #6b7280;
-    font-weight: 500;
-    text-transform: uppercase;
-}
-
-.info-value {
+.duration-row span {
     font-size: 15px;
+    color: #555;
+}
+
+/*-- Submit Button */
+.submit-btn {
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-radius: 6px;
+    background: #2e9d63;
+    color: white;
+    font-size: 16px;
     font-weight: 600;
-    color: #111827;
+    cursor: pointer;
+    margin-top: 5px;
+    transition: 0.2s ease;
 }
 
-
-/* =========================================
-   REQUIRED FIELD
-========================================= */
-
-.required {
-    color: #dc2626;
+.submit-btn:hover {
+    background: #247d4f;
 }
 
+/*-- Back Button */
+.back-btn {
+    display: block;
+    width: fit-content;
+    margin: 25px auto 0;
+    color: #2e9d63;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+}
 
-/* =========================================
-   FOOTER
-========================================= */
+.back-btn:hover {
+    text-decoration: underline;
+}
 
-.footer {
-    margin-top: 60px;
-    padding: 25px;
+/*-- Success Message */
+.success-message {
+    background: #e8f5e9;
+    color: #1b5e20;
+    padding: 12px 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
     text-align: center;
-
-    background: #ffffff;
-    border-top: 1px solid #e5e7eb;
-
-    color: #6b7280;
-    font-size: 13px;
 }
 
+/*-- Error Message */
+.error-message {
+    background: #ffebee;
+    color: #c62828;
+    padding: 12px 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    text-align: center;
+}
 
-/* =========================================
-   RESPONSIVE
-========================================= */
+/*-- Mobile */
+@media (max-width: 600px) {
 
-@media (max-width: 768px) {
-
-    .navbar {
-        height: auto;
-        padding: 18px 20px;
-
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .nav-links {
-        gap: 15px;
-        flex-wrap: wrap;
-        justify-content: center;
+    body {
+        padding: 25px 12px;
     }
 
     .booking-container {
-        margin: 30px auto;
+        padding: 30px 22px;
     }
 
-    .booking-card {
-        padding: 25px 20px;
+    .booking-container h1 {
+        font-size: 24px;
     }
 
-    .page-header h1 {
-        font-size: 25px;
-    }
-
-    .form-row {
-        grid-template-columns: 1fr;
-        gap: 18px;
-    }
-
-    .tenant-info {
-        grid-template-columns: 1fr;
-    }
-
-    .form-actions {
-        justify-content: stretch;
-    }
-
-    .btn-book {
-        width: 100%;
-    }
-}
-
-
-/* =========================================
-   SMALL MOBILE
-========================================= */
-
-@media (max-width: 480px) {
-
-    .booking-container {
-        padding: 0 12px;
-        margin: 20px auto;
-    }
-
-    .booking-card {
-        padding: 20px 15px;
-    }
-
-    .page-header h1 {
-        font-size: 22px;
-    }
-
-    .nav-links {
-        font-size: 13px;
-        gap: 10px;
-    }
-
-    .nav-links a {
-        font-size: 13px;
+    .duration-row input {
+        width: 130px;
     }
 }

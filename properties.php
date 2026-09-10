@@ -1,691 +1,705 @@
 <?php
+
+/* =========================================
+   ERROR REPORTING - TEMPORARY
+   Remove or disable after everything works
+========================================= */
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+
+
+/* =========================================
+   SESSION
+========================================= */
+
 session_start();
+
 
 /* =========================================
    DATABASE CONNECTION
 ========================================= */
+
 require_once __DIR__ . "/config/database/db.php";
 
 
 /* =========================================
-   LANDLORD ACCESS ONLY
+   TENANT LOGIN CHECK
 ========================================= */
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
 
-if (!isset($_SESSION['role']) || strtolower($_SESSION['role']) !== 'landlord') {
+
+/* =========================================
+   TENANT ROLE CHECK
+========================================= */
+
+if (
+    !isset($_SESSION['role']) ||
+    strtolower($_SESSION['role']) !== 'tenant'
+) {
     header("Location: index.php");
     exit();
 }
 
-$landlord_id = $_SESSION['user_id'];
 
-$message = "";
-$error = "";
+/* =========================================
+   AUTOMATIC PROPERTY EXPIRATION
+   Properties older than 1 month become Expired
+========================================= */
+
+$expire_sql = "
+    UPDATE properties
+    SET property_status = 'Expired'
+    WHERE property_status = 'Available'
+    AND created_at <= DATE_SUB(NOW(), INTERVAL 1 MONTH)
+";
+
+mysqli_query($conn, $expire_sql);
 
 
 /* =========================================
-   ADD PROPERTY
+   SEARCH & FILTER
 ========================================= */
-if (isset($_POST['add_property'])) {
 
-    $property_name = trim($_POST['property_name']);
-    $property_type = $_POST['property_type'];
-    $location = trim($_POST['location']);
-    $description = trim($_POST['description']);
-    $monthly_rent = $_POST['monthly_rent'];
-    $bedrooms = $_POST['bedrooms'];
-    $bathrooms = $_POST['bathrooms'];
-    $max_occupants = $_POST['max_occupants'];
+$search = "";
 
-    /* -----------------------------------------
-       BASIC VALIDATION
-    ----------------------------------------- */
-
-    if (
-        empty($property_name) ||
-        empty($property_type) ||
-        empty($location) ||
-        empty($monthly_rent)
-    ) {
-        $error = "Please fill in all required fields.";
-    } else {
-
-        /* -----------------------------------------
-           IMAGE UPLOAD
-        ----------------------------------------- */
-
-        $image_name = NULL;
-
-        if (isset($_FILES['property_image']) &&
-            $_FILES['property_image']['error'] === UPLOAD_ERR_OK) {
-
-            $upload_dir = __DIR__ . "/uploads/properties/";
-
-            /* Create folder if it doesn't exist */
-            if (!is_dir($upload_dir)) {
-                mkdir($upload_dir, 0777, true);
-            }
-
-            $original_name = $_FILES['property_image']['name'];
-            $tmp_name = $_FILES['property_image']['tmp_name'];
-
-            $extension = strtolower(
-                pathinfo($original_name, PATHINFO_EXTENSION)
-            );
-
-            $allowed_extensions = [
-                'jpg',
-                'jpeg',
-                'png',
-                'webp'
-            ];
-
-            if (!in_array($extension, $allowed_extensions)) {
-
-                $error = "Only JPG, JPEG, PNG and WEBP images are allowed.";
-
-            } else {
-
-                /* Generate unique filename */
-                $image_name =
-                    time() . "_" .
-                    uniqid() . "." .
-                    $extension;
-
-                $image_path = $upload_dir . $image_name;
-
-                if (!move_uploaded_file($tmp_name, $image_path)) {
-                    $error = "Failed to upload image.";
-                }
-            }
-        }
+$type = "";
 
 
-        /* -----------------------------------------
-           INSERT PROPERTY
-        ----------------------------------------- */
-
-        if (empty($error)) {
-
-            $sql = "INSERT INTO properties
-                    (
-                        landlord_id,
-                        property_name,
-                        property_type,
-                        location,
-                        description,
-                        monthly_rent,
-                        bedrooms,
-                        bathrooms,
-                        max_occupants,
-                        property_status,
-                        image
-                    )
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'Available', ?)";
-
-            $stmt = mysqli_prepare($conn, $sql);
-
-            if ($stmt) {
-
-                mysqli_stmt_bind_param(
-                    $stmt,
-                    "issssdiiis",
-                    $landlord_id,
-                    $property_name,
-                    $property_type,
-                    $location,
-                    $description,
-                    $monthly_rent,
-                    $bedrooms,
-                    $bathrooms,
-                    $max_occupants,
-                    $image_name
-                );
-
-                if (mysqli_stmt_execute($stmt)) {
-
-                    $message = "Property added successfully!";
-
-                    /* Clear form values */
-                    $property_name = "";
-                    $location = "";
-                    $description = "";
-                    $monthly_rent = "";
-                    $bedrooms = 1;
-                    $bathrooms = 1;
-                    $max_occupants = 1;
-
-                } else {
-
-                    $error = "Failed to add property: "
-                           . mysqli_error($conn);
-                }
-
-                mysqli_stmt_close($stmt);
-
-            } else {
-
-                $error = "Database error: "
-                       . mysqli_error($conn);
-            }
-        }
-    }
+if (isset($_GET['search'])) {
+    $search = trim($_GET['search']);
 }
+
+
+if (isset($_GET['type'])) {
+    $type = trim($_GET['type']);
+}
+
+
+/* =========================================
+   BUILD PROPERTY QUERY
+========================================= */
+
+$sql = "
+    SELECT
+        p.property_id,
+        p.landlord_id,
+        p.property_name,
+        p.property_type,
+        p.location,
+        p.description,
+        p.monthly_rent,
+        p.bedrooms,
+        p.bathrooms,
+        p.max_occupants,
+        p.property_status,
+        p.image,
+        p.created_at
+    FROM properties p
+    WHERE p.property_status = 'Available'
+    AND p.created_at > DATE_SUB(NOW(), INTERVAL 1 MONTH)
+";
+
+
+/* =========================================
+   SEARCH
+========================================= */
+
+if ($search !== "") {
+
+    $search_safe = mysqli_real_escape_string(
+        $conn,
+        $search
+    );
+
+    $sql .= "
+        AND (
+            p.property_name LIKE '%$search_safe%'
+            OR p.location LIKE '%$search_safe%'
+            OR p.description LIKE '%$search_safe%'
+        )
+    ";
+}
+
+
+/* =========================================
+   PROPERTY TYPE FILTER
+========================================= */
+
+if (
+    $type === "House" ||
+    $type === "Apartment" ||
+    $type === "Room"
+) {
+
+    $type_safe = mysqli_real_escape_string(
+        $conn,
+        $type
+    );
+
+    $sql .= "
+        AND p.property_type = '$type_safe'
+    ";
+}
+
+
+/* =========================================
+   ORDER
+========================================= */
+
+$sql .= "
+    ORDER BY p.created_at DESC
+";
+
+
+/* =========================================
+   EXECUTE QUERY
+========================================= */
+
+$result = mysqli_query($conn, $sql);
+
+
+/* =========================================
+   CHECK QUERY ERROR
+========================================= */
+
+if (!$result) {
+
+    die(
+        "<h2>Database Query Error</h2>" .
+        "<p>" . htmlspecialchars(mysqli_error($conn)) . "</p>"
+    );
+}
+
 ?>
 
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <title>Add Property - HRMS</title>
+    <title>Browse Houses | HRMS</title>
 
-    <style>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <!-- CSS -->
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
-            color: #333;
-        }
+    <link
+        rel="stylesheet"
+        href="assets/css/properties_style.css"
+    >
 
-        /* =====================================
-           TOP BAR
-        ===================================== */
 
-        .topbar {
-            height: 65px;
-            background: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 30px;
-            border-bottom: 1px solid #e5e7eb;
-        }
+    <!-- Google Font -->
 
-        .logo {
-            font-size: 22px;
-            font-weight: bold;
-            color: #2563eb;
-        }
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
 
-        .user-info {
-            font-size: 14px;
-            color: #555;
-        }
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
 
-        /* =====================================
-           MAIN CONTAINER
-        ===================================== */
-
-        .container {
-            width: 90%;
-            max-width: 1000px;
-            margin: 35px auto;
-        }
-
-        .page-title {
-            margin-bottom: 25px;
-        }
-
-        .page-title h1 {
-            font-size: 28px;
-            margin-bottom: 7px;
-        }
-
-        .page-title p {
-            color: #777;
-        }
-
-        /* =====================================
-           ALERTS
-        ===================================== */
-
-        .success {
-            background: #dcfce7;
-            color: #166534;
-            padding: 14px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        .error {
-            background: #fee2e2;
-            color: #991b1b;
-            padding: 14px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        /* =====================================
-           FORM CARD
-        ===================================== */
-
-        .card {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-        }
-
-        .form-title {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 25px;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .full {
-            grid-column: 1 / 3;
-        }
-
-        label {
-            font-weight: bold;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-
-        input,
-        select,
-        textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #d1d5db;
-            border-radius: 7px;
-            font-size: 14px;
-            outline: none;
-        }
-
-        input:focus,
-        select:focus,
-        textarea:focus {
-            border-color: #2563eb;
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .required {
-            color: red;
-        }
-
-        /* =====================================
-           BUTTON
-        ===================================== */
-
-        .button-area {
-            margin-top: 25px;
-            display: flex;
-            gap: 12px;
-        }
-
-        .btn {
-            border: none;
-            padding: 13px 25px;
-            border-radius: 7px;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: bold;
-        }
-
-        .btn-primary {
-            background: #2563eb;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #1d4ed8;
-        }
-
-        .btn-secondary {
-            background: #e5e7eb;
-            color: #333;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-        }
-
-        .btn-secondary:hover {
-            background: #d1d5db;
-        }
-
-        /* =====================================
-           RESPONSIVE
-        ===================================== */
-
-        @media (max-width: 700px) {
-
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .full {
-                grid-column: 1;
-            }
-
-            .container {
-                width: 95%;
-            }
-
-            .card {
-                padding: 20px;
-            }
-
-        }
-
-    </style>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
 
 </head>
+
 
 <body>
 
 
 <!-- =========================================
-     TOP BAR
+     HEADER
 ========================================= -->
 
-<div class="topbar">
+<header class="top-header">
 
-    <div class="logo">
-        HRMS
+    <div class="header-container">
+
+        <div class="logo">
+
+            <span>HRMS</span>
+
+        </div>
+
+
+        <nav>
+
+            <a href="tenantdashboard.php">
+                Dashboard
+            </a>
+
+            <a href="properties.php" class="active">
+                Browse Houses
+            </a>
+
+            <a href="tenant_bookings.php">
+                My Bookings
+            </a>
+
+            <a href="tenant_payments.php">
+                Payments
+            </a>
+
+            <a href="logout.php">
+                Logout
+            </a>
+
+        </nav>
+
     </div>
 
-    <div class="user-info">
-        Landlord Panel
-    </div>
+</header>
 
-</div>
 
 
 <!-- =========================================
-     MAIN
+     MAIN CONTENT
 ========================================= -->
 
-<div class="container">
+<main class="main-container">
 
-    <div class="page-title">
 
-        <h1>Add Property</h1>
+    <!-- PAGE TITLE -->
 
-        <p>
-            Add your house, apartment or room for tenants.
-        </p>
+    <div class="page-header">
+
+        <div>
+
+            <h1>
+                Browse Houses
+            </h1>
+
+            <p>
+                Find a house, apartment or room according to your needs.
+            </p>
+
+        </div>
 
     </div>
 
 
-    <?php if (!empty($message)): ?>
 
-        <div class="success">
-            <?php echo htmlspecialchars($message); ?>
-        </div>
+    <!-- =========================================
+         SEARCH & FILTER
+    ========================================= -->
 
-    <?php endif; ?>
+    <section class="search-section">
 
+        <form
+            method="GET"
+            action="properties.php"
+            class="search-form"
+        >
 
-    <?php if (!empty($error)): ?>
+            <div class="search-box">
 
-        <div class="error">
-            <?php echo htmlspecialchars($error); ?>
-        </div>
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Search by property name, location..."
+                    value="<?php echo htmlspecialchars($search); ?>"
+                >
 
-    <?php endif; ?>
-
-
-    <!-- =====================================
-         FORM
-    ====================================== -->
-
-    <div class="card">
-
-        <div class="form-title">
-            Property Information
-        </div>
+            </div>
 
 
-        <form method="POST"
-              enctype="multipart/form-data">
+            <div class="filter-box">
 
+                <select name="type">
 
-            <div class="form-grid">
+                    <option value="">
+                        All Property Types
+                    </option>
 
-
-                <!-- PROPERTY NAME -->
-
-                <div class="form-group">
-
-                    <label>
-                        Property Name
-                        <span class="required">*</span>
-                    </label>
-
-                    <input
-                        type="text"
-                        name="property_name"
-                        placeholder="Example: Sunrise Apartment"
-                        value="<?php echo htmlspecialchars($property_name ?? ''); ?>"
-                        required
+                    <option
+                        value="House"
+                        <?php
+                        if ($type === "House") {
+                            echo "selected";
+                        }
+                        ?>
                     >
+                        House
+                    </option>
 
-                </div>
-
-
-                <!-- PROPERTY TYPE -->
-
-                <div class="form-group">
-
-                    <label>
-                        Property Type
-                        <span class="required">*</span>
-                    </label>
-
-                    <select name="property_type" required>
-
-                        <option value="">
-                            Select property type
-                        </option>
-
-                        <option value="House">
-                            House
-                        </option>
-
-                        <option value="Apartment">
-                            Apartment
-                        </option>
-
-                        <option value="Room">
-                            Room
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <!-- LOCATION -->
-
-                <div class="form-group full">
-
-                    <label>
-                        Location
-                        <span class="required">*</span>
-                    </label>
-
-                    <input
-                        type="text"
-                        name="location"
-                        placeholder="Example: Dillibazar, Kathmandu"
-                        value="<?php echo htmlspecialchars($location ?? ''); ?>"
-                        required
+                    <option
+                        value="Apartment"
+                        <?php
+                        if ($type === "Apartment") {
+                            echo "selected";
+                        }
+                        ?>
                     >
+                        Apartment
+                    </option>
 
-                </div>
-
-
-                <!-- MONTHLY RENT -->
-
-                <div class="form-group">
-
-                    <label>
-                        Monthly Rent (NPR)
-                        <span class="required">*</span>
-                    </label>
-
-                    <input
-                        type="number"
-                        name="monthly_rent"
-                        min="0"
-                        step="0.01"
-                        placeholder="Example: 25000"
-                        value="<?php echo htmlspecialchars($monthly_rent ?? ''); ?>"
-                        required
+                    <option
+                        value="Room"
+                        <?php
+                        if ($type === "Room") {
+                            echo "selected";
+                        }
+                        ?>
                     >
+                        Room
+                    </option>
 
-                </div>
+                </select>
 
-
-                <!-- MAX OCCUPANTS -->
-
-                <div class="form-group">
-
-                    <label>
-                        Maximum Occupants
-                    </label>
-
-                    <input
-                        type="number"
-                        name="max_occupants"
-                        min="1"
-                        value="<?php echo htmlspecialchars($max_occupants ?? 1); ?>"
-                    >
-
-                </div>
+            </div>
 
 
-                <!-- BEDROOMS -->
-
-                <div class="form-group">
-
-                    <label>
-                        Bedrooms
-                    </label>
-
-                    <input
-                        type="number"
-                        name="bedrooms"
-                        min="0"
-                        value="<?php echo htmlspecialchars($bedrooms ?? 1); ?>"
-                    >
-
-                </div>
+            <button
+                type="submit"
+                class="search-btn"
+            >
+                Search
+            </button>
 
 
-                <!-- BATHROOMS -->
+            <a
+                href="properties.php"
+                class="reset-btn"
+            >
+                Reset
+            </a>
 
-                <div class="form-group">
+        </form>
 
-                    <label>
-                        Bathrooms
-                    </label>
-
-                    <input
-                        type="number"
-                        name="bathrooms"
-                        min="0"
-                        value="<?php echo htmlspecialchars($bathrooms ?? 1); ?>"
-                    >
-
-                </div>
+    </section>
 
 
-                <!-- DESCRIPTION -->
 
-                <div class="form-group full">
+    <!-- =========================================
+         PROPERTY LIST
+    ========================================= -->
 
-                    <label>
-                        Description
-                    </label>
-
-                    <textarea
-                        name="description"
-                        placeholder="Describe your property..."
-                    ><?php echo htmlspecialchars($description ?? ''); ?></textarea>
-
-                </div>
+    <section class="property-section">
 
 
-                <!-- IMAGE -->
+        <?php if (mysqli_num_rows($result) > 0): ?>
 
-                <div class="form-group full">
 
-                    <label>
-                        Property Image
-                    </label>
+            <div class="property-grid">
 
-                    <input
-                        type="file"
-                        name="property_image"
-                        accept=".jpg,.jpeg,.png,.webp"
-                    >
 
-                </div>
+                <?php while ($property = mysqli_fetch_assoc($result)): ?>
+
+
+                    <div class="property-card">
+
+
+                        <!-- PROPERTY IMAGE -->
+
+                        <div class="property-image">
+
+
+                            <?php
+
+                            $image_path = "";
+
+                            if (
+                                !empty($property['image'])
+                            ) {
+
+                                $image_path =
+                                    "uploads/properties/" .
+                                    $property['image'];
+
+                            }
+
+                            ?>
+
+
+                            <?php if (
+                                !empty($property['image']) &&
+                                file_exists(__DIR__ . "/" . $image_path)
+                            ): ?>
+
+                                <img
+                                    src="<?php echo htmlspecialchars($image_path); ?>"
+                                    alt="Property Image"
+                                >
+
+                            <?php else: ?>
+
+                                <div class="no-image">
+
+                                    <span>
+                                        No Image
+                                    </span>
+
+                                </div>
+
+                            <?php endif; ?>
+
+
+                            <div class="available-badge">
+
+                                Available
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- PROPERTY DETAILS -->
+
+                        <div class="property-content">
+
+
+                            <h2>
+
+                                <?php
+                                echo htmlspecialchars(
+                                    $property['property_name']
+                                );
+                                ?>
+
+                            </h2>
+
+
+                            <p class="location">
+
+                                📍
+
+                                <?php
+                                echo htmlspecialchars(
+                                    $property['location']
+                                );
+                                ?>
+
+                            </p>
+
+
+                            <div class="property-type">
+
+                                <?php
+                                echo htmlspecialchars(
+                                    $property['property_type']
+                                );
+                                ?>
+
+                            </div>
+
+
+
+                            <!-- RENT -->
+
+                            <div class="rent">
+
+                                <strong>
+                                    Rs.
+                                    <?php
+                                    echo number_format(
+                                        $property['monthly_rent'],
+                                        2
+                                    );
+                                    ?>
+                                </strong>
+
+                                <span>
+                                    / month
+                                </span>
+
+                            </div>
+
+
+
+                            <!-- PROPERTY FEATURES -->
+
+                            <div class="features">
+
+
+                                <div>
+
+                                    <strong>
+                                        <?php
+                                        echo htmlspecialchars(
+                                            $property['bedrooms']
+                                        );
+                                        ?>
+                                    </strong>
+
+                                    <span>
+                                        Bedrooms
+                                    </span>
+
+                                </div>
+
+
+                                <div>
+
+                                    <strong>
+                                        <?php
+                                        echo htmlspecialchars(
+                                            $property['bathrooms']
+                                        );
+                                        ?>
+                                    </strong>
+
+                                    <span>
+                                        Bathrooms
+                                    </span>
+
+                                </div>
+
+
+                                <div>
+
+                                    <strong>
+                                        <?php
+                                        echo htmlspecialchars(
+                                            $property['max_occupants']
+                                        );
+                                        ?>
+                                    </strong>
+
+                                    <span>
+                                        Occupants
+                                    </span>
+
+                                </div>
+
+
+                            </div>
+
+
+
+                            <!-- LANDLORD -->
+
+                            <p class="landlord">
+
+                                Landlord ID:
+                                <strong>
+
+                                    <?php
+                                    echo htmlspecialchars(
+                                        $property['landlord_id']
+                                    );
+                                    ?>
+
+                                </strong>
+
+                            </p>
+
+
+
+                            <!-- CREATED DATE -->
+
+                            <p class="created-date">
+
+                                Listed on:
+
+                                <?php
+
+                                echo date(
+                                    "d M Y",
+                                    strtotime(
+                                        $property['created_at']
+                                    )
+                                );
+
+                                ?>
+
+                            </p>
+
+
+
+                            <!-- ACTION BUTTONS -->
+
+                            <div class="property-actions">
+
+
+                                <a
+                                    href="property_details.php?id=<?php echo $property['property_id']; ?>"
+                                    class="details-btn"
+                                >
+
+                                    View Details
+
+                                </a>
+
+
+                                <a
+                                    href="booking.php?property_id=<?php echo $property['property_id']; ?>"
+                                    class="book-btn"
+                                >
+
+                                    Book Now
+
+                                </a>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                <?php endwhile; ?>
 
 
             </div>
 
 
-            <!-- BUTTONS -->
+        <?php else: ?>
 
-            <div class="button-area">
 
-                <button
-                    type="submit"
-                    name="add_property"
-                    class="btn btn-primary"
-                >
-                    Add Property
-                </button>
+            <!-- NO PROPERTY -->
+
+            <div class="no-properties">
+
+                <h2>
+                    No Properties Available
+                </h2>
+
+                <p>
+                    There are currently no available properties matching your search.
+                </p>
 
                 <a
-                    href="landlord.php"
-                    class="btn btn-secondary"
+                    href="properties.php"
+                    class="reset-btn"
                 >
-                    Cancel
+                    View All Properties
                 </a>
 
             </div>
 
 
-        </form>
+        <?php endif; ?>
 
-    </div>
 
-</div>
+    </section>
+
+
+</main>
+
 
 </body>
 

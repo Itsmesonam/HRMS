@@ -122,8 +122,7 @@ if ($_SESSION['role'] !== 'landlord') {
 
             <!-- My Houses -->
 
-            <a href="landlord_houses.php">
-
+            <a href="manage_property.php">
                 <span class="material-symbols-outlined">
                     home
                 </span>
@@ -135,19 +134,19 @@ if ($_SESSION['role'] !== 'landlord') {
             </a>
 
 
-            <!-- Add House -->
+     <!-- Add Property -->
 
-            <a href="add_house.php">
+     <a href="add_property.php">
 
-                <span class="material-symbols-outlined">
-                    add_home
-                </span>
+      <span class="material-symbols-outlined">
+        add_home
+      </span>
 
-                <h3>
-                    Add House
-                </h3>
+     <h3>
+        Add Property
+      </h3>
 
-            </a>
+   </a>
 
 
             <!-- Tenants -->

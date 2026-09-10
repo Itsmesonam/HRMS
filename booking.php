@@ -1,559 +1,363 @@
-
 <?php
 
 session_start();
 
-/* =========================================
-   CHECK TENANT LOGIN
-========================================= */
+require_once __DIR__ . "/config/database/db.php";
 
+/*-- Check tenant login */
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
 
-if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'tenant') {
+/*-- Check tenant role */
+if (!isset($_SESSION['role']) || strtolower($_SESSION['role']) !== 'tenant') {
     header("Location: index.php");
     exit();
 }
 
+$tenant_id = $_SESSION['user_id'];
 
-/* =========================================
-   DATABASE CONNECTION
-========================================= */
 
-$conn = mysqli_connect(
-    "localhost",
-    "root",
-    "",
-    "hrms"
+/*-- Get tenant name */
+$user_name = '';
+
+$user_query = mysqli_query(
+    $conn,
+    "SELECT * FROM users WHERE id = $tenant_id LIMIT 1"
 );
 
-if (!$conn) {
-    die("Database connection failed: " . mysqli_connect_error());
+if ($user_query && mysqli_num_rows($user_query) > 0) {
+
+    $user = mysqli_fetch_assoc($user_query);
+
+    /*
+       Change these according to your actual users table
+       if necessary.
+    */
+
+    if (isset($user['first_name'])) {
+        $user_name = $user['first_name'];
+
+        if (isset($user['last_name'])) {
+            $user_name .= " " . $user['last_name'];
+        }
+    }
 }
 
 
-/* =========================================
-   TENANT INFORMATION
-========================================= */
+/*-- Get available properties */
+$properties_query = "
+    SELECT
+        property_id,
+        property_name,
+        property_type,
+        location,
+        monthly_rent,
+        max_occupants
+    FROM properties
+    WHERE property_status = 'Available'
+    AND created_at > DATE_SUB(NOW(), INTERVAL 1 MONTH)
+    ORDER BY property_id DESC
+";
 
-$tenant_id = $_SESSION['user_id'];
-
-$firstname = $_SESSION['firstname'] ?? '';
-$lastname  = $_SESSION['lastname'] ?? '';
-
-
-/* =========================================
-   MESSAGE VARIABLES
-========================================= */
-
-$success = "";
-$error = "";
-
-
-/* =========================================
-   HANDLE BOOKING
-========================================= */
-
-if (isset($_POST['book'])) {
-
-    $house_id = intval($_POST['house_id'] ?? 0);
-
-    $booking_date = $_POST['booking_date'] ?? '';
-
-    $move_in_date = $_POST['move_in_date'] ?? '';
-
-    $message = trim($_POST['message'] ?? '');
+$properties_result = mysqli_query(
+    $conn,
+    $properties_query
+);
 
 
-    /* =====================================
-       VALIDATION
-    ===================================== */
+/*-- Submit booking */
+if (isset($_POST['submit_booking'])) {
 
-    if (
-        $house_id <= 0 ||
-        empty($booking_date) ||
-        empty($move_in_date)
-    ) {
+    $property_id = intval($_POST['property_id']);
+    $booking_date = $_POST['booking_date'];
+    $move_in_date = $_POST['move_in_date'];
+    $duration = intval($_POST['duration']);
+    $occupants = intval($_POST['occupants']);
+    $message = trim($_POST['message']);
 
-        $error = "Please fill in all required fields.";
+    /*-- Check property */
+    $property_query = mysqli_query(
+        $conn,
+        "SELECT *
+         FROM properties
+         WHERE property_id = $property_id
+         AND property_status = 'Available'
+         AND created_at > DATE_SUB(NOW(), INTERVAL 1 MONTH)
+         LIMIT 1"
+    );
 
-    }
+    if (!$property_query || mysqli_num_rows($property_query) === 0) {
 
-    elseif ($move_in_date < $booking_date) {
+        $error = "Selected property is no longer available.";
 
-        $error = "Move-in date cannot be before the booking date.";
+    } else {
 
-    }
+        $property = mysqli_fetch_assoc($property_query);
 
-    else {
+        /*-- Check occupants */
+        if ($occupants > $property['max_occupants']) {
 
-        /* =================================
-           CHECK HOUSE
-        ================================= */
+            $error = "Number of occupants exceeds the maximum allowed.";
 
-        $house_check = mysqli_prepare(
-            $conn,
-            "SELECT id
-             FROM houses
-             WHERE id = ?
-             AND status = 'Available'"
-        );
+        } elseif ($move_in_date < $booking_date) {
 
-        mysqli_stmt_bind_param(
-            $house_check,
-            "i",
-            $house_id
-        );
+            $error = "Move-in date cannot be before booking date.";
 
-        mysqli_stmt_execute($house_check);
+        } else {
 
-        $house_result =
-            mysqli_stmt_get_result($house_check);
-
-
-        if (mysqli_num_rows($house_result) == 0) {
-
-            $error = "Selected house is not available.";
-
-        }
-
-        else {
-
-            /* =============================
-               CHECK EXISTING BOOKING
-            ============================= */
-
-            $check_booking = mysqli_prepare(
+            /*-- Check existing booking */
+            $check_booking = mysqli_query(
                 $conn,
-                "SELECT id
+                "SELECT booking_id
                  FROM bookings
-                 WHERE tenant_id = ?
-                 AND house_id = ?
-                 AND status IN ('Pending', 'Approved')
+                 WHERE property_id = $property_id
+                 AND tenant_id = $tenant_id
+                 AND booking_status IN ('Pending', 'Confirmed')
                  LIMIT 1"
             );
 
-            mysqli_stmt_bind_param(
-                $check_booking,
-                "ii",
-                $tenant_id,
-                $house_id
-            );
+            if ($check_booking && mysqli_num_rows($check_booking) > 0) {
 
-            mysqli_stmt_execute($check_booking);
+                $error = "You already have a booking request for this property.";
 
-            $booking_result =
-                mysqli_stmt_get_result($check_booking);
+            } else {
 
-
-            if (mysqli_num_rows($booking_result) > 0) {
-
-                $error =
-                    "You already have an active booking request for this house.";
-
-            }
-
-            else {
-
-                /* =========================
-                   INSERT BOOKING
-                ========================= */
-
-                $status = "Pending";
-
-                $insert = mysqli_prepare(
+                /*-- Insert booking */
+                $stmt = mysqli_prepare(
                     $conn,
                     "INSERT INTO bookings
                     (
+                        property_id,
                         tenant_id,
-                        house_id,
                         booking_date,
                         move_in_date,
+                        duration,
+                        occupants,
                         message,
-                        status
+                        booking_status
                     )
-                    VALUES (?, ?, ?, ?, ?, ?)"
+                    VALUES (?, ?, ?, ?, ?, ?, ?, 'Pending')"
                 );
 
                 mysqli_stmt_bind_param(
-                    $insert,
-                    "iissss",
+                    $stmt,
+                    "iisssis",
+                    $property_id,
                     $tenant_id,
-                    $house_id,
                     $booking_date,
                     $move_in_date,
-                    $message,
-                    $status
+                    $duration,
+                    $occupants,
+                    $message
                 );
 
+                if (mysqli_stmt_execute($stmt)) {
 
-                if (mysqli_stmt_execute($insert)) {
+                    header("Location: tenant_bookings.php?success=1");
+                    exit();
 
-                    $success =
-                        "Booking request submitted successfully! Your request is pending landlord approval.";
+                } else {
 
+                    $error = "Booking request failed. Please try again.";
                 }
 
-                else {
-
-                    $error =
-                        "Failed to submit booking.";
-
-                }
-
-                mysqli_stmt_close($insert);
+                mysqli_stmt_close($stmt);
             }
         }
-
-        mysqli_stmt_close($house_check);
     }
 }
 
-
-/* =========================================
-   GET AVAILABLE HOUSES
-========================================= */
-
-$houses = mysqli_query(
-    $conn,
-    "SELECT id, house_name
-     FROM houses
-     WHERE status = 'Available'
-     ORDER BY id DESC"
-);
-
 ?>
-
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-    <title>Book a House - HRMS</title>
+    <title>Submit Rental Request</title>
 
-    <link
-        rel="stylesheet"
-        href="Assets/css/booking_style.css"
-    >
+    <link rel="stylesheet"
+          href="assets/css/booking_style.css">
 
 </head>
 
-
 <body>
 
+    <div class="booking-container">
 
-<!-- =====================================
-     NAVIGATION
-===================================== -->
+        <h1>Submit Rental Request</h1>
 
-<nav>
+        <p class="welcome">
+            Welcome,
+            <?php echo htmlspecialchars($user_name); ?>
+        </p>
 
-    <div class="logo">
-        HRMS
-    </div>
+        <?php if (isset($error)): ?>
 
-    <div class="nav-links">
+            <div class="error-message">
+                <?php echo htmlspecialchars($error); ?>
+            </div>
 
-        <a href="tenantdashboard.php">
-            Dashboard
-        </a>
+        <?php endif; ?>
 
-        <a href="houses.php">
-            Houses
-        </a>
+        <form method="POST">
 
-        <a
-            href="booking.php"
-            class="active"
-        >
-            Booking
-        </a>
+            <div class="form-group">
 
-        <a href="rent.php">
-            Rent
-        </a>
+                <label for="property_id">
+                    Select Property
+                </label>
 
-        <a href="logout.php">
-            Logout
-        </a>
-
-    </div>
-
-</nav>
-
-
-
-<!-- =====================================
-     BOOKING CONTAINER
-===================================== -->
-
-<div class="booking-container">
-
-    <h1>
-        Book a House
-    </h1>
-
-
-    <p class="welcome">
-
-        Welcome,
-        <?php
-        echo htmlspecialchars(
-            trim($firstname . " " . $lastname)
-        );
-        ?>
-
-    </p>
-
-
-    <!-- =================================
-         SUCCESS MESSAGE
-    ================================== -->
-
-    <?php if (!empty($success)) { ?>
-
-        <div class="success-message">
-
-            <?php
-            echo htmlspecialchars($success);
-            ?>
-
-        </div>
-
-    <?php } ?>
-
-
-    <!-- =================================
-         ERROR MESSAGE
-    ================================== -->
-
-    <?php if (!empty($error)) { ?>
-
-        <div class="error-message">
-
-            <?php
-            echo htmlspecialchars($error);
-            ?>
-
-        </div>
-
-    <?php } ?>
-
-
-    <!-- =================================
-         BOOKING FORM
-    ================================== -->
-
-    <form
-        action="booking.php"
-        method="POST"
-    >
-
-
-        <!-- HOUSE -->
-
-        <label for="house_id">
-            Select House
-        </label>
-
-        <select
-            name="house_id"
-            id="house_id"
-            required
-        >
-
-            <option value="">
-                Select an available house
-            </option>
-
-
-            <?php
-
-            if (
-                $houses &&
-                mysqli_num_rows($houses) > 0
-            ) {
-
-                while (
-                    $house =
-                    mysqli_fetch_assoc($houses)
-                ) {
-
-            ?>
-
-                <option
-                    value="<?php
-                    echo $house['id'];
-                    ?>"
+                <select
+                    name="property_id"
+                    id="property_id"
+                    required
                 >
 
-                    <?php
-                    echo htmlspecialchars(
-                        $house['house_name']
-                    );
-                    ?>
+                    <option value="">
+                        Select an available property
+                    </option>
 
-                </option>
+                    <?php while ($property = mysqli_fetch_assoc($properties_result)): ?>
 
-            <?php
+                        <option value="<?php echo $property['property_id']; ?>">
 
-                }
+                            <?php echo htmlspecialchars($property['property_name']); ?>
+                            -
+                            <?php echo htmlspecialchars($property['property_type']); ?>
+                            -
+                            <?php echo htmlspecialchars($property['location']); ?>
+                            -
+                            Rs.
+                            <?php echo number_format($property['monthly_rent'], 2); ?>
 
-            }
+                        </option>
 
-            else {
+                    <?php endwhile; ?>
 
-            ?>
+                </select>
 
-                <option value="">
-                    No available houses
-                </option>
-
-            <?php
-
-            }
-
-            ?>
-
-        </select>
+            </div>
 
 
+            <div class="form-group">
 
-        <!-- BOOKING DATE -->
+                <label for="booking_date">
+                    Booking Date
+                </label>
 
-        <label for="booking_date">
-            Booking Date
-        </label>
+                <input
+                    type="date"
+                    name="booking_date"
+                    id="booking_date"
+                    value="<?php echo date('Y-m-d'); ?>"
+                    readonly
+                    required
+                >
 
-        <input
-            type="date"
-            name="booking_date"
-            id="booking_date"
-            required
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="move_in_date">
+                    Move-in Date
+                </label>
+
+                <input
+                    type="date"
+                    name="move_in_date"
+                    id="move_in_date"
+                    min="<?php echo date('Y-m-d'); ?>"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="duration">
+                    Rental Duration
+                </label>
+
+                <div class="duration-row">
+
+                    <input
+                        type="number"
+                        name="duration"
+                        id="duration"
+                        min="1"
+                        value="1"
+                        required
+                    >
+
+                    <span>Month(s)</span>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="occupants">
+                    Number of Occupants
+                </label>
+
+                <input
+                    type="number"
+                    name="occupants"
+                    id="occupants"
+                    min="1"
+                    value="1"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="message">
+                    Message
+                </label>
+
+                <textarea
+                    name="message"
+                    id="message"
+                    placeholder="Enter any additional information for the landlord..."
+                ></textarea>
+
+            </div>
+
+
+            <button
+                type="submit"
+                name="submit_booking"
+                class="submit-btn"
+            >
+                Submit Rental Request
+            </button>
+
+        </form>
+
+
+        <a
+            href="tenantdashboard.php"
+            class="back-btn"
         >
+            ← Back to Dashboard
+        </a>
 
-
-
-        <!-- MOVE-IN DATE -->
-
-        <label for="move_in_date">
-            Move-in Date
-        </label>
-
-        <input
-            type="date"
-            name="move_in_date"
-            id="move_in_date"
-            required
-        >
-
-
-
-        <!-- MESSAGE -->
-
-        <label for="message">
-            Message
-        </label>
-
-        <textarea
-            name="message"
-            id="message"
-            rows="4"
-            placeholder="Enter any additional information..."
-        ></textarea>
-
-
-
-        <!-- SUBMIT -->
-
-        <button
-            type="submit"
-            name="book"
-        >
-            Submit Booking
-        </button>
-
-    </form>
-
-
-    <!-- BACK BUTTON -->
-
-    <a
-        href="tenantdashboard.php"
-        class="back-btn"
-    >
-        ← Back to Dashboard
-    </a>
-
-</div>
-
-
-
-<!-- =====================================
-     JAVASCRIPT DATE VALIDATION
-===================================== -->
-
-<script>
-
-const bookingDate =
-    document.getElementById("booking_date");
-
-const moveInDate =
-    document.getElementById("move_in_date");
-
-
-/* Get today's date */
-
-const today =
-    new Date().toISOString().split("T")[0];
-
-
-/* Booking cannot be before today */
-
-bookingDate.min = today;
-
-
-/* Move-in cannot be before today */
-
-moveInDate.min = today;
-
-
-/* Move-in date follows booking date */
-
-bookingDate.addEventListener(
-    "change",
-    function () {
-
-        moveInDate.min =
-            bookingDate.value;
-
-        if (
-            moveInDate.value &&
-            moveInDate.value <
-            bookingDate.value
-        ) {
-
-            moveInDate.value = "";
-
-        }
-
-    }
-);
-
-</script>
-
+    </div>
 
 </body>
 
 </html>
-

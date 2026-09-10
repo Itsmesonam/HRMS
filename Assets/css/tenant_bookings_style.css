@@ -1,0 +1,247 @@
+/* =========================================
+   GLOBAL
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f7fb;
+    color: #1f2937;
+}
+
+
+/* =========================================
+   PAGE CONTAINER
+========================================= */
+
+.page-container {
+    width: 100%;
+    min-height: 100vh;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.page-header {
+    background: #ffffff;
+    min-height: 90px;
+
+    padding: 20px 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.page-header h1 {
+    font-size: 28px;
+    margin-bottom: 6px;
+}
+
+.page-header p {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+
+/* =========================================
+   BROWSE BUTTON
+========================================= */
+
+.browse-btn {
+    text-decoration: none;
+
+    background: #2563eb;
+    color: #ffffff;
+
+    padding: 11px 20px;
+
+    border-radius: 7px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+.browse-btn:hover {
+    background: #1d4ed8;
+}
+
+
+/* =========================================
+   MAIN
+========================================= */
+
+main {
+    padding: 30px 35px;
+}
+
+
+/* =========================================
+   BOOKING SECTION
+========================================= */
+
+.booking-section {
+    background: #ffffff;
+
+    border-radius: 10px;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+
+    overflow: hidden;
+}
+
+
+/* =========================================
+   SECTION HEADER
+========================================= */
+
+.section-header {
+    padding: 22px 25px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.section-header h2 {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.section-header p {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+
+/* =========================================
+   TABLE
+========================================= */
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #f8fafc;
+}
+
+th {
+    text-align: left;
+
+    padding: 15px 20px;
+
+    font-size: 13px;
+
+    color: #4b5563;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+td {
+    padding: 15px 20px;
+
+    font-size: 14px;
+
+    border-bottom: 1px solid #f0f0f0;
+}
+
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.empty-state {
+    padding: 55px 20px;
+
+    text-align: center;
+}
+
+.empty-state h3 {
+    font-size: 18px;
+
+    margin-bottom: 8px;
+}
+
+.empty-state p {
+    color: #6b7280;
+
+    font-size: 14px;
+
+    margin-bottom: 22px;
+}
+
+
+/* =========================================
+   FIND PROPERTY BUTTON
+========================================= */
+
+.find-btn {
+    display: inline-block;
+
+    text-decoration: none;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    padding: 11px 20px;
+
+    border-radius: 7px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+.find-btn:hover {
+    background: #1d4ed8;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 700px) {
+
+    .page-header {
+        padding: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    main {
+        padding: 20px;
+    }
+
+    .browse-btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    th,
+    td {
+        padding: 12px;
+        white-space: nowrap;
+    }
+
+}

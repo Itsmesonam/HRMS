@@ -122,7 +122,7 @@ if ($_SESSION['role'] !== 'tenant') {
 
             <!-- Browse Houses -->
 
-            <a href="houses.php">
+            <a href="properties.php">
 
                 <span class="material-symbols-outlined">
                     home

@@ -25,7 +25,9 @@ body {
     padding: 22px 40px;
 
     display: flex;
+
     justify-content: space-between;
+
     align-items: center;
 
     border-bottom: 1px solid #e5e7eb;
@@ -37,6 +39,7 @@ body {
 
 .page-header p {
     color: #6b7280;
+
     font-size: 14px;
 }
 
@@ -64,7 +67,7 @@ body {
 ========================= */
 
 main {
-    max-width: 1100px;
+    max-width: 850px;
 
     margin: auto;
 
@@ -88,39 +91,25 @@ main {
 
 .message.error {
     background: #fee2e2;
+
     color: #991b1b;
 }
 
 .message.success {
     background: #dcfce7;
+
     color: #166534;
 }
 
 
 /* =========================
-   PAYMENT LAYOUT
+   FORM CARD
 ========================= */
 
-.payment-layout {
-    display: grid;
-
-    grid-template-columns: 1fr 1fr;
-
-    gap: 25px;
-
-    align-items: start;
-}
-
-
-/* =========================
-   CARDS
-========================= */
-
-.booking-card,
-.payment-card {
+.form-card {
     background: white;
 
-    padding: 28px;
+    padding: 30px;
 
     border-radius: 10px;
 
@@ -128,16 +117,9 @@ main {
         0 3px 12px rgba(0, 0, 0, 0.05);
 }
 
-.booking-card h2,
-.payment-card h2 {
-    margin-bottom: 22px;
-
-    font-size: 20px;
-}
-
 
 /* =========================
-   PROPERTY
+   PROPERTY PREVIEW
 ========================= */
 
 .property-preview {
@@ -147,22 +129,22 @@ main {
 
     gap: 15px;
 
-    padding-bottom: 20px;
+    padding-bottom: 25px;
+
+    margin-bottom: 25px;
 
     border-bottom: 1px solid #e5e7eb;
-
-    margin-bottom: 20px;
 }
 
 .property-preview img,
 .image-placeholder {
-    width: 75px;
+    width: 80px;
 
-    height: 75px;
+    height: 80px;
 
     object-fit: cover;
 
-    border-radius: 8px;
+    border-radius: 9px;
 }
 
 .image-placeholder {
@@ -174,63 +156,17 @@ main {
 
     justify-content: center;
 
-    font-size: 32px;
+    font-size: 35px;
 }
 
-.property-preview h3 {
-    margin-bottom: 6px;
+.property-preview h2 {
+    margin-bottom: 5px;
 }
 
 .property-preview p {
     color: #6b7280;
 
     font-size: 13px;
-}
-
-
-/* =========================
-   DETAILS
-========================= */
-
-.detail-row {
-    display: flex;
-
-    justify-content: space-between;
-
-    gap: 20px;
-
-    padding: 13px 0;
-
-    border-bottom: 1px solid #f0f0f0;
-}
-
-.detail-row span {
-    color: #6b7280;
-
-    font-size: 14px;
-}
-
-.detail-row strong {
-    text-align: right;
-
-    font-size: 14px;
-}
-
-.detail-row.total {
-    margin-top: 8px;
-
-    padding-top: 18px;
-
-    border-bottom: none;
-}
-
-.detail-row.total span,
-.detail-row.total strong {
-    font-size: 17px;
-}
-
-.detail-row.total strong {
-    color: #2563eb;
 }
 
 
@@ -287,63 +223,80 @@ main {
         0 0 0 2px rgba(37, 99, 235, 0.08);
 }
 
-.form-group small {
-    display: block;
 
-    margin-top: 6px;
+/* =========================
+   FORM ROW
+========================= */
 
-    color: #6b7280;
+.form-row {
+    display: grid;
 
-    font-size: 12px;
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 15px;
+}
+
+
+/* Three-column room section */
+
+.form-row:has(
+    input[name="max_occupants"]
+) {
+    grid-template-columns:
+        repeat(3, 1fr);
 }
 
 
 /* =========================
-   AMOUNT
+   FORM ACTIONS
 ========================= */
 
-.amount-box {
-    padding: 14px;
+.form-actions {
+    display: flex;
 
-    background: #eff6ff;
+    justify-content: flex-end;
 
-    border: 1px solid #bfdbfe;
+    gap: 10px;
 
-    border-radius: 7px;
+    margin-top: 25px;
 
-    color: #1d4ed8;
+    padding-top: 20px;
 
-    font-size: 20px;
-
-    font-weight: 700;
+    border-top: 1px solid #e5e7eb;
 }
 
-
-/* =========================
-   PAY BUTTON
-========================= */
-
-.pay-btn {
-    width: 100%;
-
-    padding: 13px;
-
-    border: none;
+.cancel-btn,
+.update-btn {
+    padding: 11px 20px;
 
     border-radius: 7px;
 
-    background: #2563eb;
+    font-size: 14px;
 
-    color: white;
-
-    font-size: 15px;
-
-    font-weight: 600;
+    text-decoration: none;
 
     cursor: pointer;
 }
 
-.pay-btn:hover {
+.cancel-btn {
+    background: #e5e7eb;
+
+    color: #374151;
+}
+
+.cancel-btn:hover {
+    background: #d1d5db;
+}
+
+.update-btn {
+    border: none;
+
+    background: #2563eb;
+
+    color: white;
+}
+
+.update-btn:hover {
     background: #1d4ed8;
 }
 
@@ -352,7 +305,7 @@ main {
    RESPONSIVE
 ========================= */
 
-@media (max-width: 800px) {
+@media (max-width: 700px) {
 
     .page-header {
         padding: 20px;
@@ -368,13 +321,26 @@ main {
         padding: 25px 12px;
     }
 
-    .payment-layout {
+    .form-card {
+        padding: 20px;
+    }
+
+    .form-row,
+    .form-row:has(
+        input[name="max_occupants"]
+    ) {
         grid-template-columns: 1fr;
     }
 
-    .booking-card,
-    .payment-card {
-        padding: 20px;
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .cancel-btn,
+    .update-btn {
+        text-align: center;
+
+        width: 100%;
     }
 
 }
