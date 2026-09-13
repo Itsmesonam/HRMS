@@ -166,14 +166,14 @@ if ($_SESSION['role'] !== 'landlord') {
 
             <!-- Bookings -->
 
-            <a href="landlord_bookings.php">
+            <a href="rental_requests.php">
 
                 <span class="material-symbols-outlined">
                     calendar_month
                 </span>
 
                 <h3>
-                    Bookings
+                    Rental Requests
                 </h3>
 
             </a>

@@ -2,28 +2,27 @@
 
 session_start();
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 require_once __DIR__ . "/config/database/db.php";
 
 
-/* =========================================
-   LANDLORD LOGIN CHECK
-========================================= */
+/*-- Landlord Login Check */
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
 
+
+/*-- Landlord Role Check */
+
 if (
     !isset($_SESSION['role']) ||
     strtolower($_SESSION['role']) !== 'landlord'
 ) {
-    header("Location: login.php");
+    header("Location: index.php");
     exit();
 }
+
 
 $landlord_id = $_SESSION['user_id'];
 
@@ -31,168 +30,158 @@ $message = "";
 $message_type = "";
 
 
-/* =========================================
-   CONFIRM BOOKING
-========================================= */
+/*-- Approve Booking */
 
-if (isset($_POST['confirm_booking'])) {
+if (isset($_POST['approve_booking'])) {
 
-    $booking_id = intval($_POST['booking_id']);
+    $booking_id = (int) $_POST['booking_id'];
 
     mysqli_begin_transaction($conn);
 
     try {
 
-        /* Get booking belonging to this landlord */
+        /*-- Check Booking Belongs to This Landlord */
 
-        $sql = "
-            SELECT
+        $check_stmt = mysqli_prepare(
+            $conn,
+            "SELECT
                 b.booking_id,
                 b.property_id,
                 b.booking_status,
                 p.property_status
-
-            FROM bookings b
-
-            INNER JOIN properties p
+             FROM bookings b
+             INNER JOIN properties p
                 ON b.property_id = p.property_id
-
-            WHERE b.booking_id = ?
-              AND p.landlord_id = ?
-
-            FOR UPDATE
-        ";
-
-        $stmt = mysqli_prepare($conn, $sql);
+             WHERE b.booking_id = ?
+             AND p.landlord_id = ?
+             FOR UPDATE"
+        );
 
         mysqli_stmt_bind_param(
-            $stmt,
+            $check_stmt,
             "ii",
             $booking_id,
             $landlord_id
         );
 
-        mysqli_stmt_execute($stmt);
+        mysqli_stmt_execute($check_stmt);
 
-        $result = mysqli_stmt_get_result($stmt);
+        $check_result =
+            mysqli_stmt_get_result($check_stmt);
 
-        $booking = mysqli_fetch_assoc($result);
+        $booking =
+            mysqli_fetch_assoc($check_result);
 
-        mysqli_stmt_close($stmt);
+        mysqli_stmt_close($check_stmt);
 
 
         if (!$booking) {
-            throw new Exception("Booking request not found.");
+            throw new Exception(
+                "Booking request not found."
+            );
         }
 
 
-        /* Only Pending bookings can be confirmed */
+        /*-- Only Pending Booking Can Be Approved */
 
-        if ($booking['booking_status'] !== 'Pending') {
+        if (
+            strtolower(
+                $booking['booking_status']
+            ) !== 'pending'
+        ) {
             throw new Exception(
                 "This booking has already been processed."
             );
         }
 
 
-        /* Property must still be available */
+        /*-- Property Must Be Available */
 
-        if ($booking['property_status'] !== 'Available') {
+        if (
+            strtolower(
+                $booking['property_status']
+            ) !== 'available'
+        ) {
             throw new Exception(
                 "This property is no longer available."
             );
         }
 
 
-        /* Confirm booking */
+        /*-- Confirm Booking */
 
-        $sql = "
-            UPDATE bookings
-
-            SET booking_status = 'Confirmed'
-
-            WHERE booking_id = ?
-              AND booking_status = 'Pending'
-        ";
-
-        $stmt = mysqli_prepare($conn, $sql);
+        $update_booking = mysqli_prepare(
+            $conn,
+            "UPDATE bookings
+             SET booking_status = 'Confirmed'
+             WHERE booking_id = ?"
+        );
 
         mysqli_stmt_bind_param(
-            $stmt,
+            $update_booking,
             "i",
             $booking_id
         );
 
-        mysqli_stmt_execute($stmt);
+        mysqli_stmt_execute($update_booking);
 
-        mysqli_stmt_close($stmt);
+        mysqli_stmt_close($update_booking);
 
 
-        /* Make property occupied */
+        /*-- Mark Property Occupied */
 
-        $sql = "
-            UPDATE properties
-
-            SET property_status = 'Occupied'
-
-            WHERE property_id = ?
-              AND property_status = 'Available'
-        ";
-
-        $stmt = mysqli_prepare($conn, $sql);
+        $update_property = mysqli_prepare(
+            $conn,
+            "UPDATE properties
+             SET property_status = 'Occupied'
+             WHERE property_id = ?"
+        );
 
         mysqli_stmt_bind_param(
-            $stmt,
+            $update_property,
             "i",
             $booking['property_id']
         );
 
-        mysqli_stmt_execute($stmt);
+        mysqli_stmt_execute($update_property);
 
-        mysqli_stmt_close($stmt);
+        mysqli_stmt_close($update_property);
 
 
         mysqli_commit($conn);
 
-        header(
-            "Location: rental_requests.php?success=confirmed"
-        );
+        $message =
+            "Booking request approved successfully.";
 
-        exit();
+        $message_type = "success";
 
     } catch (Exception $e) {
 
         mysqli_rollback($conn);
 
         $message = $e->getMessage();
+
         $message_type = "error";
     }
 }
 
 
-/* =========================================
-   REJECT BOOKING
-========================================= */
+/*-- Reject Booking */
 
 if (isset($_POST['reject_booking'])) {
 
-    $booking_id = intval($_POST['booking_id']);
+    $booking_id = (int) $_POST['booking_id'];
 
-
-    $sql = "
-        UPDATE bookings b
-
-        INNER JOIN properties p
+    $stmt = mysqli_prepare(
+        $conn,
+        "UPDATE bookings b
+         INNER JOIN properties p
             ON b.property_id = p.property_id
-
-        SET b.booking_status = 'Rejected'
-
-        WHERE b.booking_id = ?
-          AND p.landlord_id = ?
-          AND b.booking_status = 'Pending'
-    ";
-
-    $stmt = mysqli_prepare($conn, $sql);
+         SET b.booking_status = 'Rejected'
+         WHERE b.booking_id = ?
+         AND p.landlord_id = ?
+         AND b.booking_status = 'Pending'"
+    );
 
     mysqli_stmt_bind_param(
         $stmt,
@@ -201,29 +190,19 @@ if (isset($_POST['reject_booking'])) {
         $landlord_id
     );
 
-    if (mysqli_stmt_execute($stmt)) {
+    mysqli_stmt_execute($stmt);
 
-        if (mysqli_stmt_affected_rows($stmt) > 0) {
+    if (mysqli_stmt_affected_rows($stmt) > 0) {
 
-            header(
-                "Location: rental_requests.php?success=rejected"
-            );
+        $message =
+            "Booking request rejected successfully.";
 
-            exit();
-
-        } else {
-
-            $message =
-                "Booking request could not be rejected.";
-
-            $message_type = "error";
-        }
+        $message_type = "success";
 
     } else {
 
         $message =
-            "Database error: " .
-            mysqli_error($conn);
+            "Unable to reject this booking.";
 
         $message_type = "error";
     }
@@ -232,43 +211,13 @@ if (isset($_POST['reject_booking'])) {
 }
 
 
-/* =========================================
-   SUCCESS MESSAGE
-========================================= */
+/*-- Get Landlord Booking Requests */
 
-if (isset($_GET['success'])) {
-
-    if ($_GET['success'] === 'confirmed') {
-
-        $message = "Booking confirmed successfully.";
-        $message_type = "success";
-
-    }
-
-    elseif ($_GET['success'] === 'rejected') {
-
-        $message = "Booking request rejected.";
-        $message_type = "success";
-
-    }
-}
-
-
-/* =========================================
-   FILTER
-========================================= */
-
-$filter = $_GET['status'] ?? 'All';
-
-
-/* =========================================
-   GET RENTAL REQUESTS
-========================================= */
-
-$sql = "
+$query = "
     SELECT
-
         b.booking_id,
+        b.property_id,
+        b.tenant_id,
         b.booking_date,
         b.move_in_date,
         b.duration,
@@ -277,83 +226,50 @@ $sql = "
         b.booking_status,
         b.created_at,
 
-        p.property_id,
         p.property_name,
         p.property_type,
         p.location,
         p.monthly_rent,
-
-        u.first_name,
-        u.last_name,
-        u.email,
-        u.phone
+        p.property_status
 
     FROM bookings b
 
     INNER JOIN properties p
         ON b.property_id = p.property_id
 
-    INNER JOIN users u
-        ON b.tenant_id = u.id
-
     WHERE p.landlord_id = ?
+
+    ORDER BY
+        CASE
+            WHEN b.booking_status = 'Pending'
+            THEN 1
+            WHEN b.booking_status = 'Confirmed'
+            THEN 2
+            WHEN b.booking_status = 'Rejected'
+            THEN 3
+            ELSE 4
+        END,
+        b.created_at DESC
 ";
 
 
-/* Add status filter */
+$stmt = mysqli_prepare(
+    $conn,
+    $query
+);
 
-if (
-    in_array(
-        $filter,
-        ['Pending', 'Confirmed', 'Rejected']
-    )
-) {
-
-    $sql .= "
-        AND b.booking_status = ?
-    ";
-
-}
-
-$sql .= "
-    ORDER BY b.created_at DESC
-";
-
-
-$stmt = mysqli_prepare($conn, $sql);
-
-
-if (
-    in_array(
-        $filter,
-        ['Pending', 'Confirmed', 'Rejected']
-    )
-) {
-
-    mysqli_stmt_bind_param(
-        $stmt,
-        "is",
-        $landlord_id,
-        $filter
-    );
-
-} else {
-
-    mysqli_stmt_bind_param(
-        $stmt,
-        "i",
-        $landlord_id
-    );
-
-}
-
+mysqli_stmt_bind_param(
+    $stmt,
+    "i",
+    $landlord_id
+);
 
 mysqli_stmt_execute($stmt);
 
-$result = mysqli_stmt_get_result($stmt);
+$requests_result =
+    mysqli_stmt_get_result($stmt);
 
 ?>
-
 
 <!DOCTYPE html>
 
@@ -368,7 +284,9 @@ $result = mysqli_stmt_get_result($stmt);
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Rental Requests | HRMS</title>
+    <title>
+        Rental Requests
+    </title>
 
     <link
         rel="stylesheet"
@@ -384,18 +302,18 @@ $result = mysqli_stmt_get_result($stmt);
 <div class="page-container">
 
 
-    <!-- =================================
-         HEADER
-    ================================== -->
+    <!-- Page Header -->
 
-    <header class="page-header">
+    <div class="page-header">
 
         <div>
 
-            <h1>Rental Requests</h1>
+            <h1>
+                Rental Requests
+            </h1>
 
             <p>
-                Review rental requests from tenants.
+                View and manage tenant rental requests
             </p>
 
         </div>
@@ -403,448 +321,431 @@ $result = mysqli_stmt_get_result($stmt);
 
         <a
             href="landlorddashboard.php"
-            class="back-btn"
+            class="dashboard-btn"
         >
             ← Dashboard
         </a>
 
-    </header>
+    </div>
 
 
-    <main>
+
+    <!-- Message -->
+
+    <?php if (!empty($message)): ?>
+
+        <div
+            class="message
+            <?php echo $message_type; ?>"
+        >
+
+            <?php
+            echo htmlspecialchars($message);
+            ?>
+
+        </div>
+
+    <?php endif; ?>
 
 
-        <!-- =================================
-             MESSAGE
-        ================================== -->
 
-        <?php if (!empty($message)): ?>
+    <!-- Booking Requests -->
 
-            <div class="message <?php echo $message_type; ?>">
+    <div class="requests-card">
 
-                <?php
-                echo htmlspecialchars($message);
-                ?>
+
+        <div class="card-header">
+
+            <h2>
+                Tenant Requests
+            </h2>
+
+        </div>
+
+
+        <?php if (
+            mysqli_num_rows($requests_result) > 0
+        ): ?>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Property
+                            </th>
+
+                            <th>
+                                Tenant ID
+                            </th>
+
+                            <th>
+                                Booking Date
+                            </th>
+
+                            <th>
+                                Move-in Date
+                            </th>
+
+                            <th>
+                                Duration
+                            </th>
+
+                            <th>
+                                Occupants
+                            </th>
+
+                            <th>
+                                Rent
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                    <?php while (
+                        $request =
+                        mysqli_fetch_assoc(
+                            $requests_result
+                        )
+                    ): ?>
+
+
+                        <tr>
+
+
+                            <!-- Property -->
+
+                            <td>
+
+                                <div class="property-name">
+
+                                    <strong>
+
+                                        <?php
+
+                                        echo htmlspecialchars(
+                                            $request['property_name']
+                                        );
+
+                                        ?>
+
+                                    </strong>
+
+                                    <small>
+
+                                        <?php
+
+                                        echo htmlspecialchars(
+                                            $request['property_type']
+                                        );
+
+                                        ?>
+                                        -
+                                        <?php
+
+                                        echo htmlspecialchars(
+                                            $request['location']
+                                        );
+
+                                        ?>
+
+                                    </small>
+
+                                </div>
+
+                            </td>
+
+
+
+                            <!-- Tenant -->
+
+                            <td>
+
+                                #<?php
+
+                                echo htmlspecialchars(
+                                    $request['tenant_id']
+                                );
+
+                                ?>
+
+                            </td>
+
+
+
+                            <!-- Booking Date -->
+
+                            <td>
+
+                                <?php
+
+                                echo date(
+                                    "d M Y",
+                                    strtotime(
+                                        $request['booking_date']
+                                    )
+                                );
+
+                                ?>
+
+                            </td>
+
+
+
+                            <!-- Move-in Date -->
+
+                            <td>
+
+                                <?php
+
+                                echo date(
+                                    "d M Y",
+                                    strtotime(
+                                        $request['move_in_date']
+                                    )
+                                );
+
+                                ?>
+
+                            </td>
+
+
+
+                            <!-- Duration -->
+
+                            <td>
+
+                                <?php
+
+                                echo htmlspecialchars(
+                                    $request['duration']
+                                );
+
+                                ?>
+
+                                month(s)
+
+                            </td>
+
+
+
+                            <!-- Occupants -->
+
+                            <td>
+
+                                <?php
+
+                                echo htmlspecialchars(
+                                    $request['occupants']
+                                );
+
+                                ?>
+
+                            </td>
+
+
+
+                            <!-- Rent -->
+
+                            <td>
+
+                                Rs.
+
+                                <?php
+
+                                echo number_format(
+                                    $request['monthly_rent'],
+                                    2
+                                );
+
+                                ?>
+
+                            </td>
+
+
+
+                            <!-- Status -->
+
+                            <td>
+
+                                <span
+                                    class="status
+                                    <?php
+                                    echo strtolower(
+                                        $request[
+                                            'booking_status'
+                                        ]
+                                    );
+                                    ?>"
+                                >
+
+                                    <?php
+
+                                    echo htmlspecialchars(
+                                        $request[
+                                            'booking_status'
+                                        ]
+                                    );
+
+                                    ?>
+
+                                </span>
+
+                            </td>
+
+
+
+                            <!-- Action -->
+
+                            <td>
+
+                                <?php if (
+                                    strtolower(
+                                        $request[
+                                            'booking_status'
+                                        ]
+                                    ) === 'pending'
+                                ): ?>
+
+
+                                    <div class="action-buttons">
+
+
+                                        <!-- Approve -->
+
+                                        <form
+                                            method="POST"
+                                            onsubmit="
+                                                return confirm(
+                                                    'Are you sure you want to approve this booking?'
+                                                );
+                                            "
+                                        >
+
+                                            <input
+                                                type="hidden"
+                                                name="booking_id"
+                                                value="<?php
+                                                echo $request[
+                                                    'booking_id'
+                                                ];
+                                                ?>"
+                                            >
+
+                                            <button
+                                                type="submit"
+                                                name="approve_booking"
+                                                class="approve-btn"
+                                            >
+                                                Approve
+                                            </button>
+
+                                        </form>
+
+
+
+                                        <!-- Reject -->
+
+                                        <form
+                                            method="POST"
+                                            onsubmit="
+                                                return confirm(
+                                                    'Are you sure you want to reject this booking?'
+                                                );
+                                            "
+                                        >
+
+                                            <input
+                                                type="hidden"
+                                                name="booking_id"
+                                                value="<?php
+                                                echo $request[
+                                                    'booking_id'
+                                                ];
+                                                ?>"
+                                            >
+
+                                            <button
+                                                type="submit"
+                                                name="reject_booking"
+                                                class="reject-btn"
+                                            >
+                                                Reject
+                                            </button>
+
+                                        </form>
+
+
+                                    </div>
+
+
+                                <?php else: ?>
+
+                                    <span class="processed">
+                                        Processed
+                                    </span>
+
+                                <?php endif; ?>
+
+                            </td>
+
+
+                        </tr>
+
+
+                    <?php endwhile; ?>
+
+
+                    </tbody>
+
+                </table>
 
             </div>
+
+
+        <?php else: ?>
+
+
+            <div class="no-requests">
+
+                <div class="empty-icon">
+                    📋
+                </div>
+
+                <h3>
+                    No Rental Requests
+                </h3>
+
+                <p>
+                    You don't have any tenant
+                    rental requests yet.
+                </p>
+
+            </div>
+
 
         <?php endif; ?>
 
 
-        <!-- =================================
-             FILTER
-        ================================== -->
-
-        <div class="filter-bar">
-
-            <form method="GET">
-
-                <select
-                    name="status"
-                    onchange="this.form.submit()"
-                >
-
-                    <option
-                        value="All"
-                        <?php
-                        echo $filter === 'All'
-                            ? 'selected'
-                            : '';
-                        ?>
-                    >
-                        All Requests
-                    </option>
-
-
-                    <option
-                        value="Pending"
-                        <?php
-                        echo $filter === 'Pending'
-                            ? 'selected'
-                            : '';
-                        ?>
-                    >
-                        Pending
-                    </option>
-
-
-                    <option
-                        value="Confirmed"
-                        <?php
-                        echo $filter === 'Confirmed'
-                            ? 'selected'
-                            : '';
-                        ?>
-                    >
-                        Confirmed
-                    </option>
-
-
-                    <option
-                        value="Rejected"
-                        <?php
-                        echo $filter === 'Rejected'
-                            ? 'selected'
-                            : '';
-                        ?>
-                    >
-                        Rejected
-                    </option>
-
-                </select>
-
-            </form>
-
-        </div>
-
-
-        <!-- =================================
-             REQUEST CARD
-        ================================== -->
-
-        <div class="requests-card">
-
-
-            <?php if (mysqli_num_rows($result) > 0): ?>
-
-
-                <div class="table-container">
-
-                    <table>
-
-                        <thead>
-
-                            <tr>
-
-                                <th>Tenant</th>
-
-                                <th>Property</th>
-
-                                <th>Move-in Date</th>
-
-                                <th>Duration</th>
-
-                                <th>Occupants</th>
-
-                                <th>Rent</th>
-
-                                <th>Status</th>
-
-                                <th>Action</th>
-
-                            </tr>
-
-                        </thead>
-
-
-                        <tbody>
-
-
-                        <?php while ($row = mysqli_fetch_assoc($result)): ?>
-
-
-                            <tr>
-
-
-                                <!-- TENANT -->
-
-                                <td>
-
-                                    <div class="tenant-info">
-
-                                        <strong>
-
-                                            <?php
-                                            echo htmlspecialchars(
-                                                $row['first_name']
-                                                . " "
-                                                . $row['last_name']
-                                            );
-                                            ?>
-
-                                        </strong>
-
-                                        <small>
-
-                                            <?php
-                                            echo htmlspecialchars(
-                                                $row['email']
-                                            );
-                                            ?>
-
-                                        </small>
-
-                                        <?php if (!empty($row['phone'])): ?>
-
-                                            <small>
-
-                                                <?php
-                                                echo htmlspecialchars(
-                                                    $row['phone']
-                                                );
-                                                ?>
-
-                                            </small>
-
-                                        <?php endif; ?>
-
-                                    </div>
-
-                                </td>
-
-
-                                <!-- PROPERTY -->
-
-                                <td>
-
-                                    <div class="property-info">
-
-                                        <strong>
-
-                                            <?php
-                                            echo htmlspecialchars(
-                                                $row['property_name']
-                                            );
-                                            ?>
-
-                                        </strong>
-
-                                        <small>
-
-                                            <?php
-                                            echo htmlspecialchars(
-                                                $row['property_type']
-                                            );
-                                            ?>
-
-                                        </small>
-
-                                        <small>
-
-                                            <?php
-                                            echo htmlspecialchars(
-                                                $row['location']
-                                            );
-                                            ?>
-
-                                        </small>
-
-                                    </div>
-
-                                </td>
-
-
-                                <!-- MOVE IN -->
-
-                                <td>
-
-                                    <?php
-                                    echo htmlspecialchars(
-                                        $row['move_in_date']
-                                    );
-                                    ?>
-
-                                </td>
-
-
-                                <!-- DURATION -->
-
-                                <td>
-
-                                    <?php
-                                    echo htmlspecialchars(
-                                        $row['duration']
-                                    );
-                                    ?>
-
-                                    month(s)
-
-                                </td>
-
-
-                                <!-- OCCUPANTS -->
-
-                                <td>
-
-                                    <?php
-                                    echo htmlspecialchars(
-                                        $row['occupants']
-                                    );
-                                    ?>
-
-                                </td>
-
-
-                                <!-- RENT -->
-
-                                <td>
-
-                                    Rs.
-
-                                    <?php
-                                    echo number_format(
-                                        $row['monthly_rent'],
-                                        2
-                                    );
-                                    ?>
-
-                                </td>
-
-
-                                <!-- STATUS -->
-
-                                <td>
-
-                                    <span
-                                        class="status <?php
-                                        echo strtolower(
-                                            $row['booking_status']
-                                        );
-                                        ?>"
-                                    >
-
-                                        <?php
-                                        echo htmlspecialchars(
-                                            $row['booking_status']
-                                        );
-                                        ?>
-
-                                    </span>
-
-                                </td>
-
-
-                                <!-- ACTION -->
-
-                                <td>
-
-
-                                    <?php if (
-                                        $row['booking_status']
-                                        === 'Pending'
-                                    ): ?>
-
-
-                                        <div class="action-buttons">
-
-
-                                            <!-- CONFIRM -->
-
-                                            <form
-                                                method="POST"
-                                                onsubmit="
-                                                    return confirm(
-                                                        'Confirm this rental request?'
-                                                    );
-                                                "
-                                            >
-
-                                                <input
-                                                    type="hidden"
-                                                    name="booking_id"
-                                                    value="<?php
-                                                    echo $row['booking_id'];
-                                                    ?>"
-                                                >
-
-                                                <button
-                                                    type="submit"
-                                                    name="confirm_booking"
-                                                    class="confirm-btn"
-                                                >
-                                                    Confirm
-                                                </button>
-
-                                            </form>
-
-
-                                            <!-- REJECT -->
-
-                                            <form
-                                                method="POST"
-                                                onsubmit="
-                                                    return confirm(
-                                                        'Reject this rental request?'
-                                                    );
-                                                "
-                                            >
-
-                                                <input
-                                                    type="hidden"
-                                                    name="booking_id"
-                                                    value="<?php
-                                                    echo $row['booking_id'];
-                                                    ?>"
-                                                >
-
-                                                <button
-                                                    type="submit"
-                                                    name="reject_booking"
-                                                    class="reject-btn"
-                                                >
-                                                    Reject
-                                                </button>
-
-                                            </form>
-
-
-                                        </div>
-
-
-                                    <?php else: ?>
-
-
-                                        <span class="processed">
-                                            Processed
-                                        </span>
-
-
-                                    <?php endif; ?>
-
-
-                                </td>
-
-
-                            </tr>
-
-
-                        <?php endwhile; ?>
-
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-
-            <?php else: ?>
-
-
-                <div class="empty-state">
-
-                    <div class="icon">
-                        📋
-                    </div>
-
-                    <h2>
-                        No Rental Requests
-                    </h2>
-
-                    <p>
-                        Tenant rental requests will appear here.
-                    </p>
-
-                </div>
-
-
-            <?php endif; ?>
-
-
-        </div>
-
-
-    </main>
+    </div>
 
 
 </div>
@@ -853,7 +754,6 @@ $result = mysqli_stmt_get_result($stmt);
 </body>
 
 </html>
-
 
 <?php
 

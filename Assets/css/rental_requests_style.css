@@ -1,3 +1,5 @@
+/*-- Global */
+
 * {
     margin: 0;
     padding: 0;
@@ -6,418 +8,273 @@
 
 body {
     font-family: Arial, sans-serif;
-    background: #f5f7fb;
-    color: #1f2937;
+    background: #f4f7f5;
+    color: #333;
 }
+
+
+/*-- Page Container */
 
 .page-container {
-    min-height: 100vh;
+    width: 94%;
+    max-width: 1400px;
+    margin: 40px auto;
 }
 
 
-/* =========================
-   HEADER
-========================= */
+/*-- Page Header */
 
 .page-header {
-    background: white;
-
-    padding: 22px 40px;
-
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 25px;
 }
 
 .page-header h1 {
+    color: #1b5e20;
+    font-size: 30px;
     margin-bottom: 6px;
 }
 
 .page-header p {
-    color: #6b7280;
-    font-size: 14px;
+    color: #777;
+    font-size: 15px;
 }
 
-.back-btn {
-    background: #e5e7eb;
 
-    color: #374151;
+/*-- Dashboard Button */
 
+.dashboard-btn {
+    padding: 11px 18px;
+    background: #e8f5e9;
+    color: #1b5e20;
     text-decoration: none;
-
-    padding: 10px 18px;
-
-    border-radius: 7px;
+    border-radius: 8px;
+    font-weight: 600;
 }
 
-.back-btn:hover {
-    background: #d1d5db;
-}
-
-
-/* =========================
-   MAIN
-========================= */
-
-main {
-    max-width: 1200px;
-
-    margin: auto;
-
-    padding: 35px 20px;
+.dashboard-btn:hover {
+    background: #c8e6c9;
 }
 
 
-/* =========================
-   FILTER
-========================= */
+/*-- Message */
 
-.filter-bar {
-    background: white;
-
-    padding: 18px;
-
-    border-radius: 10px;
-
+.message {
+    padding: 14px 18px;
+    border-radius: 8px;
     margin-bottom: 20px;
-
-    display: flex;
-    justify-content: flex-end;
+    font-weight: 600;
 }
 
-.filter-bar form {
-    margin: 0;
+.message.success {
+    background: #e8f5e9;
+    color: #1b5e20;
 }
 
-.filter-bar select {
-    padding: 11px 35px 11px 12px;
-
-    border: 1px solid #d1d5db;
-
-    border-radius: 7px;
-
-    background: white;
-
-    font-size: 14px;
-
-    cursor: pointer;
-}
-
-.filter-bar select:focus {
-    outline: none;
-
-    border-color: #2563eb;
+.message.error {
+    background: #ffebee;
+    color: #c62828;
 }
 
 
-/* =========================
-   REQUEST CARD
-========================= */
+/*-- Requests Card */
 
 .requests-card {
-    background: white;
-
-    border-radius: 10px;
-
-    min-height: 400px;
-
-    box-shadow:
-        0 3px 12px rgba(0,0,0,0.05);
-
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
     overflow: hidden;
 }
 
 
-/* =========================
-   TABLE
-========================= */
+/*-- Card Header */
 
-.table-container {
+.card-header {
+    padding: 22px 25px;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.card-header h2 {
+    color: #333;
+    font-size: 21px;
+}
+
+
+/*-- Table Wrapper */
+
+.table-wrapper {
     width: 100%;
-
     overflow-x: auto;
 }
 
+
+/*-- Table */
+
 table {
     width: 100%;
-
-    min-width: 1050px;
-
     border-collapse: collapse;
+    min-width: 1100px;
 }
 
 thead {
-    background: #f8fafc;
+    background: #f8faf8;
 }
 
 th {
-    padding: 15px;
-
     text-align: left;
-
-    color: #6b7280;
-
+    padding: 16px 14px;
+    color: #555;
     font-size: 13px;
-
-    font-weight: 600;
-
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 td {
-    padding: 16px 15px;
-
+    padding: 17px 14px;
+    border-bottom: 1px solid #eeeeee;
     font-size: 14px;
-
-    border-bottom: 1px solid #e5e7eb;
-
     vertical-align: middle;
 }
 
 tbody tr:hover {
-    background: #f9fafb;
+    background: #fafdfb;
 }
 
 
-/* =========================
-   TENANT INFO
-========================= */
+/*-- Property Name */
 
-.tenant-info {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 4px;
+.property-name strong {
+    display: block;
+    color: #1b5e20;
+    margin-bottom: 5px;
 }
 
-.tenant-info strong {
-    font-size: 14px;
-}
-
-.tenant-info small {
-    color: #6b7280;
-
+.property-name small {
+    display: block;
+    color: #888;
     font-size: 12px;
 }
 
 
-/* =========================
-   PROPERTY INFO
-========================= */
-
-.property-info {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 4px;
-}
-
-.property-info strong {
-    font-size: 14px;
-}
-
-.property-info small {
-    color: #6b7280;
-
-    font-size: 12px;
-}
-
-
-/* =========================
-   STATUS
-========================= */
+/*-- Status */
 
 .status {
     display: inline-block;
-
-    padding: 6px 11px;
-
+    padding: 7px 12px;
     border-radius: 20px;
-
     font-size: 12px;
-
-    font-weight: 600;
+    font-weight: bold;
 }
-
-
-/* Pending */
 
 .status.pending {
-    background: #fef3c7;
-
-    color: #92400e;
+    background: #fff8e1;
+    color: #f57f17;
 }
-
-
-/* Confirmed */
 
 .status.confirmed {
-    background: #dcfce7;
-
-    color: #166534;
+    background: #e8f5e9;
+    color: #1b5e20;
 }
-
-
-/* Rejected */
 
 .status.rejected {
-    background: #fee2e2;
+    background: #ffebee;
+    color: #c62828;
+}
 
-    color: #991b1b;
+.status.cancelled {
+    background: #eeeeee;
+    color: #666;
 }
 
 
-/* =========================
-   ACTION BUTTONS
-========================= */
+/*-- Action Buttons */
 
 .action-buttons {
     display: flex;
-
     gap: 7px;
+    align-items: center;
 }
 
 .action-buttons form {
     margin: 0;
 }
 
-.confirm-btn,
+.approve-btn,
 .reject-btn {
     border: none;
-
-    padding: 8px 12px;
-
+    padding: 8px 11px;
     border-radius: 6px;
-
+    color: white;
     font-size: 12px;
-
     font-weight: 600;
-
     cursor: pointer;
 }
 
-
-/* Confirm */
-
-.confirm-btn {
-    background: #16a34a;
-
-    color: white;
+.approve-btn {
+    background: #2e9d63;
 }
 
-.confirm-btn:hover {
-    background: #15803d;
+.approve-btn:hover {
+    background: #247d4e;
 }
-
-
-/* Reject */
 
 .reject-btn {
-    background: #dc2626;
-
-    color: white;
+    background: #d9534f;
 }
 
 .reject-btn:hover {
-    background: #b91c1c;
+    background: #c03935;
 }
 
 
-/* Already processed */
+/*-- Processed */
 
 .processed {
-    color: #6b7280;
-
+    color: #888;
     font-size: 12px;
 }
 
 
-/* =========================
-   SUCCESS / ERROR MESSAGE
-========================= */
+/*-- Empty State */
 
-.message {
-    padding: 13px 16px;
-
-    margin-bottom: 20px;
-
-    border-radius: 7px;
-
-    font-size: 14px;
-}
-
-.message.success {
-    background: #dcfce7;
-
-    color: #166534;
-
-    border: 1px solid #bbf7d0;
-}
-
-.message.error {
-    background: #fee2e2;
-
-    color: #991b1b;
-
-    border: 1px solid #fecaca;
-}
-
-
-/* =========================
-   EMPTY STATE
-========================= */
-
-.empty-state {
+.no-requests {
+    padding: 70px 20px;
     text-align: center;
-
-    padding: 80px 30px;
 }
 
-.empty-state .icon {
-    font-size: 55px;
-
+.empty-icon {
+    font-size: 45px;
     margin-bottom: 15px;
 }
 
-.empty-state h2 {
+.no-requests h3 {
+    color: #333;
     margin-bottom: 8px;
-
-    font-size: 21px;
 }
 
-.empty-state p {
-    color: #6b7280;
-
-    font-size: 14px;
+.no-requests p {
+    color: #888;
 }
 
 
-/* =========================
-   RESPONSIVE
-========================= */
+/*-- Responsive */
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
+
+    .page-container {
+        width: 95%;
+        margin: 25px auto;
+    }
 
     .page-header {
-        padding: 20px;
-
         flex-direction: column;
-
         align-items: flex-start;
-
         gap: 15px;
     }
 
-    main {
-        padding: 25px 12px;
-    }
-
-    .filter-bar {
-        justify-content: flex-start;
+    .page-header h1 {
+        font-size: 25px;
     }
 
 }

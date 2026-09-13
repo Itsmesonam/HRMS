@@ -1,0 +1,340 @@
+/*-- Global */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #333;
+}
+
+
+/*-- Main Container */
+
+.details-container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 40px auto;
+}
+
+
+/*-- Back Button */
+
+.back-btn {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #2e9d63;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.back-btn:hover {
+    text-decoration: underline;
+}
+
+
+/*-- Details Card */
+
+.details-card {
+    background: #ffffff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+}
+
+
+/*-- Property Image */
+
+.property-image {
+    width: 100%;
+    height: 400px;
+    background: #e8f5e9;
+}
+
+.property-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.no-image {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #777;
+    font-size: 20px;
+}
+
+
+/*-- Property Information */
+
+.property-info {
+    padding: 35px;
+}
+
+
+/*-- Title Row */
+
+.title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.title-row h1 {
+    font-size: 32px;
+    color: #1b5e20;
+    margin-bottom: 8px;
+}
+
+.location {
+    color: #666;
+    font-size: 16px;
+}
+
+
+/*-- Status */
+
+.status {
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.status.available {
+    background: #e8f5e9;
+    color: #1b5e20;
+}
+
+.status.occupied {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.status.expired {
+    background: #eeeeee;
+    color: #555;
+}
+
+.status.pending {
+    background: #fff8e1;
+    color: #f57f17;
+}
+
+.status.unavailable {
+    background: #eeeeee;
+    color: #555;
+}
+
+
+/*-- Monthly Rent */
+
+.rent {
+    margin-top: 25px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #2e9d63;
+}
+
+.rent span {
+    font-size: 16px;
+    color: #777;
+    font-weight: normal;
+}
+
+
+/*-- Property Features */
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin: 30px 0;
+}
+
+.feature {
+    background: #f4f7f5;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.feature strong {
+    display: block;
+    font-size: 20px;
+    color: #1b5e20;
+    margin-bottom: 7px;
+}
+
+.feature span {
+    color: #777;
+    font-size: 13px;
+}
+
+
+/*-- Sections */
+
+.section {
+    margin-top: 30px;
+}
+
+.section h2 {
+    color: #1b5e20;
+    font-size: 21px;
+    margin-bottom: 12px;
+}
+
+.section p {
+    line-height: 1.7;
+    color: #555;
+}
+
+
+/*-- Property Information Grid */
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.info-grid div {
+    background: #f8faf8;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.info-grid span {
+    display: block;
+    color: #777;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+.info-grid strong {
+    color: #333;
+}
+
+
+/*-- Action Buttons */
+
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 35px;
+}
+
+.book-btn,
+.back-properties,
+.unavailable-btn {
+    flex: 1;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+
+/*-- Book Button */
+
+.book-btn {
+    background: #2e9d63;
+    color: #ffffff;
+}
+
+.book-btn:hover {
+    background: #247d4e;
+}
+
+
+/*-- Back Button */
+
+.back-properties {
+    background: #e8f5e9;
+    color: #1b5e20;
+}
+
+.back-properties:hover {
+    background: #c8e6c9;
+}
+
+
+/*-- Unavailable Button */
+
+.unavailable-btn {
+    background: #dddddd;
+    color: #777777;
+    cursor: not-allowed;
+}
+
+
+/*-- Mobile Responsive */
+
+@media (max-width: 768px) {
+
+    .details-container {
+        width: 95%;
+        margin: 20px auto;
+    }
+
+    .property-image {
+        height: 280px;
+    }
+
+    .property-info {
+        padding: 22px;
+    }
+
+    .title-row {
+        flex-direction: column;
+    }
+
+    .features {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+}
+
+
+/*-- Small Mobile */
+
+@media (max-width: 480px) {
+
+    .title-row h1 {
+        font-size: 25px;
+    }
+
+    .rent {
+        font-size: 24px;
+    }
+
+    .features {
+        grid-template-columns: 1fr;
+    }
+
+    .property-image {
+        height: 230px;
+    }
+
+}
