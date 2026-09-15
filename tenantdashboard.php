@@ -59,7 +59,8 @@ if ($_SESSION['role'] !== 'tenant') {
     <link rel="stylesheet"
           href="assets/css/tenantdashboard_style.css">
 
-          
+          <a href="messages.php">Messages</a>
+
 
 </head>
 

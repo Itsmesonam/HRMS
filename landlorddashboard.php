@@ -272,8 +272,7 @@ if ($stmt = mysqli_prepare($conn, $sql)) {
 
     <!-- Landlord Dashboard CSS -->
 
-    <link rel="stylesheet"
-          href="assets/css/landlorddashboard_style.css">
+    <link rel="stylesheet"  href="Assets/css/landlorddashboard_style.css">
 
           
 

@@ -170,8 +170,10 @@ function whatsappNumber($phone)
     <title>
         Messages - HRMS
     </title>
-<link rel="stylesheet"
-      href="assets/css/messages_style.css">
+
+
+  <link rel="stylesheet" href="/hrms/Assets/css/message_style.css">
+
 
 </head>
 
