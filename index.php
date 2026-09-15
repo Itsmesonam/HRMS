@@ -12,7 +12,7 @@
     <title>House Rental Management System</title>
 
     <!-- Index CSS -->
-    <link rel="stylesheet" href="Assets/css/index_style.css">
+    <link rel="stylesheet" href="Assets/css/index_style.css?v=2">
 
 </head>
 
@@ -35,49 +35,6 @@
                 Home
             </a>
         </li>
-
-
-        <li>
-            <a href="properties.php">
-                Properties
-            </a>
-        </li>
-
-
-        <!-- LANDLORDS → LOGIN -->
-
-        <li>
-            <a href="login.php">
-                Landlords
-            </a>
-        </li>
-
-
-        <!-- TENANTS → LOGIN -->
-
-        <li>
-            <a href="login.php">
-                Tenants
-            </a>
-        </li>
-
-
-        <li>
-            <a href="booking.php">
-                Booking
-            </a>
-        </li>
-
-
-        <!-- USER LOGIN -->
-
-        <li>
-            <a href="login.php">
-                Login
-            </a>
-        </li>
-
-
         <!-- USER REGISTER -->
 
         <li>
@@ -86,6 +43,13 @@
             </a>
         </li>
 
+        <!-- USER LOGIN -->
+
+        <li>
+            <a href="login.php">
+                Login
+            </a>
+        </li>
 
         <!-- ADMIN LOGIN -->
 

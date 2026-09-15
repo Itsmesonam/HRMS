@@ -90,12 +90,7 @@ nav ul li a:hover {
 .hero {
     min-height: 650px;
 
-    background-image:
-        linear-gradient(
-            rgba(0, 20, 50, 0.35),
-            rgba(0, 20, 50, 0.35)
-        ),
-        url("../images/building.jpg");
+    background-image: url("/hrms/image/building.jpg");
 
     background-size: cover;
 
