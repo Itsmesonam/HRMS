@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -11,116 +10,203 @@
 
     <title>House Rental Management System</title>
 
-    <!-- Index CSS -->
-    <link rel="stylesheet" href="Assets/css/index_style.css?v=2">
+    <link rel="stylesheet"
+          href="Assets/css/index_style.css?v=4">
 
 </head>
-
 
 <body>
 
 
-<!-- NAVIGATION -->
+<!-- =========================================
+     NAVIGATION BAR
+========================================= -->
 
-<nav>
+<header class="navbar">
 
-    <div class="logo">
-        HRMS
+    <a href="index.php" class="logo">
+        <img src="image/logo.jpg" alt="Homy Logo">
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="#home">Home</a>
+
+        <a href="#about">About Us</a>
+
+        <a href="#services">Services</a>
+
+        <a href="#blog">Blog</a>
+
+        <a href="#contact">Contact</a>
+
+    </nav>
+
+
+    <div class="nav-buttons">
+
+        <a href="login.php"
+           class="login-btn">
+            Login
+        </a>
+
+        <a href="register.php"
+           class="signup-btn">
+            Sign Up
+        </a>
+
     </div>
 
-    <ul>
-
-        <li>
-            <a href="index.php">
-                Home
-            </a>
-        </li>
-        <!-- USER REGISTER -->
-
-        <li>
-            <a href="register.php">
-                Register
-            </a>
-        </li>
-
-        <!-- USER LOGIN -->
-
-        <li>
-            <a href="login.php">
-                Login
-            </a>
-        </li>
-
-        <!-- ADMIN LOGIN -->
-
-        <li>
-            <a href="adminlogin.php">
-                Admin
-            </a>
-        </li>
-
-    </ul>
-
-</nav>
+</header>
 
 
 
-<!-- HERO SECTION -->
+<!-- =========================================
+     HERO SECTION
+========================================= -->
 
-<section class="hero">
+<section class="hero"
+         id="home">
 
-    <div class="overlay">
-
-        <h1>
-            Find Your Dream Rental Home
-        </h1>
-
-        <p>
-            Search houses, apartments and rooms across Nepal
-        </p>
+    <div class="hero-overlay">
 
 
-        <!-- SEARCH BOX -->
+        <div class="hero-content">
 
-        <form
-            class="search-box"
-            action="properties.php"
-            method="GET"
-        >
-
-            <input
-                type="text"
-                name="location"
-                placeholder="Location"
-            >
+            <span class="hero-small-text">
+                RENT • LIVE • BELONG
+            </span>
 
 
-            <select name="type">
-
-                <option value="">
-                    Property Type
-                </option>
-
-                <option value="House">
-                    House
-                </option>
-
-                <option value="Apartment">
-                    Apartment
-                </option>
-
-                <option value="Room">
-                    Room
-                </option>
-
-            </select>
+            <h1>
+                Find Your Dream
+                <br>
+                Rental Home
+            </h1>
 
 
-            <button type="submit">
-                Search
-            </button>
+            <p>
+                Search houses, apartments and rooms
+                across Nepal and find a place
+                that feels like home.
+            </p>
 
-        </form>
+
+            <!-- SEARCH BOX -->
+
+            <form class="search-box"
+                  action="properties.php"
+                  method="GET">
+
+
+                <!-- Location -->
+
+                <div class="search-field">
+
+                    <label for="location">
+                        Location
+                    </label>
+
+                    <input
+                        type="text"
+                        id="location"
+                        name="location"
+                        placeholder="Enter location">
+
+                </div>
+
+
+
+                <!-- Property Type -->
+
+                <div class="search-field">
+
+                    <label for="type">
+                        Property Type
+                    </label>
+
+                    <select
+                        id="type"
+                        name="type">
+
+                        <option value="">
+                            Select Type
+                        </option>
+
+                        <option value="House">
+                            House
+                        </option>
+
+                        <option value="Apartment">
+                            Apartment
+                        </option>
+
+                        <option value="Room">
+                            Room
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- Rent -->
+
+                <div class="search-field">
+
+                    <label for="rent">
+                        Monthly Rent
+                    </label>
+
+                    <select
+                        id="rent"
+                        name="rent">
+
+                        <option value="">
+                            Any Price
+                        </option>
+
+                        <option value="10000">
+                            Under Rs. 10,000
+                        </option>
+
+                        <option value="20000">
+                            Under Rs. 20,000
+                        </option>
+
+                        <option value="30000">
+                            Under Rs. 30,000
+                        </option>
+
+                        <option value="50000">
+                            Under Rs. 50,000
+                        </option>
+
+                        <option value="100000">
+                            Under Rs. 100,000
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- Search Button -->
+
+                <button
+                    type="submit"
+                    class="search-btn">
+
+                    Search
+
+                </button>
+
+            </form>
+
+        </div>
 
     </div>
 
@@ -128,180 +214,504 @@
 
 
 
-<!-- WELCOME / SERVICES -->
+<!-- =========================================
+     BROWSE AVAILABLE PROPERTIES
+========================================= -->
 
-<section class="welcome">
+<section class="browse-properties" id="properties">
 
-    <h2>
-        Featured Services
-    </h2>
+    <div class="section-heading">
+        <span>EXPLORE</span>
+        <h2>Browse Available Properties</h2>
+        <p>Find a property that matches your lifestyle, location and budget.</p>
+    </div>
+
+    <div class="property-categories">
+
+        <!-- House -->
+        <div class="property-category">
+            <img src="/images/house.jpg" alt="Rental House">
+
+            <div class="category-content">
+                <span class="property-label">HOUSE</span>
+
+                <h3>Rental Houses</h3>
+
+                <p>
+                    Find comfortable houses suitable for families
+                    and long-term living.
+                </p>
+
+                <a href="properties.php?type=House" class="category-btn">
+                    Explore Houses →
+                </a>
+            </div>
+        </div>
+
+
+        <!-- Apartment -->
+        <div class="property-category">
+            <img src="/images/apartment.jpg" alt="Apartment">
+
+            <div class="category-content">
+                <span class="property-label">APARTMENT</span>
+
+                <h3>Modern Apartments</h3>
+
+                <p>
+                    Explore modern apartments in convenient
+                    locations across Nepal.
+                </p>
+
+                <a href="properties.php?type=Apartment" class="category-btn">
+                    Explore Apartments →
+                </a>
+            </div>
+        </div>
+
+
+        <!-- Room -->
+        <div class="property-category">
+            <img src="/images/room.jpg" alt="Rental Room">
+
+            <div class="category-content">
+                <span class="property-label">ROOM</span>
+
+                <h3>Rental Rooms</h3>
+
+                <p>
+                    Find affordable rooms for students,
+                    professionals and individuals.
+                </p>
+
+                <a href="properties.php?type=Room" class="category-btn">
+                    Explore Rooms →
+                </a>
+            </div>
+        </div>
+
+    </div>
 
 </section>
 
 
 
-<!-- cards-->
+<!-- =========================================
+     ABOUT US
+========================================= -->
 
-<div class="container">
+<section class="about-section"
+         id="about">
+
+    <div class="about-container">
 
 
-    <!-- properties -->
+        <div class="about-image">
 
-    <div class="card">
+            <img
+                src="/images/house.jpg"
+                alt="Rental Property">
 
-        <img
-            src="Assets/images/house.jpg"
-            alt="House"
-        >
+        </div>
 
-        <h3>
-            Properties
-        </h3>
+
+
+        <div class="about-content">
+
+            <span class="section-label">
+                ABOUT US
+            </span>
+
+            <h2>
+                Making Rental Living
+                Simple and Convenient
+            </h2>
+
+            <p>
+                House Rental Management System
+                is a platform designed to make
+                the process of finding and managing
+                rental properties easier.
+            </p>
+
+            <p>
+                Tenants can search for available
+                properties, submit rental requests
+                and manage their bookings.
+                Landlords can add properties,
+                manage rental requests and
+                monitor payments.
+            </p>
+
+
+            <a
+                href="register.php"
+                class="primary-btn">
+
+                Get Started
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     SERVICES
+========================================= -->
+
+<section class="services-section"
+         id="services">
+
+    <div class="section-heading">
+
+        <span>
+            OUR SERVICES
+        </span>
+
+        <h2>
+            Everything You Need
+            for Easy Renting
+        </h2>
 
         <p>
-            View and manage available rental properties.
+            Simple tools for tenants and
+            landlords to manage the rental
+            process.
         </p>
-
-        <a
-            href="properties.php"
-            class="btn"
-        >
-            See Details
-        </a>
 
     </div>
 
 
+    <div class="service-cards">
 
-    <!-- LANDLORD -->
 
-    <div class="card">
+        <div class="service-card">
 
-        <img
-            src="Assets/images/landlord.jpg"
-            alt="Landlord"
-        >
+            <div class="service-icon">
+                🔍
+            </div>
 
-        <h3>
-            Landlords
-        </h3>
+            <h3>
+                Property Search
+            </h3>
+
+            <p>
+                Search houses, apartments
+                and rooms based on location
+                and property type.
+            </p>
+
+        </div>
+
+
+
+        <div class="service-card">
+
+            <div class="service-icon">
+                🏠
+            </div>
+
+            <h3>
+                Rental Booking
+            </h3>
+
+            <p>
+                Submit rental requests and
+                manage your booking information
+                easily.
+            </p>
+
+        </div>
+
+
+
+        <div class="service-card">
+
+            <div class="service-icon">
+                💳
+            </div>
+
+            <h3>
+                Payment Management
+            </h3>
+
+            <p>
+                Manage rental payments and
+                keep track of your payment
+                history.
+            </p>
+
+        </div>
+
+
+
+        <div class="service-card">
+
+            <div class="service-icon">
+                📋
+            </div>
+
+            <h3>
+                Property Management
+            </h3>
+
+            <p>
+                Landlords can add properties,
+                manage listings and handle
+                rental requests.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     BLOG
+========================================= -->
+
+<section class="blog-section"
+         id="blog">
+
+    <div class="section-heading">
+
+        <span>
+            OUR BLOG
+        </span>
+
+        <h2>
+            Helpful Rental Tips
+        </h2>
 
         <p>
-            Manage landlord information and properties.
+            Useful information to help you
+            make better rental decisions.
         </p>
-
-        <!-- LANDLORD → LOGIN -->
-
-        <a
-            href="login.php"
-            class="btn"
-        >
-            Landlord Login
-        </a>
 
     </div>
 
 
+    <div class="blog-cards">
 
-    <!-- TENANT -->
 
-    <div class="card">
+        <article class="blog-card">
 
-        <img
-            src="Assets/images/tenant.jpg"
-            alt="Tenant"
-        >
+            <img
+                src="Assets/images/house.jpg"
+                alt="Finding a rental home">
 
-        <h3>
-            Tenants
-        </h3>
+            <div class="blog-content">
 
-        <p>
-            Manage tenant details and rental records.
-        </p>
+                <span>
+                    RENTING GUIDE
+                </span>
 
-        <!-- TENANT → LOGIN -->
+                <h3>
+                    How to Find the Right
+                    Rental Home
+                </h3>
 
-        <a
-            href="login.php"
-            class="btn"
-        >
-            Tenant Login
-        </a>
+                <p>
+                    Learn what to consider when
+                    choosing a rental property.
+                </p>
+
+                <a href="#contact">
+                    Read More →
+                </a>
+
+            </div>
+
+        </article>
+
+
+
+        <article class="blog-card">
+
+            <img
+                src="Assets/images/booking.jpg"
+                alt="Rental booking">
+
+            <div class="blog-content">
+
+                <span>
+                    RENTAL TIPS
+                </span>
+
+                <h3>
+                    Things to Check Before
+                    Renting a Property
+                </h3>
+
+                <p>
+                    Important things tenants should
+                    check before moving into a property.
+                </p>
+
+                <a href="#contact">
+                    Read More →
+                </a>
+
+            </div>
+
+        </article>
+
+
+
+        <article class="blog-card">
+
+            <img
+                src="Assets/images/landlord.jpg"
+                alt="Landlord management">
+
+            <div class="blog-content">
+
+                <span>
+                    LANDLORD GUIDE
+                </span>
+
+                <h3>
+                    Tips for Managing
+                    Rental Properties
+                </h3>
+
+                <p>
+                    Helpful ideas for landlords to
+                    manage their rental properties.
+                </p>
+
+                <a href="#contact">
+                    Read More →
+                </a>
+
+            </div>
+
+        </article>
 
     </div>
 
+</section>
 
 
-    <!--BOOKING -->
 
-    <div class="card">
+<!-- =========================================
+     CONTACT
+========================================= -->
 
-        <img
-            src="Assets/images/booking.jpg"
-            alt="Booking"
-        >
+<section class="contact-section"
+         id="contact">
 
-        <h3>
-            Booking
-        </h3>
+    <div class="contact-container">
 
-        <p>
-            Handle house booking and reservations.
-        </p>
 
-        <a
-            href="booking.php"
-            class="btn"
-        >
-            See Details
-        </a>
+        <div class="contact-content">
+
+            <span class="section-label">
+                CONTACT US
+            </span>
+
+            <h2>
+                Have Questions?
+                Let's Talk.
+            </h2>
+
+            <p>
+                If you need help finding a rental
+                property or managing your property,
+                feel free to contact us.
+            </p>
+
+        </div>
+
+
+
+        <div class="contact-info">
+
+            <div class="contact-item">
+
+                <div class="contact-icon">
+                    ✉
+                </div>
+
+                <div>
+
+                    <h4>
+                        Email
+                    </h4>
+
+                    <p>
+                        hrms@example.com
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="contact-item">
+
+                <div class="contact-icon">
+                    ☎
+                </div>
+
+                <div>
+
+                    <h4>
+                        Phone
+                    </h4>
+
+                    <p>
+                        +977 98XXXXXXXX
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="contact-item">
+
+                <div class="contact-icon">
+                    📍
+                </div>
+
+                <div>
+
+                    <h4>
+                        Location
+                    </h4>
+
+                    <p>
+                        Kathmandu, Nepal
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 
+</section>
 
-
-    <!-- admin -->
-
-    <div class="card">
-
-        <img
-            src="Assets/images/admin.jpg"
-            alt="Admin"
-        >
-
-        <h3>
-            Admin Panel
-        </h3>
 
         <p>
-            Control users, houses, and system reports.
+            © 2026 House Rental Management System.
+            All Rights Reserved.
         </p>
 
-        <!-- ADMIN → ADMIN LOGIN -->
-
-        <a
-            href="adminlogin.php"
-            class="btn"
-        >
-            Admin Login
-        </a>
-
     </div>
-
-
-</div>
-
-
-
-<!-- FOOTER -->
-
-<footer>
-
-    <p>
-        &copy; 2026 House Rental Management System.
-        All Rights Reserved.
-    </p>
 
 </footer>
 

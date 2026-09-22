@@ -51,7 +51,7 @@ if ($booking_id <= 0) {
 
 if (isset($_POST['make_payment'])) {
 
-    $payment_method = $_POST['payment_method'] ?? '';
+    $payment_method = trim($_POST['payment_method'] ?? '');
     $transaction_id = trim($_POST['transaction_id'] ?? '');
     $notes = trim($_POST['notes'] ?? '');
 
@@ -68,93 +68,66 @@ if (isset($_POST['make_payment'])) {
         'Bank Transfer'
     ];
 
-    if (!in_array($payment_method, $allowed_methods)) {
+    if (!in_array($payment_method, $allowed_methods, true)) {
 
         $message = "Please select a valid payment method.";
         $message_type = "error";
 
     } else {
 
-
         /* =====================================
-           GET BOOKING
+           TRANSACTION ID VALIDATION
         ===================================== */
 
-        $sql = "
-            SELECT
-                b.booking_id,
-                b.property_id,
-                b.tenant_id,
-                b.booking_status,
+        $online_methods = [
+            'Card',
+            'eSewa',
+            'Khalti',
+            'Bank Transfer'
+        ];
 
-                p.property_name,
-                p.location,
-                p.monthly_rent,
-                p.landlord_id
-
-            FROM bookings b
-
-            INNER JOIN properties p
-                ON b.property_id = p.property_id
-
-            WHERE b.booking_id = ?
-              AND b.tenant_id = ?
-
-            LIMIT 1
-        ";
-
-        $stmt = mysqli_prepare($conn, $sql);
-
-        mysqli_stmt_bind_param(
-            $stmt,
-            "ii",
-            $booking_id,
-            $tenant_id
-        );
-
-        mysqli_stmt_execute($stmt);
-
-        $result = mysqli_stmt_get_result($stmt);
-
-        $booking = mysqli_fetch_assoc($result);
-
-        mysqli_stmt_close($stmt);
-
-
-        if (!$booking) {
-
-            $message = "Booking not found.";
-            $message_type = "error";
-
-        } elseif (
-            $booking['booking_status'] !== 'Confirmed'
+        if (
+            in_array($payment_method, $online_methods, true)
+            && empty($transaction_id)
         ) {
 
             $message =
-                "Payment is available only for confirmed bookings.";
+                "Transaction ID is required for " .
+                htmlspecialchars($payment_method) .
+                " payment.";
 
             $message_type = "error";
 
         } else {
 
-
             /* =====================================
-               CHECK EXISTING PAYMENT
+               GET BOOKING
             ===================================== */
 
-            $check_sql = "
-                SELECT payment_id, payment_status
-                FROM payments
-                WHERE booking_id = ?
-                  AND tenant_id = ?
-                ORDER BY payment_id DESC
+            $sql = "
+                SELECT
+                    b.booking_id,
+                    b.property_id,
+                    b.tenant_id,
+                    b.booking_status,
+
+                    p.property_name,
+                    p.location,
+                    p.monthly_rent,
+                    p.landlord_id
+
+                FROM bookings b
+
+                INNER JOIN properties p
+                    ON b.property_id = p.property_id
+
+                WHERE b.booking_id = ?
+                  AND b.tenant_id = ?
+
                 LIMIT 1
             ";
 
-            $stmt = mysqli_prepare(
-                $conn,
-                $check_sql
-            );
+            $stmt = mysqli_prepare($conn, $sql);
 
             mysqli_stmt_bind_param(
                 $stmt,
@@ -165,94 +138,182 @@ if (isset($_POST['make_payment'])) {
 
             mysqli_stmt_execute($stmt);
 
-            $payment_result =
-                mysqli_stmt_get_result($stmt);
+            $result = mysqli_stmt_get_result($stmt);
 
-            $existing_payment =
-                mysqli_fetch_assoc($payment_result);
+            $payment_booking = mysqli_fetch_assoc($result);
 
             mysqli_stmt_close($stmt);
 
 
-            if (
-                $existing_payment &&
-                $existing_payment['payment_status']
-                === 'Completed'
+            /* =====================================
+               CHECK BOOKING
+            ===================================== */
+
+            if (!$payment_booking) {
+
+                $message = "Booking not found.";
+                $message_type = "error";
+
+            } elseif (
+                $payment_booking['booking_status'] !== 'Confirmed'
             ) {
 
                 $message =
-                    "Payment for this booking has already been completed.";
+                    "Payment is available only for confirmed bookings.";
 
                 $message_type = "error";
 
             } else {
 
-
                 /* =====================================
-                   INSERT PAYMENT
+                   CHECK EXISTING PAYMENTS
                 ===================================== */
 
-                $amount =
-                    $booking['monthly_rent'];
-
-                $payment_status = 'Completed';
-
-
-                $insert_sql = "
-                    INSERT INTO payments (
-                        booking_id,
-                        property_id,
-                        tenant_id,
-                        landlord_id,
-                        amount,
-                        payment_method,
-                        payment_status,
-                        transaction_id,
-                        notes
-                    )
-
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                $check_sql = "
+                    SELECT
+                        payment_id,
+                        payment_status
+                    FROM payments
+                    WHERE booking_id = ?
+                      AND tenant_id = ?
+                    ORDER BY payment_id DESC
+                    LIMIT 1
                 ";
 
                 $stmt = mysqli_prepare(
                     $conn,
-                    $insert_sql
+                    $check_sql
                 );
 
                 mysqli_stmt_bind_param(
                     $stmt,
-                    "iiiidssss",
+                    "ii",
                     $booking_id,
-                    $booking['property_id'],
-                    $tenant_id,
-                    $booking['landlord_id'],
-                    $amount,
-                    $payment_method,
-                    $payment_status,
-                    $transaction_id,
-                    $notes
+                    $tenant_id
                 );
 
+                mysqli_stmt_execute($stmt);
 
-                if (mysqli_stmt_execute($stmt)) {
+                $payment_result =
+                    mysqli_stmt_get_result($stmt);
 
-                    mysqli_stmt_close($stmt);
+                $existing_payment =
+                    mysqli_fetch_assoc($payment_result);
 
-                    header(
-                        "Location: tenant_payments.php?success=1"
-                    );
+                mysqli_stmt_close($stmt);
 
-                    exit();
 
-                } else {
+                /* =====================================
+                   PREVENT DUPLICATE COMPLETED PAYMENT
+                ===================================== */
+
+                if (
+                    $existing_payment &&
+                    $existing_payment['payment_status'] === 'Completed'
+                ) {
 
                     $message =
-                        "Payment failed: " .
-                        mysqli_error($conn);
+                        "Payment for this booking has already been completed.";
 
                     $message_type = "error";
 
-                    mysqli_stmt_close($stmt);
+                }
+
+                /* =====================================
+                   PREVENT DUPLICATE PENDING PAYMENT
+                ===================================== */
+
+                elseif (
+                    $existing_payment &&
+                    $existing_payment['payment_status'] === 'Pending'
+                ) {
+
+                    $message =
+                        "You already have a pending payment for this booking. "
+                        . "Please wait for verification.";
+
+                    $message_type = "error";
+
+                } else {
+
+                    /* =====================================
+                       PAYMENT AMOUNT
+                    ===================================== */
+
+                    $amount =
+                        $payment_booking['monthly_rent'];
+
+
+                    /* =====================================
+                       PAYMENT STATUS
+
+                       Payment is initially Pending.
+                       Landlord/Admin can verify it.
+                    ===================================== */
+
+                    $payment_status = 'Pending';
+
+
+                    /* =====================================
+                       INSERT PAYMENT
+                    ===================================== */
+
+                    $insert_sql = "
+                        INSERT INTO payments (
+                            booking_id,
+                            property_id,
+                            tenant_id,
+                            landlord_id,
+                            amount,
+                            payment_method,
+                            payment_status,
+                            transaction_id,
+                            notes
+                        )
+
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    ";
+
+                    $stmt = mysqli_prepare(
+                        $conn,
+                        $insert_sql
+                    );
+
+                    mysqli_stmt_bind_param(
+                        $stmt,
+                        "iiiidssss",
+                        $booking_id,
+                        $payment_booking['property_id'],
+                        $tenant_id,
+                        $payment_booking['landlord_id'],
+                        $amount,
+                        $payment_method,
+                        $payment_status,
+                        $transaction_id,
+                        $notes
+                    );
+
+
+                    if (mysqli_stmt_execute($stmt)) {
+
+                        mysqli_stmt_close($stmt);
+
+                        header(
+                            "Location: tenant_payments.php?success=1"
+                        );
+
+                        exit();
+
+                    } else {
+
+                        $message =
+                            "Payment failed: " .
+                            mysqli_error($conn);
+
+                        $message_type = "error";
+
+                        mysqli_stmt_close($stmt);
+                    }
                 }
             }
         }
@@ -336,7 +397,7 @@ if (!$booking) {
 
     <link
         rel="stylesheet"
-        href="assets/css/payment_style.css"
+        href="/hrms/Assets/css/payment_style.css"
     >
 
 </head>
@@ -430,19 +491,23 @@ if (!$booking) {
                     <div>
 
                         <h3>
+
                             <?php
                             echo htmlspecialchars(
                                 $booking['property_name']
                             );
                             ?>
+
                         </h3>
 
                         <p>
+
                             <?php
                             echo htmlspecialchars(
                                 $booking['location']
                             );
                             ?>
+
                         </p>
 
                     </div>
@@ -460,9 +525,11 @@ if (!$booking) {
                         </span>
 
                         <strong>
+
                             #<?php
                             echo $booking['booking_id'];
                             ?>
+
                         </strong>
 
                     </div>
@@ -475,11 +542,13 @@ if (!$booking) {
                         </span>
 
                         <strong>
+
                             <?php
                             echo htmlspecialchars(
                                 $booking['property_type']
                             );
                             ?>
+
                         </strong>
 
                     </div>
@@ -492,11 +561,13 @@ if (!$booking) {
                         </span>
 
                         <strong>
+
                             <?php
                             echo htmlspecialchars(
                                 $booking['move_in_date']
                             );
                             ?>
+
                         </strong>
 
                     </div>
@@ -509,9 +580,13 @@ if (!$booking) {
                         </span>
 
                         <strong>
+
                             <?php
                             echo $booking['duration'];
-                            ?> month(s)
+                            ?>
+
+                            month(s)
+
                         </strong>
 
                     </div>
@@ -524,9 +599,11 @@ if (!$booking) {
                         </span>
 
                         <strong>
+
                             <?php
                             echo $booking['occupants'];
                             ?>
+
                         </strong>
 
                     </div>
@@ -539,16 +616,20 @@ if (!$booking) {
                         </span>
 
                         <strong>
+
                             Rs.
+
                             <?php
                             echo number_format(
                                 $booking['monthly_rent'],
                                 2
                             );
                             ?>
+
                         </strong>
 
                     </div>
+
 
                 </div>
 
@@ -566,7 +647,11 @@ if (!$booking) {
                 </h2>
 
 
-                <form method="POST">
+                <form
+                    method="POST"
+                    action=""
+                    id="paymentForm"
+                >
 
 
                     <input
@@ -589,6 +674,7 @@ if (!$booking) {
                         <div class="amount-box">
 
                             Rs.
+
                             <?php
                             echo number_format(
                                 $booking['monthly_rent'],
@@ -655,11 +741,13 @@ if (!$booking) {
                         <input
                             type="text"
                             name="transaction_id"
-                            placeholder="Enter transaction ID if available"
+                            id="transaction_id"
+                            placeholder="Enter transaction ID"
                         >
 
-                        <small>
-                            Required for online payments if applicable.
+                        <small id="transactionHelp">
+                            Required for Card, eSewa, Khalti
+                            and Bank Transfer.
                         </small>
 
                     </div>
@@ -678,6 +766,23 @@ if (!$booking) {
                             rows="4"
                             placeholder="Optional payment notes..."
                         ></textarea>
+
+                    </div>
+
+
+                    <!-- PAYMENT NOTICE -->
+
+                    <div class="payment-notice">
+
+                        <strong>
+                            Payment Verification
+                        </strong>
+
+                        <p>
+                            Your payment will be recorded as
+                            <b>Pending</b> and will be verified
+                            by the landlord/admin.
+                        </p>
 
                     </div>
 
@@ -705,6 +810,64 @@ if (!$booking) {
 
 
 </div>
+
+
+<script>
+
+/* =========================================
+   TRANSACTION ID REQUIREMENT
+========================================= */
+
+const paymentMethod =
+    document.getElementById("payment_method");
+
+const transactionId =
+    document.getElementById("transaction_id");
+
+const transactionHelp =
+    document.getElementById("transactionHelp");
+
+
+function updateTransactionRequirement() {
+
+    const onlineMethods = [
+        "Card",
+        "eSewa",
+        "Khalti",
+        "Bank Transfer"
+    ];
+
+    if (
+        onlineMethods.includes(
+            paymentMethod.value
+        )
+    ) {
+
+        transactionId.required = true;
+
+        transactionHelp.textContent =
+            "Transaction ID is required for this payment method.";
+
+    } else {
+
+        transactionId.required = false;
+
+        transactionHelp.textContent =
+            "Transaction ID is not required for Cash payment.";
+
+    }
+
+}
+
+
+paymentMethod.addEventListener(
+    "change",
+    updateTransactionRequirement
+);
+
+updateTransactionRequirement();
+
+</script>
 
 
 </body>
