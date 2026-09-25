@@ -77,7 +77,7 @@ if (isset($_POST['register'])) {
         } else {
 
 
-            /*HASH PASSWORD*/
+            /* HASH PASSWORD */
 
             $hashedPassword = password_hash(
                 $password,
@@ -129,7 +129,7 @@ if (isset($_POST['register'])) {
             );
 
 
-            /* execute insert */
+            /* EXECUTE INSERT */
 
             if (mysqli_stmt_execute($query)) {
 
@@ -200,14 +200,35 @@ if (isset($_POST['register'])) {
 <body>
 
 
+<!-- BACKGROUND OVERLAY -->
+
+<div class="page-overlay"></div>
+
+
+<!-- HOMY LOGO -->
+
+<a href="index.php" class="auth-logo">
+
+   
+</a>
+
+
+<!-- REGISTRATION CARD -->
+
 <div class="container">
 
 
     <!-- TITLE -->
 
     <div class="title">
-        Registration Form
+        Registration
     </div>
+
+
+    <p class="subtitle">
+        Create your account and start your journey
+      
+    </p>
 
 
     <!-- REGISTRATION FORM -->
@@ -230,6 +251,7 @@ if (isset($_POST['register'])) {
                 type="text"
                 name="firstname"
                 class="input"
+                placeholder="Enter your first name"
                 required
             >
 
@@ -248,6 +270,7 @@ if (isset($_POST['register'])) {
                 type="text"
                 name="lastname"
                 class="input"
+                placeholder="Enter your last name"
                 required
             >
 
@@ -266,6 +289,7 @@ if (isset($_POST['register'])) {
                 type="password"
                 name="password"
                 class="input"
+                placeholder="Enter your password"
                 required
             >
 
@@ -284,6 +308,7 @@ if (isset($_POST['register'])) {
                 type="password"
                 name="cpassword"
                 class="input"
+                placeholder="Confirm your password"
                 required
             >
 
@@ -304,7 +329,7 @@ if (isset($_POST['register'])) {
             >
 
                 <option value="">
-                    Select
+                    Select Gender
                 </option>
 
                 <option value="Male">
@@ -334,7 +359,7 @@ if (isset($_POST['register'])) {
             >
 
                 <option value="">
-                    Select
+                    Select Role
                 </option>
 
                 <option value="landlord">
@@ -362,6 +387,7 @@ if (isset($_POST['register'])) {
                 type="email"
                 name="email"
                 class="input"
+                placeholder="Enter your email address"
                 required
             >
 
@@ -380,6 +406,7 @@ if (isset($_POST['register'])) {
                 type="text"
                 name="phone"
                 class="input"
+                placeholder="Enter your phone number"
                 required
             >
 
@@ -397,6 +424,7 @@ if (isset($_POST['register'])) {
             <textarea
                 name="address"
                 class="input"
+                placeholder="Enter your address"
                 required
             ></textarea>
 
@@ -416,11 +444,11 @@ if (isset($_POST['register'])) {
                     required
                 >
 
-            </label>
+                <span>
+                    I agree to the terms and conditions
+                </span>
 
-            <p>
-                I agree to the terms and conditions
-            </p>
+            </label>
 
         </div>
 
@@ -453,6 +481,14 @@ if (isset($_POST['register'])) {
 
 
     </form>
+
+
+</div>
+
+
+<!-- RIGHT SIDE MESSAGE -->
+
+<div class="welcome-content">
 
 
 </div>

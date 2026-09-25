@@ -1,4 +1,4 @@
-/* --reset-- */
+/*-- Reset --*/
 
 * {
     margin: 0;
@@ -7,7 +7,7 @@
 }
 
 
-/* --BODY / BACKGROUND-- */
+/*-- Body / Background --*/
 
 html,
 body {
@@ -18,239 +18,289 @@ body {
 body {
     min-height: 100vh;
 
-    background: linear-gradient(
-        135deg,
-        #e8f5e9,
-        #c8e6c9
-    );
-
     font-family: Arial, sans-serif;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(20, 40, 32, 0.70),
+            rgba(20, 40, 32, 0.40),
+            rgba(20, 40, 32, 0.20)
+        ),
+        url("/hrms/image/login.jpg");
 
-    padding: 20px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    padding: 35px 7%;
 }
 
 
-/* --LOGIN CONTAINER-- */
+/*-- Login Container --*/
 
 .login-container {
-    width: 400px;
+    width: 430px;
     max-width: 100%;
 
-    background-color: #ffffff;
+    padding: 38px 40px;
 
-    padding: 35px 30px;
+    background: rgba(255, 255, 255, 0.97);
 
-    border-radius: 12px;
+    border-radius: 16px;
 
-    border: 1px solid #d7e8d9;
+    border: 1px solid rgba(255, 255, 255, 0.8);
 
     box-shadow:
-        0 10px 35px rgba(0, 0, 0, 0.15);
+        0 20px 60px rgba(0, 0, 0, 0.25);
+
+    position: relative;
+    z-index: 2;
 }
 
 
-/* --TITLE-- */
+/*-- Title --*/
 
 .login-container h3 {
-    text-align: center;
+    margin: 0 0 10px;
 
-    margin-bottom: 25px;
+    color: #2d7658;
 
-    font-size: 28px;
+    font-size: 32px;
 
-    font-weight: bold;
+    font-weight: 700;
 
-    color: #1b5e20;
+    text-align: left;
 }
 
 
-/* --LABEL-- */
+/*-- Subtitle --*/
+
+.login-container h3::after {
+    content: "Welcome back! Login to continue your journey.";
+
+    display: block;
+
+    margin-top: 10px;
+
+    color: #718078;
+
+    font-size: 14px;
+
+    font-weight: 400;
+
+    line-height: 1.6;
+}
+
+
+/*-- Form --*/
+
+.login-container form {
+    width: 100%;
+
+    margin-top: 28px;
+}
+
+
+/*-- Labels --*/
 
 .login-container label {
     display: block;
 
-    margin-top: 15px;
     margin-bottom: 6px;
+
+    color: #33413a;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+/*-- Email / Password --*/
+
+.login-container input[type="email"],
+.login-container input[type="password"] {
+
+    width: 100%;
+
+    height: 45px;
+
+    padding: 0 13px;
+
+    margin-bottom: 18px;
+
+    border: 1px solid #d3ddd7;
+
+    border-radius: 7px;
+
+    background-color: #f8faf9;
+
+    color: #333;
 
     font-size: 14px;
 
-    font-weight: bold;
+    outline: none;
 
-    color: #333333;
+    transition: 0.3s;
 }
 
-
-/* --FORM CONTROLS-- */
-
-/*
-   Email
-   Password
-   Role
-
-   All have exactly:
-   Width  : 100%
-   Height : 45px
-*/
-
-.login-container input[type="email"],
-.login-container input[type="password"],
-.login-container select {
-
-    display: block;
-
-    width: 100% !important;
-    height: 45px !important;
-
-    min-width: 0 !important;
-    max-width: 100% !important;
-
-    padding: 0 12px !important;
-
-    margin: 0 !important;
-
-    border: 1px solid #b8ccb9 !important;
-
-    border-radius: 6px !important;
-
-    background-color: #f5faf6 !important;
-
-    color: #333333 !important;
-
-    font-size: 15px !important;
-
-    font-family: Arial, sans-serif !important;
-
-    font-weight: normal;
-
-    line-height: 45px;
-
-    outline: none !important;
-
-    box-sizing: border-box !important;
-}
-
-
-/* --EMAIL + PASSWORD FOCUS-- */
 
 .login-container input[type="email"]:focus,
 .login-container input[type="password"]:focus {
 
-    border-color: #4caf50 !important;
+    border-color: #2d7658;
 
-    background-color: #ffffff !important;
+    background-color: #ffffff;
+
+    box-shadow:
+        0 0 0 3px rgba(45, 118, 88, 0.08);
 }
 
 
-/* --SELECT-- */
+/*-- Role Select --*/
 
 .login-container select {
 
-    cursor: pointer;
+    width: 100%;
 
-    line-height: normal;
+    height: 45px;
 
-    
-    -webkit-appearance: auto;
-    appearance: auto;
-}
+    padding: 0 13px;
 
+    margin-bottom: 24px;
 
-/* --SELECT FOCUS-- */
+    border: 1px solid #d3ddd7;
 
-.login-container select:focus {
+    border-radius: 7px;
 
-    border-color: #4caf50 !important;
+    background-color: #f8faf9;
 
-    background-color: #ffffff !important;
-}
+    color: #333;
 
+    font-size: 14px;
 
-/* --LOGIN BUTTON-- */
-
-.login-container button {
-
-    display: block;
-
-    width: 100% !important;
-    height: 45px !important;
-
-    margin-top: 22px;
-
-    padding: 0 12px;
-
-    border: none;
-
-    border-radius: 6px;
-
-    background-color: #2e7d32;
-
-    color: #ffffff;
-
-    font-size: 16px;
-
-    font-weight: bold;
-
-    font-family: Arial, sans-serif;
+    outline: none;
 
     cursor: pointer;
 
     transition: 0.3s;
+}
 
-    box-sizing: border-box;
+
+.login-container select:focus {
+
+    border-color: #2d7658;
+
+    background-color: #ffffff;
+
+    box-shadow:
+        0 0 0 3px rgba(45, 118, 88, 0.08);
+}
+
+
+/*-- Login Button --*/
+
+.login-container button {
+
+    width: 100%;
+
+    height: 45px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background-color: #2d7658;
+
+    color: #ffffff;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.3s;
 }
 
 
 .login-container button:hover {
 
-    background-color: #1b5e20;
+    background-color: #245d46;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 6px 15px rgba(45, 118, 88, 0.25);
 }
 
-    
-/* --REGISTER LINK-- */
+
+/*-- Register Link --*/
 
 .register-link {
 
-    text-align: center;
-
     margin-top: 20px;
 
-    font-size: 14px;
+    text-align: center;
 
-    color: #555555;
+    color: #66746d;
+
+    font-size: 13px;
 }
 
 
 .register-link a {
 
-    color: #2e7d32;
+    color: #2d7658;
 
-    font-weight: bold;
+    font-weight: 700;
 
     text-decoration: none;
+
+    transition: 0.3s;
 }
 
 
 .register-link a:hover {
 
-    color: #1b5e20;
+    color: #245d46;
 
     text-decoration: underline;
 }
 
 
-/* --MOBILE-- */
+/*-- Mobile --*/
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
+
+    body {
+
+        padding: 20px 12px;
+
+        justify-content: center;
+
+        background-position: center;
+    }
+
 
     .login-container {
 
         width: 100%;
 
-        padding: 30px 22px;
+        padding: 30px 25px;
+
+        border-radius: 14px;
     }
 
+
+    .login-container h3 {
+
+        font-size: 27px;
+    }
 }

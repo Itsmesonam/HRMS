@@ -230,7 +230,7 @@
 
         <!-- House -->
         <div class="property-category">
-            <img src="/images/house.jpg" alt="Rental House">
+            <img src="image/House.jpg" alt="Rental House">
 
             <div class="category-content">
                 <span class="property-label">HOUSE</span>
@@ -251,7 +251,7 @@
 
         <!-- Apartment -->
         <div class="property-category">
-            <img src="/images/apartment.jpg" alt="Apartment">
+            <img src="image/appartment.webp" alt="Apartment">
 
             <div class="category-content">
                 <span class="property-label">APARTMENT</span>
@@ -272,7 +272,7 @@
 
         <!-- Room -->
         <div class="property-category">
-            <img src="/images/room.jpg" alt="Rental Room">
+            <img src="image/room.webp" alt="Rental Room">
 
             <div class="category-content">
                 <span class="property-label">ROOM</span>
@@ -305,17 +305,9 @@
 
     <div class="about-container">
 
+    </div>
 
-        <div class="about-image">
-
-            <img
-                src="/images/house.jpg"
-                alt="Rental Property">
-
-        </div>
-
-
-
+           
         <div class="about-content">
 
             <span class="section-label">
@@ -505,7 +497,7 @@
         <article class="blog-card">
 
             <img
-                src="Assets/images/house.jpg"
+                src="image/finding-home.png"
                 alt="Finding a rental home">
 
             <div class="blog-content">
@@ -537,7 +529,7 @@
         <article class="blog-card">
 
             <img
-                src="Assets/images/booking.jpg"
+                src="image/rental-book.png"
                 alt="Rental booking">
 
             <div class="blog-content">
@@ -569,7 +561,7 @@
         <article class="blog-card">
 
             <img
-                src="Assets/images/landlord.jpg"
+                src="image/landlord-mgnt.png"
                 alt="Landlord management">
 
             <div class="blog-content">

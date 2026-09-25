@@ -7,6 +7,7 @@ session_start();
 
 require_once __DIR__ . "/config/database/db.php";
 
+
 /*-- Landlord login check */
 
 if (!isset($_SESSION['user_id'])) {
@@ -14,12 +15,18 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-if (!isset($_SESSION['role']) || strtolower($_SESSION['role']) !== 'landlord') {
+
+if (
+    !isset($_SESSION['role']) ||
+    strtolower($_SESSION['role']) !== 'landlord'
+) {
     header("Location: login.php");
     exit();
 }
 
+
 $landlord_id = (int) $_SESSION['user_id'];
+
 
 /*-- Automatically expire properties older than 1 month */
 
@@ -31,11 +38,19 @@ $expire_sql = "
       AND created_at <= DATE_SUB(NOW(), INTERVAL 1 MONTH)
 ";
 
+
 if ($stmt = mysqli_prepare($conn, $expire_sql)) {
-    mysqli_stmt_bind_param($stmt, "i", $landlord_id);
+
+    mysqli_stmt_bind_param(
+        $stmt,
+        "i",
+        $landlord_id
+    );
+
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
 }
+
 
 /*-- Dashboard statistics */
 
@@ -46,6 +61,9 @@ $totalTenants = 0;
 $pendingBookings = 0;
 $monthlyRent = 0;
 
+
+/*-- Property statistics */
+
 $sql = "
     SELECT
         COUNT(*) AS total_houses,
@@ -55,108 +73,181 @@ $sql = "
     WHERE landlord_id = ?
 ";
 
+
 if ($stmt = mysqli_prepare($conn, $sql)) {
-    mysqli_stmt_bind_param($stmt, "i", $landlord_id);
+
+    mysqli_stmt_bind_param(
+        $stmt,
+        "i",
+        $landlord_id
+    );
+
     mysqli_stmt_execute($stmt);
+
     $result = mysqli_stmt_get_result($stmt);
 
     if ($row = mysqli_fetch_assoc($result)) {
-        $totalHouses = (int) ($row['total_houses'] ?? 0);
-        $availableHouses = (int) ($row['available_houses'] ?? 0);
-        $occupiedHouses = (int) ($row['occupied_houses'] ?? 0);
+
+        $totalHouses =
+            (int) ($row['total_houses'] ?? 0);
+
+        $availableHouses =
+            (int) ($row['available_houses'] ?? 0);
+
+        $occupiedHouses =
+            (int) ($row['occupied_houses'] ?? 0);
     }
 
     mysqli_stmt_close($stmt);
 }
+
 
 /*-- Pending rental requests */
 
 $sql = "
     SELECT COUNT(*) AS pending
     FROM bookings b
+
     INNER JOIN properties p
         ON b.property_id = p.property_id
+
     WHERE p.landlord_id = ?
       AND b.booking_status = 'Pending'
 ";
 
+
 if ($stmt = mysqli_prepare($conn, $sql)) {
-    mysqli_stmt_bind_param($stmt, "i", $landlord_id);
+
+    mysqli_stmt_bind_param(
+        $stmt,
+        "i",
+        $landlord_id
+    );
+
     mysqli_stmt_execute($stmt);
+
     $result = mysqli_stmt_get_result($stmt);
 
     if ($row = mysqli_fetch_assoc($result)) {
-        $pendingBookings = (int) ($row['pending'] ?? 0);
+
+        $pendingBookings =
+            (int) ($row['pending'] ?? 0);
     }
 
     mysqli_stmt_close($stmt);
 }
+
 
 /*-- Active tenants */
 
 $sql = "
     SELECT COUNT(DISTINCT b.tenant_id) AS tenant_count
+
     FROM bookings b
+
     INNER JOIN properties p
         ON b.property_id = p.property_id
+
     WHERE p.landlord_id = ?
       AND b.booking_status = 'Confirmed'
 ";
 
+
 if ($stmt = mysqli_prepare($conn, $sql)) {
-    mysqli_stmt_bind_param($stmt, "i", $landlord_id);
+
+    mysqli_stmt_bind_param(
+        $stmt,
+        "i",
+        $landlord_id
+    );
+
     mysqli_stmt_execute($stmt);
+
     $result = mysqli_stmt_get_result($stmt);
 
     if ($row = mysqli_fetch_assoc($result)) {
-        $totalTenants = (int) ($row['tenant_count'] ?? 0);
+
+        $totalTenants =
+            (int) ($row['tenant_count'] ?? 0);
     }
 
     mysqli_stmt_close($stmt);
 }
 
-/*-- Expected monthly rent from occupied properties */
+
+/*-- Expected monthly rent */
 
 $sql = "
     SELECT COALESCE(SUM(monthly_rent), 0) AS monthly_rent
+
     FROM properties
+
     WHERE landlord_id = ?
       AND property_status = 'Occupied'
 ";
 
+
 if ($stmt = mysqli_prepare($conn, $sql)) {
-    mysqli_stmt_bind_param($stmt, "i", $landlord_id);
+
+    mysqli_stmt_bind_param(
+        $stmt,
+        "i",
+        $landlord_id
+    );
+
     mysqli_stmt_execute($stmt);
+
     $result = mysqli_stmt_get_result($stmt);
 
     if ($row = mysqli_fetch_assoc($result)) {
-        $monthlyRent = (float) ($row['monthly_rent'] ?? 0);
+
+        $monthlyRent =
+            (float) ($row['monthly_rent'] ?? 0);
     }
 
     mysqli_stmt_close($stmt);
 }
 
-/*-- Landlord email for the dashboard header */
+
+/*-- Landlord email */
 
 $landlordEmail = "Landlord";
 
-$sql = "SELECT email FROM users WHERE id = ? LIMIT 1";
+
+$sql = "
+    SELECT email
+    FROM users
+    WHERE id = ?
+    LIMIT 1
+";
+
 
 if ($stmt = mysqli_prepare($conn, $sql)) {
-    mysqli_stmt_bind_param($stmt, "i", $landlord_id);
+
+    mysqli_stmt_bind_param(
+        $stmt,
+        "i",
+        $landlord_id
+    );
+
     mysqli_stmt_execute($stmt);
+
     $result = mysqli_stmt_get_result($stmt);
 
     if ($row = mysqli_fetch_assoc($result)) {
-        $landlordEmail = $row['email'];
+
+        $landlordEmail =
+            $row['email'];
     }
 
     mysqli_stmt_close($stmt);
 }
+
 
 /*-- My houses */
 
 $myHouses = [];
+
 
 $sql = "
     SELECT
@@ -164,36 +255,61 @@ $sql = "
         p.property_name,
         p.monthly_rent,
         p.property_status,
+
         (
             SELECT u.email
+
             FROM bookings b2
-            INNER JOIN users u ON b2.tenant_id = u.id
+
+            INNER JOIN users u
+                ON b2.tenant_id = u.id
+
             WHERE b2.property_id = p.property_id
               AND b2.booking_status = 'Confirmed'
+
             ORDER BY b2.booking_id DESC
+
             LIMIT 1
+
         ) AS tenant_email
+
     FROM properties p
+
     WHERE p.landlord_id = ?
+
     ORDER BY p.created_at DESC
+
     LIMIT 5
 ";
 
+
 if ($stmt = mysqli_prepare($conn, $sql)) {
-    mysqli_stmt_bind_param($stmt, "i", $landlord_id);
+
+    mysqli_stmt_bind_param(
+        $stmt,
+        "i",
+        $landlord_id
+    );
+
     mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
+
+    $result =
+        mysqli_stmt_get_result($stmt);
+
 
     while ($row = mysqli_fetch_assoc($result)) {
+
         $myHouses[] = $row;
     }
 
     mysqli_stmt_close($stmt);
 }
 
-/*-- Recent rental requests */
+
+/*-- Recent bookings */
 
 $recentBookings = [];
+
 
 $sql = "
     SELECT
@@ -202,80 +318,143 @@ $sql = "
         b.booking_status,
         p.property_name,
         u.email AS tenant_email
+
     FROM bookings b
+
     INNER JOIN properties p
         ON b.property_id = p.property_id
+
     INNER JOIN users u
         ON b.tenant_id = u.id
+
     WHERE p.landlord_id = ?
+
     ORDER BY b.created_at DESC
+
     LIMIT 5
 ";
 
+
 if ($stmt = mysqli_prepare($conn, $sql)) {
-    mysqli_stmt_bind_param($stmt, "i", $landlord_id);
+
+    mysqli_stmt_bind_param(
+        $stmt,
+        "i",
+        $landlord_id
+    );
+
     mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
+
+    $result =
+        mysqli_stmt_get_result($stmt);
+
 
     while ($row = mysqli_fetch_assoc($result)) {
+
         $recentBookings[] = $row;
     }
 
     mysqli_stmt_close($stmt);
 }
 
+
 /*-- Payment summary */
 
 $paidAmount = 0;
 $pendingAmount = 0;
 
+
 $sql = "
     SELECT
-        COALESCE(SUM(CASE WHEN py.payment_status = 'Completed' THEN py.amount ELSE 0 END), 0) AS paid_amount,
-        COALESCE(SUM(CASE WHEN py.payment_status = 'Pending' THEN py.amount ELSE 0 END), 0) AS pending_amount
+
+        COALESCE(
+            SUM(
+                CASE
+                    WHEN py.payment_status = 'Completed'
+                    THEN py.amount
+                    ELSE 0
+                END
+            ),
+            0
+        ) AS paid_amount,
+
+        COALESCE(
+            SUM(
+                CASE
+                    WHEN py.payment_status = 'Pending'
+                    THEN py.amount
+                    ELSE 0
+                END
+            ),
+            0
+        ) AS pending_amount
+
     FROM payments py
+
     WHERE py.landlord_id = ?
 ";
 
+
 if ($stmt = mysqli_prepare($conn, $sql)) {
-    mysqli_stmt_bind_param($stmt, "i", $landlord_id);
+
+    mysqli_stmt_bind_param(
+        $stmt,
+        "i",
+        $landlord_id
+    );
+
     mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
+
+    $result =
+        mysqli_stmt_get_result($stmt);
+
 
     if ($row = mysqli_fetch_assoc($result)) {
-        $paidAmount = (float) ($row['paid_amount'] ?? 0);
-        $pendingAmount = (float) ($row['pending_amount'] ?? 0);
+
+        $paidAmount =
+            (float) ($row['paid_amount'] ?? 0);
+
+        $pendingAmount =
+            (float) ($row['pending_amount'] ?? 0);
     }
 
     mysqli_stmt_close($stmt);
 }
 
 ?>
+
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <title>HRMS Landlord Dashboard</title>
+    <title>
+        HRMS Landlord Dashboard
+    </title>
 
 
     <!-- Google Material Symbols -->
 
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    >
 
 
     <!-- Landlord Dashboard CSS -->
 
-    <link rel="stylesheet"  href="Assets/css/landlorddashboard_style.css">
-
-          
-
+    <link
+        rel="stylesheet"
+        href="Assets/css/landlorddashboard_style.css"
+    >
 
 </head>
 
@@ -286,7 +465,9 @@ if ($stmt = mysqli_prepare($conn, $sql)) {
 <div class="container">
 
 
-    <!-- sidebar -->
+    <!-- =========================================
+         SIDEBAR
+    ========================================= -->
 
     <aside>
 
@@ -294,17 +475,10 @@ if ($stmt = mysqli_prepare($conn, $sql)) {
         <div class="top">
 
 
-            <div class="logo">
-
-                <h2>
-
-                    <span class="logo-text">
-                        HRMS
-                    </span>
-
-                </h2>
-
-            </div>
+        <div class="logo">
+            <img src="Assets/images/logo.png" alt="HOMY Logo">
+                 </div>
+            
 
 
             <div class="close">
@@ -315,7 +489,6 @@ if ($stmt = mysqli_prepare($conn, $sql)) {
 
             </div>
 
-
         </div>
 
 
@@ -324,8 +497,10 @@ if ($stmt = mysqli_prepare($conn, $sql)) {
 
             <!-- Dashboard -->
 
-            <a href="landlorddashboard.php"
-               class="active">
+            <a
+                href="landlorddashboard.php"
+                class="active"
+            >
 
                 <span class="material-symbols-outlined">
                     dashboard
@@ -341,6 +516,7 @@ if ($stmt = mysqli_prepare($conn, $sql)) {
             <!-- My Houses -->
 
             <a href="manage_property.php">
+
                 <span class="material-symbols-outlined">
                     home
                 </span>
@@ -352,20 +528,22 @@ if ($stmt = mysqli_prepare($conn, $sql)) {
             </a>
 
 
-     <!-- Add Property -->
+            <!-- Add Property -->
 
-     <a href="add_property.php">
+            <a href="add_property.php">
 
-      <span class="material-symbols-outlined">
-        add_home
-      </span>
+                <span class="material-symbols-outlined">
+                    add_home
+                </span>
 
-     <h3>
-        Add Property
-      </h3>
+                <h3>
+                    Add Property
+                </h3>
 
-  
-            <!-- Bookings -->
+            </a>
+
+
+            <!-- Rental Requests -->
 
             <a href="rental_requests.php">
 
@@ -427,7 +605,10 @@ if ($stmt = mysqli_prepare($conn, $sql)) {
 
             <!-- Logout -->
 
-            <a href="logout.php" class="logout">
+            <a
+                href="logout.php"
+                class="logout"
+            >
 
                 <span class="material-symbols-outlined">
                     logout
@@ -445,12 +626,15 @@ if ($stmt = mysqli_prepare($conn, $sql)) {
     </aside>
 
 
-    <!-- Main -->
+
+    <!-- =========================================
+         MAIN
+    ========================================= -->
 
     <main>
 
 
-        <!-- Header -->
+        <!-- HEADER -->
 
         <div class="top-header">
 
@@ -470,7 +654,6 @@ if ($stmt = mysqli_prepare($conn, $sql)) {
 
             <div class="landlord-profile">
 
-
                 <span class="material-symbols-outlined">
                     notifications
                 </span>
@@ -479,7 +662,11 @@ if ($stmt = mysqli_prepare($conn, $sql)) {
                 <div>
 
                     <strong>
-                        <?php echo htmlspecialchars($landlordEmail); ?>
+                        <?php
+                        echo htmlspecialchars(
+                            $landlordEmail
+                        );
+                        ?>
                     </strong>
 
                     <small>
@@ -488,7 +675,6 @@ if ($stmt = mysqli_prepare($conn, $sql)) {
 
                 </div>
 
-
             </div>
 
 
@@ -496,12 +682,12 @@ if ($stmt = mysqli_prepare($conn, $sql)) {
 
 
 
-        <!-- STATISTICS -->
+        <!-- =========================================
+             STATISTICS
+        ========================================= -->
 
         <div class="stats">
 
-
-            <!-- My Houses -->
 
             <div class="card">
 
@@ -516,7 +702,9 @@ if ($stmt = mysqli_prepare($conn, $sql)) {
                     </h3>
 
                     <h2>
-                        <?php echo $totalHouses; ?>
+                        <?php
+                        echo $totalHouses;
+                        ?>
                     </h2>
 
                     <p>
@@ -527,8 +715,6 @@ if ($stmt = mysqli_prepare($conn, $sql)) {
 
             </div>
 
-
-            <!-- Available Houses -->
 
             <div class="card">
 
@@ -543,7 +729,9 @@ if ($stmt = mysqli_prepare($conn, $sql)) {
                     </h3>
 
                     <h2>
-                        <?php echo $availableHouses; ?>
+                        <?php
+                        echo $availableHouses;
+                        ?>
                     </h2>
 
                     <p>
@@ -554,8 +742,6 @@ if ($stmt = mysqli_prepare($conn, $sql)) {
 
             </div>
 
-
-            <!-- Occupied -->
 
             <div class="card">
 
@@ -570,7 +756,9 @@ if ($stmt = mysqli_prepare($conn, $sql)) {
                     </h3>
 
                     <h2>
-                        <?php echo $occupiedHouses; ?>
+                        <?php
+                        echo $occupiedHouses;
+                        ?>
                     </h2>
 
                     <p>
@@ -581,8 +769,6 @@ if ($stmt = mysqli_prepare($conn, $sql)) {
 
             </div>
 
-
-            <!-- Tenants -->
 
             <div class="card">
 
@@ -597,7 +783,9 @@ if ($stmt = mysqli_prepare($conn, $sql)) {
                     </h3>
 
                     <h2>
-                        <?php echo $totalTenants; ?>
+                        <?php
+                        echo $totalTenants;
+                        ?>
                     </h2>
 
                     <p>
@@ -608,8 +796,6 @@ if ($stmt = mysqli_prepare($conn, $sql)) {
 
             </div>
 
-
-            <!-- Bookings -->
 
             <div class="card">
 
@@ -624,7 +810,9 @@ if ($stmt = mysqli_prepare($conn, $sql)) {
                     </h3>
 
                     <h2>
-                        <?php echo $pendingBookings; ?>
+                        <?php
+                        echo $pendingBookings;
+                        ?>
                     </h2>
 
                     <p>
@@ -635,8 +823,6 @@ if ($stmt = mysqli_prepare($conn, $sql)) {
 
             </div>
 
-
-            <!-- Rent -->
 
             <div class="card">
 
@@ -651,7 +837,12 @@ if ($stmt = mysqli_prepare($conn, $sql)) {
                     </h3>
 
                     <h2>
-                        Rs. <?php echo number_format($monthlyRent); ?>
+                        Rs.
+                        <?php
+                        echo number_format(
+                            $monthlyRent
+                        );
+                        ?>
                     </h2>
 
                     <p>
@@ -666,446 +857,403 @@ if ($stmt = mysqli_prepare($conn, $sql)) {
         </div>
 
 
+<!-- DASHBOARD CONTENT -->
 
-        <!-- DASHBOARD CONTENT -->
+<div class="dashboard-content">
 
-        <div class="dashboard-content">
+    <!-- Revenue Overview -->
 
+    <div class="panel revenue">
 
-            <!-- Revenue -->
+        <div class="panel-header">
 
-            <div class="panel revenue">
+            <h2>
+                Revenue Overview
+            </h2>
 
-
-                <div class="panel-header">
-
-                    <h2>
-                        Revenue Overview
-                    </h2>
-
-
-                    <select>
-
-                        <option>
-                            This Year
-                        </option>
-
-                        <option>
-                            Last Year
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <div class="chart-placeholder">
-
-                    Revenue Chart
-
-                </div>
-
-
-            </div>
-
-
-
-            <!-- Booking -->
-
-            <div class="panel booking">
-
-
-                <div class="panel-header">
-
-                    <h2>
-                        Booking Overview
-                    </h2>
-
-
-                    <select>
-
-                        <option>
-                            This Year
-                        </option>
-
-                        <option>
-                            Last Year
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <div class="circle-chart">
-
-                    <div>
-
-                        <?php echo $pendingBookings; ?>
-
-                        <small>
-                            Pending
-                        </small>
-
-                    </div>
-
-                </div>
-
-
-            </div>
-
+            <select>
+                <option>This Year</option>
+                <option>Last Year</option>
+            </select>
 
         </div>
 
-
-
-        <!-- TABLES -->
-
-        <div class="tables">
-
-
-            <!-- My Houses -->
-
-            <div class="panel">
-
-
-                <div class="panel-header">
-
-                    <h2>
-                        My Houses
-                    </h2>
-
-
-                    <button type="button"
-                            onclick="window.location.href='manage_property.php'">
-                        View All
-                    </button>
-
-                </div>
-
-
-                <table>
-
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                House
-                            </th>
-
-                            <th>
-                                Rent
-                            </th>
-
-                            <th>
-                                Tenant
-                            </th>
-
-                            <th>
-                                Status
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody>
-
-                    <?php if (!empty($myHouses)): ?>
-
-                        <?php foreach ($myHouses as $house): ?>
-
-                        <tr>
-
-                            <td>
-                                <?php echo htmlspecialchars($house['property_name']); ?>
-                            </td>
-
-                            <td>
-                                Rs. <?php echo number_format((float)$house['monthly_rent']); ?>
-                            </td>
-
-                            <td>
-                                <?php
-                                echo !empty($house['tenant_email'])
-                                    ? htmlspecialchars($house['tenant_email'])
-                                    : 'Vacant';
-                                ?>
-                            </td>
-
-                            <td>
-                                <?php
-                                $statusClass = strtolower($house['property_status']);
-                                ?>
-
-                                <span class="status <?php echo htmlspecialchars($statusClass); ?>">
-                                    <?php echo htmlspecialchars($house['property_status']); ?>
-                                </span>
-
-                            </td>
-
-                        </tr>
-
-                        <?php endforeach; ?>
-
-                    <?php else: ?>
-
-                        <tr>
-
-                            <td>
-                                No houses yet
-                            </td>
-
-                            <td>-</td>
-                            <td>-</td>
-
-                            <td>
-                                <span class="status pending">
-                                    No Data
-                                </span>
-                            </td>
-
-                        </tr>
-
-                    <?php endif; ?>
-
-                    </tbody>
-
-
-                </table>
-
-
-            </div>
-
-
-
-            <!-- Recent Bookings -->
-
-            <div class="panel">
-
-
-                <div class="panel-header">
-
-                    <h2>
-                        Recent Bookings
-                    </h2>
-
-
-                    <button type="button"
-                            onclick="window.location.href='rental_requests.php'">
-                        View All
-                    </button>
-
-                </div>
-
-
-                <table>
-
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                Tenant
-                            </th>
-
-                            <th>
-                                House
-                            </th>
-
-                            <th>
-                                Date
-                            </th>
-
-                            <th>
-                                Status
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody>
-
-                    <?php if (!empty($recentBookings)): ?>
-
-                        <?php foreach ($recentBookings as $booking): ?>
-
-                        <tr>
-
-                            <td>
-                                <?php echo htmlspecialchars($booking['tenant_email']); ?>
-                            </td>
-
-                            <td>
-                                <?php echo htmlspecialchars($booking['property_name']); ?>
-                            </td>
-
-                            <td>
-                                <?php echo htmlspecialchars($booking['booking_date']); ?>
-                            </td>
-
-                            <td>
-
-                                <span class="status <?php echo strtolower($booking['booking_status']); ?>">
-                                    <?php echo htmlspecialchars($booking['booking_status']); ?>
-                                </span>
-
-                            </td>
-
-                        </tr>
-
-                        <?php endforeach; ?>
-
-                    <?php else: ?>
-
-                        <tr>
-
-                            <td>
-                                No bookings
-                            </td>
-
-                            <td>-</td>
-                            <td>-</td>
-
-                            <td>
-                                <span class="status pending">
-                                    No Data
-                                </span>
-                            </td>
-
-                        </tr>
-
-                    <?php endif; ?>
-
-                    </tbody>
-
-
-                </table>
-
-
-            </div>
-
-
+        <div class="chart-placeholder">
+            Revenue Chart
         </div>
 
-
-
-        <!-- Bottom Section -->
-
-        <div class="bottom-section">
-
-
-            <!-- House Status -->
-
-            <div class="panel">
-
-                <h2>
-                    House Status
-                </h2>
-
-                <p>
-                    Occupied:
-                    <strong>
-                        <?php echo $occupiedHouses; ?>
-                    </strong>
-                </p>
-
-                <p>
-                    Vacant:
-                    <strong>
-                        <?php echo $availableHouses; ?>
-                    </strong>
-                </p>
-
-                <p>
-                    Maintenance:
-                    <strong>
-                        0
-                    </strong>
-                </p>
-
-            </div>
-
-
-            <!-- Rent Summary -->
-
-            <div class="panel">
-
-                <h2>
-                    Rent Summary
-                </h2>
-
-                <p>
-                    Monthly Rent:
-                    <strong>
-                        Rs. <?php echo number_format($monthlyRent); ?>
-                    </strong>
-                </p>
-
-                <p>
-                    Paid:
-                    <strong>
-                        Rs. <?php echo number_format($paidAmount); ?>
-                    </strong>
-                </p>
-
-                <p>
-                    Pending:
-                    <strong>
-                        Rs. <?php echo number_format($pendingAmount); ?>
-                    </strong>
-                </p>
-
-            </div>
-
-
-            <!-- Account -->
-
-            <div class="panel">
-
-                <h2>
-                    Account Overview
-                </h2>
-
-                <p>
-                    Houses:
-                    <strong>
-                        <?php echo $totalHouses; ?>
-                    </strong>
-                </p>
-
-                <p>
-                    Tenants:
-                    <strong>
-                        <?php echo $totalTenants; ?>
-                    </strong>
-                </p>
-
-                <p>
-                    Account Status:
-                    <strong>
-                        Active
-                    </strong>
-                </p>
-
-            </div>
-
-
-        </div>
-
-
-    </main>
-
+    </div>
 
 </div>
 
 
-</body>
+<!-- TABLES -->
 
-</html>
+<div class="tables">
+
+
+    <!-- My Houses -->
+
+    <div class="panel">
+
+        <div class="panel-header">
+
+            <h2>
+                My Houses
+            </h2>
+
+            <button
+                type="button"
+                onclick="window.location.href='manage_property.php'"
+            >
+                View All
+            </button>
+
+        </div>
+
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>House</th>
+                    <th>Rent</th>
+                    <th>Tenant</th>
+                    <th>Status</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            <?php if (!empty($myHouses)): ?>
+
+                <?php foreach ($myHouses as $house): ?>
+
+                    <tr>
+
+                        <td>
+                            <?php
+                            echo htmlspecialchars(
+                                $house['property_name']
+                            );
+                            ?>
+                        </td>
+
+                        <td>
+                            Rs.
+                            <?php
+                            echo number_format(
+                                (float)$house['monthly_rent']
+                            );
+                            ?>
+                        </td>
+
+                        <td>
+
+                            <?php
+
+                            echo !empty($house['tenant_email'])
+                                ? htmlspecialchars($house['tenant_email'])
+                                : 'Vacant';
+
+                            ?>
+
+                        </td>
+
+                        <td>
+
+                            <?php
+                            $statusClass =
+                                strtolower(
+                                    $house['property_status']
+                                );
+                            ?>
+
+                            <span
+                                class="status <?php echo htmlspecialchars($statusClass); ?>"
+                            >
+
+                                <?php
+                                echo htmlspecialchars(
+                                    $house['property_status']
+                                );
+                                ?>
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                <?php endforeach; ?>
+
+            <?php else: ?>
+
+                <tr>
+
+                    <td>
+                        No houses yet
+                    </td>
+
+                    <td>-</td>
+
+                    <td>-</td>
+
+                    <td>
+
+                        <span class="status pending">
+                            No Data
+                        </span>
+
+                    </td>
+
+                </tr>
+
+            <?php endif; ?>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+
+    <!-- Recent Bookings -->
+
+    <div class="panel">
+
+        <div class="panel-header">
+
+            <h2>
+                Recent Bookings
+            </h2>
+
+            <button
+                type="button"
+                onclick="window.location.href='rental_requests.php'"
+            >
+                View All
+            </button>
+
+        </div>
+
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Tenant</th>
+                    <th>House</th>
+                    <th>Date</th>
+                    <th>Status</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            <?php if (!empty($recentBookings)): ?>
+
+                <?php foreach ($recentBookings as $booking): ?>
+
+                    <tr>
+
+                        <td>
+                            <?php
+                            echo htmlspecialchars(
+                                $booking['tenant_email']
+                            );
+                            ?>
+                        </td>
+
+                        <td>
+                            <?php
+                            echo htmlspecialchars(
+                                $booking['property_name']
+                            );
+                            ?>
+                        </td>
+
+                        <td>
+                            <?php
+                            echo htmlspecialchars(
+                                $booking['booking_date']
+                            );
+                            ?>
+                        </td>
+
+                        <td>
+
+                            <span
+                                class="status <?php echo strtolower($booking['booking_status']); ?>"
+                            >
+
+                                <?php
+                                echo htmlspecialchars(
+                                    $booking['booking_status']
+                                );
+                                ?>
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                <?php endforeach; ?>
+
+            <?php else: ?>
+
+                <tr>
+
+                    <td>
+                        No bookings
+                    </td>
+
+                    <td>-</td>
+
+                    <td>-</td>
+
+                    <td>
+
+                        <span class="status pending">
+                            No Data
+                        </span>
+
+                    </td>
+
+                </tr>
+
+            <?php endif; ?>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+
+<!-- BOTTOM SUMMARY -->
+
+<div class="bottom-section">
+
+
+    <!-- House Status -->
+
+    <div class="panel">
+
+        <h2>
+            House Status
+        </h2>
+
+        <p>
+            Occupied:
+            <strong>
+                <?php echo $occupiedHouses; ?>
+            </strong>
+        </p>
+
+        <p>
+            Vacant:
+            <strong>
+                <?php echo $availableHouses; ?>
+            </strong>
+        </p>
+
+        <p>
+            Maintenance:
+            <strong>
+                0
+            </strong>
+        </p>
+
+    </div>
+
+
+    <!-- Rent Summary -->
+
+    <div class="panel">
+
+        <h2>
+            Rent Summary
+        </h2>
+
+        <p>
+            Monthly Rent:
+            <strong>
+                Rs.
+                <?php
+                echo number_format($monthlyRent);
+                ?>
+            </strong>
+        </p>
+
+        <p>
+            Paid:
+            <strong>
+                Rs.
+                <?php
+                echo number_format($paidAmount);
+                ?>
+            </strong>
+        </p>
+
+        <p>
+            Pending:
+            <strong>
+                Rs.
+                <?php
+                echo number_format($pendingAmount);
+                ?>
+            </strong>
+        </p>
+
+    </div>
+
+
+    <!-- Account Overview -->
+
+    <div class="panel">
+
+        <h2>
+            Account Overview
+        </h2>
+
+        <p>
+            Houses:
+            <strong>
+                <?php echo $totalHouses; ?>
+            </strong>
+        </p>
+
+        <p>
+            Tenants:
+            <strong>
+                <?php echo $totalTenants; ?>
+            </strong>
+        </p>
+
+        <p>
+            Account Status:
+            <strong>
+                Active
+            </strong>
+        </p>
+
+    </div>
+
+
+</div>

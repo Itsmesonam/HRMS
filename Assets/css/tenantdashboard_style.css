@@ -16,27 +16,33 @@ body {
     font-family: Arial, sans-serif;
     background: #f5f7fb;
     color: #222;
+
     min-width: 1200px;
+
     overflow-x: auto;
 }
 
 .container {
     display: flex;
+
     width: 100%;
+
     min-height: 100vh;
 }
 
 
-/*-- Sidebar-- */
+/*-- Sidebar -- */
 
 aside {
     width: 240px;
     height: 100vh;
 
     background: #ffffff;
+
     border-right: 1px solid #e5e7eb;
 
     position: fixed;
+
     left: 0;
     top: 0;
 
@@ -45,11 +51,16 @@ aside {
     overflow-y: auto;
 }
 
+
+/*-- Sidebar Top -- */
+
 .top {
     height: 75px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 
     padding: 0 22px;
@@ -57,15 +68,36 @@ aside {
     border-bottom: 1px solid #eee;
 }
 
-.logo-text {
-    color: #2e9d63;
-    font-size: 25px;
-    font-weight: bold;
+
+/*-- Sidebar Logo --*/
+
+.logo {
+    width: 140px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+    margin-bottom: 15px;
 }
+
+.logo img {
+    width: 95px;
+    height: 45px;
+    object-fit: contain;
+    object-position: left center;
+    display: block;
+}
+
+
+/*-- Close -- */
 
 .close {
     cursor: pointer;
 }
+
+
+/*-- Sidebar Menu -- */
 
 .sidebar {
     padding: 18px 14px;
@@ -73,6 +105,7 @@ aside {
 
 .sidebar a {
     display: flex;
+
     align-items: center;
 
     gap: 14px;
@@ -93,6 +126,7 @@ aside {
 .sidebar a:hover,
 .sidebar a.active {
     background: #e8f7ee;
+
     color: #2e9d63;
 }
 
@@ -102,16 +136,18 @@ aside {
 
 .sidebar h3 {
     font-size: 14px;
+
     font-weight: 500;
 }
 
 .sidebar .logout {
     margin-top: 25px;
+
     color: #e74c3c;
 }
 
 
-/*-- Main-- */
+/*-- Main -- */
 
 main {
     margin-left: 240px;
@@ -124,7 +160,7 @@ main {
 }
 
 
-/*-- Header --*/
+/*-- Header -- */
 
 .top-header {
     width: 100%;
@@ -132,6 +168,7 @@ main {
     display: flex;
 
     justify-content: space-between;
+
     align-items: center;
 
     margin-bottom: 22px;
@@ -150,6 +187,9 @@ main {
 
     font-size: 14px;
 }
+
+
+/*-- Tenant Profile -- */
 
 .tenant-profile {
     display: flex;
@@ -184,7 +224,7 @@ main {
 }
 
 
-/*-- Statistics --*/
+/*-- Statistics -- */
 
 .stats {
     width: 100%;
@@ -200,7 +240,7 @@ main {
 }
 
 
-/*-- Cards-- */
+/*-- Cards -- */
 
 .card {
     background: #ffffff;
@@ -252,14 +292,14 @@ main {
 }
 
 
-/*-- Dashboard Content-- */
+/*-- Dashboard Content -- */
 
 .dashboard-content {
     width: 100%;
 
     display: grid;
 
-    grid-template-columns: 2.2fr 1fr;
+    grid-template-columns: 1fr;
 
     gap: 20px;
 
@@ -267,7 +307,7 @@ main {
 }
 
 
-/*-- Panel-- */
+/*-- Panel -- */
 
 .panel {
     background: #ffffff;
@@ -284,6 +324,7 @@ main {
     display: flex;
 
     justify-content: space-between;
+
     align-items: center;
 
     margin-bottom: 18px;
@@ -293,6 +334,9 @@ main {
 .panel h2 {
     font-size: 17px;
 }
+
+
+/*-- Select -- */
 
 select {
     padding: 7px 11px;
@@ -307,7 +351,7 @@ select {
 }
 
 
-/*-- Chart-- */
+/*-- Rental Chart Placeholder -- */
 
 .chart-placeholder {
     height: 210px;
@@ -315,63 +359,14 @@ select {
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     color: #aaa;
 }
 
 
-/*-- Circle-- */
-
-.circle-chart {
-    width: 175px;
-    height: 175px;
-
-    border-radius: 50%;
-
-    margin: 20px auto;
-
-    background: conic-gradient(
-        #2e9d63 0 55%,
-        #6587ed 55% 75%,
-        #f5ad45 75% 90%,
-        #ed6464 90% 100%
-    );
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-}
-
-.circle-chart div {
-    width: 110px;
-    height: 110px;
-
-    border-radius: 50%;
-
-    background: #ffffff;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    flex-direction: column;
-
-    font-size: 23px;
-
-    font-weight: bold;
-}
-
-.circle-chart small {
-    font-size: 11px;
-
-    color: #888;
-}
-
-
-/*-- Tables --*/
+/*-- Tables -- */
 
 .tables {
     width: 100%;
@@ -384,6 +379,9 @@ select {
 
     margin-bottom: 20px;
 }
+
+
+/*-- Buttons -- */
 
 button {
     background: #ffffff;
@@ -408,6 +406,9 @@ button:hover {
 
     color: #ffffff;
 }
+
+
+/*-- Tables -- */
 
 table {
     width: 100%;
@@ -436,7 +437,7 @@ td {
 }
 
 
-/*-- Status --*/
+/*-- Status -- */
 
 .status {
     padding: 4px 9px;
@@ -446,6 +447,12 @@ td {
     font-size: 10px;
 
     white-space: nowrap;
+}
+
+.confirmed {
+    background: #e5f7ec;
+
+    color: #249653;
 }
 
 .approved {
@@ -466,8 +473,14 @@ td {
     color: #d64545;
 }
 
+.cancelled {
+    background: #f1f1f1;
 
-/*-- Bottom --*/
+    color: #777;
+}
+
+
+/*-- Bottom Section -- */
 
 .bottom-section {
     width: 100%;
@@ -490,8 +503,12 @@ td {
     font-size: 13px;
 }
 
+.bottom-section strong {
+    font-weight: 600;
+}
 
-/*-- Large Landscape-- */
+
+/*-- Large Landscape -- */
 
 @media (min-width: 1600px) {
 
@@ -510,13 +527,10 @@ td {
         min-height: 145px;
     }
 
-    .dashboard-content {
-        grid-template-columns: 2.5fr 1fr;
-    }
 }
 
 
-/*-- Medium Landscape-- */
+/*-- Medium Landscape -- */
 
 @media (max-width: 1399px) {
 
@@ -529,10 +543,6 @@ td {
             repeat(6, minmax(0, 1fr));
     }
 
-    .dashboard-content {
-        grid-template-columns: 2.2fr 1fr;
-    }
-
     .tables {
         grid-template-columns: 1fr 1fr;
     }
@@ -541,4 +551,5 @@ td {
         grid-template-columns:
             repeat(3, 1fr);
     }
+
 }
