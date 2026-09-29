@@ -286,11 +286,9 @@ if ($recentBookingsResult) {
 
 
             <!-- Logo -->
-<div class="logo">
-
-    <img src=" images/logo.png" alt="HOMY Logo">
-
-</div>
+          <div class="logo">
+               <img src="image/logo.jpg" alt="HOMY Logo">
+          </div>
 
             <!-- Close -->
 

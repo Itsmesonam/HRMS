@@ -476,8 +476,8 @@ if ($stmt = mysqli_prepare($conn, $sql)) {
 
 
         <div class="logo">
-            <img src="Assets/images/logo.png" alt="HOMY Logo">
-                 </div>
+    <img src="image/logo.jpg" alt="HOMY Logo">
+             </div>
             
 
 
