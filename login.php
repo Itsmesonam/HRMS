@@ -27,19 +27,37 @@ if (!$conn) {
 
 if (isset($_POST['login'])) {
 
-    $email = trim($_POST['username']);
-    $password = $_POST['password'];
-    $role = $_POST['role'];
+    $email = trim($_POST['username'] ?? '');
+    $password = $_POST['password'] ?? '';
+    $role = $_POST['role'] ?? '';
 
 
     /* =====================================
-       CHECK ROLE
+       SERVER-SIDE VALIDATION
     ===================================== */
 
-    if (empty($role)) {
+    if (empty($email) || empty($password)) {
 
         echo "<script>
-                alert('Please select your role');
+                alert('Please enter email and password');
+              </script>";
+
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+
+        echo "<script>
+                alert('Please enter a valid email address');
+              </script>";
+
+    } elseif (strlen($password) < 6) {
+
+        echo "<script>
+                alert('Password must contain at least 6 characters');
+              </script>";
+
+    } elseif (!in_array($role, ['landlord', 'tenant'], true)) {
+
+        echo "<script>
+                alert('Please select a valid role');
               </script>";
 
     } else {
@@ -91,9 +109,7 @@ if (isset($_POST['login'])) {
 
         /* Get result */
 
-        $result = mysqli_stmt_get_result(
-            $query
-        );
+        $result = mysqli_stmt_get_result($query);
 
 
         /* =================================
@@ -145,9 +161,7 @@ if (isset($_POST['login'])) {
                    ROLE BASED REDIRECT
                 ================================= */
 
-                if (
-                    $user['role'] === 'landlord'
-                ) {
+                if ($user['role'] === 'landlord') {
 
                     header(
                         "Location: landlorddashboard.php"
@@ -155,10 +169,7 @@ if (isset($_POST['login'])) {
 
                     exit();
 
-
-                } elseif (
-                    $user['role'] === 'tenant'
-                ) {
+                } elseif ($user['role'] === 'tenant') {
 
                     header(
                         "Location: tenantdashboard.php"
@@ -168,7 +179,6 @@ if (isset($_POST['login'])) {
 
                 }
 
-
             } else {
 
                 echo "<script>
@@ -176,7 +186,6 @@ if (isset($_POST['login'])) {
                       </script>";
 
             }
-
 
         } else {
 
@@ -197,148 +206,147 @@ if (isset($_POST['login'])) {
 
 ?>
 
-
 <!DOCTYPE html>
 
 <html lang="en">
 
 <head>
 
-    <meta charset="UTF-8">
+```
+<meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-    <title>
-        Login - House Rental Management System
-    </title>
+<title>
+    Login - House Rental Management System
+</title>
 
 
-    <!-- LOGIN CSS -->
+<!-- LOGIN CSS -->
 
-    <link
-        rel="stylesheet"
-        href="Assets/css/login_style.css"
-    >
+<link
+    rel="stylesheet"
+    href="Assets/css/login_style.css"
+>
+```
+
 </head>
 
 <body>
 
-
-<!-- login container -->
+<!-- LOGIN CONTAINER -->
 
 <div class="login-container">
 
+```
+<!-- TITLE -->
 
-    <!-- title -->
-
-    <h3>
-        Login Here
-    </h3>
+<h3>
+    Login Here
+</h3>
 
 
-    <!-- login form -->
+<!-- LOGIN FORM -->
 
-    <form
-        action=""
-        method="POST"
+<form
+    action=""
+    method="POST"
+>
+
+
+    <!-- EMAIL -->
+
+    <label for="username">
+        Email
+    </label>
+
+    <input
+        type="email"
+        name="username"
+        id="username"
+        placeholder="Enter your email"
+        maxlength="100"
+        required
     >
 
 
-        <!-- EMAIL -->
+    <!-- PASSWORD -->
 
-        <label for="username">
-            Email
-        </label>
+    <label for="password">
+        Password
+    </label>
 
-
-        <input
-            type="email"
-            name="username"
-            id="username"
-            placeholder="Enter your email"
-            required
-        >
-
-
-
-        <!-- PASSWORD -->
-
-        <label for="password">
-            Password
-        </label>
+    <input
+        type="password"
+        name="password"
+        id="password"
+        placeholder="Enter your password"
+        minlength="6"
+        required
+    >
 
 
-        <input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Enter your password"
-            required
-        >
+    <!-- ROLE -->
+
+    <label for="role">
+        Login As
+    </label>
+
+    <select
+        name="role"
+        id="role"
+        required
+    >
+
+        <option value="">
+            Select your role
+        </option>
+
+        <option value="landlord">
+            Landlord
+        </option>
+
+        <option value="tenant">
+            Tenant
+        </option>
+
+    </select>
 
 
+    <!-- LOGIN BUTTON -->
 
-        <!-- ROLE -->
-
-        <label for="role">
-            Login As
-        </label>
-
-
-        <select
-            name="role"
-            id="role"
-            required
-        >
-
-            <option value="">
-                Select your role
-            </option>
+    <button
+        type="submit"
+        name="login"
+    >
+        Log In
+    </button>
 
 
-            <option value="landlord">
-                Landlord
-            </option>
+    <!-- REGISTER LINK -->
+
+    <div class="register-link">
+
+        Don't have an account?
+
+        <a href="register.php">
+            Sign Up
+        </a>
+
+    </div>
 
 
-            <option value="tenant">
-                Tenant
-            </option>
-
-        </select>
-
-
-
-        <!-- LOGIN BUTTON -->
-
-        <button
-            type="submit"
-            name="login"
-        >
-            Log In
-        </button>
-
-        <!-- REGISTER LINK -->
-
-        <div class="register-link">
-
-            Don't have an account?
-
-            <a href="register.php">
-                Sign Up
-            </a>
-
-        </div>
-
-
-    </form>
-
+</form>
+```
 
 </div>
 
+<!-- JAVASCRIPT VALIDATION -->
+
+<script src="/hrms/Assets/js/validation.js"></script>
 
 </body>
 

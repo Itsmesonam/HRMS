@@ -2,7 +2,7 @@
 
 session_start();
 
-/* --DATABASE CONNECTION-- */
+/* -- DATABASE CONNECTION -- */
 
 $conn = mysqli_connect(
     "localhost",
@@ -19,114 +19,111 @@ if (!$conn) {
 }
 
 
-/* --ADMIN LOGIN-- */
+/* -- ADMIN LOGIN -- */
 
 if (isset($_POST['admin_login'])) {
 
-    $email = trim($_POST['email']);
-    $password = $_POST['password'];
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
 
+    /* Server-side validation */
 
-    /* Find admin */
+    if (empty($email) || empty($password)) {
 
-    $query = mysqli_prepare(
-    $conn,
+        $error = "Please fill in all fields.";
 
-    "SELECT id,
-            firstname,
-            lastname,
-            password
-     FROM users
-     WHERE email = ?
-       AND role = 'admin'
-     LIMIT 1"
-);
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
+        $error = "Please enter a valid email address.";
 
-    if (!$query) {
+    } elseif (strlen($password) < 6) {
 
-        die(
-            "Login query failed: "
-            . mysqli_error($conn)
-        );
-
-    }
-
-
-    mysqli_stmt_bind_param(
-        $query,
-        "s",
-        $email
-    );
-
-
-    mysqli_stmt_execute($query);
-
-
-    $result = mysqli_stmt_get_result(
-        $query
-    );
-
-
-    /* Check if admin exists */
-
-    if (mysqli_num_rows($result) == 1) {
-
-        $admin = mysqli_fetch_assoc($result);
-
-
-        /* Check password */
-
-        if (
-            password_verify(
-                $password,
-                $admin['password']
-            )
-        ) {
-
-
-            /* Regenerate session ID */
-
-            session_regenerate_id(true);
-
-
-            /* Create admin session */
-
-            $_SESSION['admin_id'] =
-                $admin['id'];
-
-            $_SESSION['admin_name'] =
-                $admin['firstname']
-                . " "
-                . $admin['lastname'];
-
-
-            /* Go to admin dashboard */
-
-            header(
-                "Location: admindashboard.php"
-            );
-
-            exit();
-
-
-        } else {
-
-            $error =
-                "Incorrect password.";
-
-        }
-
+        $error = "Password must contain at least 6 characters.";
 
     } else {
 
-        $error =
-            "Admin account not found.";
+        /* Find admin */
+
+        $query = mysqli_prepare(
+            $conn,
+            "SELECT id,
+                    firstname,
+                    lastname,
+                    password
+             FROM users
+             WHERE email = ?
+               AND role = 'admin'
+             LIMIT 1"
+        );
+
+        if (!$query) {
+
+            die(
+                "Login query failed: "
+                . mysqli_error($conn)
+            );
+
+        }
+
+        mysqli_stmt_bind_param(
+            $query,
+            "s",
+            $email
+        );
+
+        mysqli_stmt_execute($query);
+
+        $result = mysqli_stmt_get_result($query);
+
+        /* Check admin account */
+
+        if (mysqli_num_rows($result) == 1) {
+
+            $admin = mysqli_fetch_assoc($result);
+
+            /* Verify password */
+
+            if (password_verify(
+                $password,
+                $admin['password']
+            )) {
+
+                /* Regenerate session ID */
+
+                session_regenerate_id(true);
+
+                /* Create admin session */
+
+                $_SESSION['admin_id'] = $admin['id'];
+
+                $_SESSION['admin_name'] =
+                    $admin['firstname'] . " " .
+                    $admin['lastname'];
+
+                $_SESSION['role'] = 'admin';
+
+                /* Redirect to dashboard */
+
+                header("Location: admindashboard.php");
+
+                exit();
+
+            } else {
+
+                $error = "Invalid email or password.";
+
+            }
+
+        } else {
+
+            $error = "Invalid email or password.";
+
+        }
+
+        mysqli_stmt_close($query);
 
     }
 
-
-    mysqli_stmt_close($query);
 }
 
 ?>
@@ -140,21 +137,18 @@ if (isset($_POST['admin_login'])) {
 
     <meta charset="UTF-8">
 
-
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     >
 
-
-    <title>
-        Admin Login - HRMS
-    </title>
-
+    <title>Admin Login - HRMS</title>
 
     <!-- ADMIN LOGIN CSS -->
 
-    <link rel="stylesheet"   href="Assets/css/adminlogin_style.css"
+    <link
+        rel="stylesheet"
+        href="Assets/css/adminlogin_style.css"
     >
 
 </head>
@@ -162,102 +156,88 @@ if (isset($_POST['admin_login'])) {
 
 <body>
 
+    <!-- Admin Login Container -->
 
-<!-- admin login container -->
+    <div class="admin-login-container">
 
-<div class="admin-login-container">
+        <h2>
+            Admin Login
+        </h2>
 
-
-    <h2>
-        Admin Login
-    </h2>
-
-
-    <p class="subtitle">
-        House Rental Management System
-    </p>
+        <p class="subtitle">
+            House Rental Management System
+        </p>
 
 
-    <!-- ERROR MESSAGE -->
+        <!-- ERROR MESSAGE -->
 
-    <?php
+        <?php if (isset($error)) { ?>
 
-    if (isset($error)) {
+            <p class="error">
+                <?php echo htmlspecialchars($error); ?>
+            </p>
 
-        echo "<p class='error'>"
-             . htmlspecialchars($error)
-             . "</p>";
-
-    }
-
-    ?>
+        <?php } ?>
 
 
-    <!-- --ADMIN LOGIN FORM-- -->
+        <!-- ADMIN LOGIN FORM -->
 
-    <form
-        method="POST"
-        action=""
-    >
+        <form method="POST" action="">
+
+            <!-- EMAIL -->
+
+            <label for="email">
+                Admin Email
+            </label>
+
+            <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Enter admin email"
+                value="<?php echo htmlspecialchars($email ?? ''); ?>"
+                required
+            >
 
 
-        <!-- ADMIN EMAIL -->
+            <!-- PASSWORD -->
 
-        <label for="email">
-            Admin Email
-        </label>
+            <label for="password">
+                Password
+            </label>
+
+            <input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Enter password"
+                minlength="6"
+                required
+            >
 
 
-        <input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Enter admin email"
-            required
+            <!-- LOGIN BUTTON -->
+
+            <button
+                type="submit"
+                name="admin_login"
+            >
+                Login
+            </button>
+
+        </form>
+
+
+        <!-- BACK TO HOME -->
+
+        <a
+            href="index.php"
+            class="back-home"
         >
+            ← Back to Home
+        </a>
 
-
-        <!-- PASSWORD -->
-
-        <label for="password">
-            Password
-        </label>
-
-
-        <input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Enter password"
-            required
-        >
-
-
-        <!-- LOGIN BUTTON -->
-
-        <button
-            type="submit"
-            name="admin_login"
-        >
-            Login
-        </button>
-
-
-    </form>
-
-
-    <!-- BACK TO HOME -->
-
-    <a
-        href="index.php"
-        class="back-home"
-    >
-        ← Back to Home
-    </a>
-
-
-</div>
-
+    </div>
 
 </body>
 
