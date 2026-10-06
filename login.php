@@ -3,177 +3,165 @@
 session_start();
 
 /* =========================================
-   DATABASE CONNECTION
+DATABASE CONNECTION
 ========================================= */
 
 $conn = mysqli_connect(
-    "localhost",
-    "root",
-    "",
-    "hrms"
+"localhost",
+"root",
+"",
+"hrms"
 );
 
 if (!$conn) {
-    die(
-        "Database connection failed: "
-        . mysqli_connect_error()
-    );
+die(
+"Database connection failed: "
+. mysqli_connect_error()
+);
 }
 
-
 /* =========================================
-   LOGIN AUTHENTICATION
+LOGIN AUTHENTICATION
 ========================================= */
 
 if (isset($_POST['login'])) {
 
     $email = trim($_POST['username'] ?? '');
-    $password = $_POST['password'] ?? '';
-    $role = $_POST['role'] ?? '';
-
+$password = $_POST['password'] ?? '';
+$role = $_POST['role'] ?? '';
 
     /* =====================================
-       SERVER-SIDE VALIDATION
-    ===================================== */
+SERVER-SIDE VALIDATION
+===================================== */
 
     if (empty($email) || empty($password)) {
 
         echo "<script>
-                alert('Please enter email and password');
-              </script>";
+alert('Please enter email and password');
+</script>";
 
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
         echo "<script>
-                alert('Please enter a valid email address');
-              </script>";
+alert('Please enter a valid email address');
+</script>";
 
     } elseif (strlen($password) < 6) {
 
         echo "<script>
-                alert('Password must contain at least 6 characters');
-              </script>";
+alert('Password must contain at least 6 characters');
+</script>";
 
     } elseif (!in_array($role, ['landlord', 'tenant'], true)) {
 
         echo "<script>
-                alert('Please select a valid role');
-              </script>";
+alert('Please select a valid role');
+</script>";
 
     } else {
 
-
         /* =================================
-           CHECK USER FROM DATABASE
-        ================================= */
+CHECK USER FROM DATABASE
+================================= */
 
         $query = mysqli_prepare(
-            $conn,
+$conn,
 
             "SELECT id,
-                    firstname,
-                    lastname,
-                    password,
-                    role
-             FROM users
-             WHERE email = ?
-             AND role = ?
-             LIMIT 1"
-        );
-
+firstname,
+lastname,
+password,
+role
+FROM users
+WHERE email = ?
+AND role = ?
+LIMIT 1"
+);
 
         if (!$query) {
 
             die(
-                "Login query failed: "
-                . mysqli_error($conn)
-            );
+"Login query failed: "
+. mysqli_error($conn)
+);
 
         }
-
 
         /* Bind email and role */
 
         mysqli_stmt_bind_param(
-            $query,
-            "ss",
-            $email,
-            $role
-        );
-
+$query,
+"ss",
+$email,
+$role
+);
 
         /* Execute query */
 
         mysqli_stmt_execute($query);
 
-
         /* Get result */
 
         $result = mysqli_stmt_get_result($query);
 
-
         /* =================================
-           CHECK USER
-        ================================= */
+CHECK USER
+================================= */
 
         if (mysqli_num_rows($result) === 1) {
 
             $user = mysqli_fetch_assoc($result);
 
-
             /* =================================
-               CHECK PASSWORD
-            ================================= */
+CHECK PASSWORD
+================================= */
 
             if (
-                password_verify(
-                    $password,
-                    $user['password']
-                )
-            ) {
-
+password_verify(
+$password,
+$user['password']
+)
+) {
 
                 /* =================================
-                   REGENERATE SESSION ID
-                ================================= */
+REGENERATE SESSION ID
+================================= */
 
                 session_regenerate_id(true);
 
-
                 /* =================================
-                   CREATE USER SESSION
-                ================================= */
+CREATE USER SESSION
+================================= */
 
                 $_SESSION['user_id'] =
-                    $user['id'];
+$user['id'];
 
                 $_SESSION['firstname'] =
-                    $user['firstname'];
+$user['firstname'];
 
                 $_SESSION['lastname'] =
-                    $user['lastname'];
+$user['lastname'];
 
                 $_SESSION['role'] =
-                    $user['role'];
-
+$user['role'];
 
                 /* =================================
-                   ROLE BASED REDIRECT
-                ================================= */
+ROLE BASED REDIRECT
+================================= */
 
                 if ($user['role'] === 'landlord') {
 
                     header(
-                        "Location: landlorddashboard.php"
-                    );
+"Location: landlorddashboard.php"
+);
 
                     exit();
 
                 } elseif ($user['role'] === 'tenant') {
 
                     header(
-                        "Location: tenantdashboard.php"
-                    );
+"Location: tenantdashboard.php"
+);
 
                     exit();
 
@@ -182,19 +170,18 @@ if (isset($_POST['login'])) {
             } else {
 
                 echo "<script>
-                        alert('Incorrect password');
-                      </script>";
+alert('Incorrect password');
+</script>";
 
             }
 
         } else {
 
             echo "<script>
-                    alert('Invalid email or selected role');
-                  </script>";
+alert('Invalid email or selected role');
+</script>";
 
         }
-
 
         /* Close statement */
 
@@ -212,27 +199,29 @@ if (isset($_POST['login'])) {
 
 <head>
 
-```
+text
 <meta charset="UTF-8">
+
 
 <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
 >
 
+
 <title>
     Login - House Rental Management System
 </title>
 
 
+
 <!-- LOGIN CSS -->
+
 
 <link
     rel="stylesheet"
     href="Assets/css/login_style.css"
 >
-```
-
 </head>
 
 <body>
@@ -241,15 +230,18 @@ if (isset($_POST['login'])) {
 
 <div class="login-container">
 
-```
+text
 <!-- TITLE -->
+
 
 <h3>
     Login Here
 </h3>
 
 
+
 <!-- LOGIN FORM -->
+
 
 <form
     action=""
@@ -257,11 +249,14 @@ if (isset($_POST['login'])) {
 >
 
 
+
     <!-- EMAIL -->
+
 
     <label for="username">
         Email
     </label>
+
 
     <input
         type="email"
@@ -273,11 +268,14 @@ if (isset($_POST['login'])) {
     >
 
 
+
     <!-- PASSWORD -->
+
 
     <label for="password">
         Password
     </label>
+
 
     <input
         type="password"
@@ -289,11 +287,14 @@ if (isset($_POST['login'])) {
     >
 
 
+
     <!-- ROLE -->
+
 
     <label for="role">
         Login As
     </label>
+
 
     <select
         name="role"
@@ -301,22 +302,28 @@ if (isset($_POST['login'])) {
         required
     >
 
+
         <option value="">
             Select your role
         </option>
+
 
         <option value="landlord">
             Landlord
         </option>
 
+
         <option value="tenant">
             Tenant
         </option>
 
+
     </select>
 
 
+
     <!-- LOGIN BUTTON -->
+
 
     <button
         type="submit"
@@ -326,22 +333,26 @@ if (isset($_POST['login'])) {
     </button>
 
 
+
     <!-- REGISTER LINK -->
+
 
     <div class="register-link">
 
+
         Don't have an account?
+
 
         <a href="register.php">
             Sign Up
         </a>
 
+
     </div>
 
 
-</form>
-```
 
+</form>
 </div>
 
 <!-- JAVASCRIPT VALIDATION -->
