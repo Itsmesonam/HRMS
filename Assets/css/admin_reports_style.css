@@ -1,0 +1,909 @@
+/* =====================================================
+   GENERAL
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f7fb;
+    color: #222;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+aside {
+    width: 245px;
+    min-width: 245px;
+
+    background: #ffffff;
+
+    border-right: 1px solid #e5e7eb;
+
+    position: fixed;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.top {
+    height: 80px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 25px;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+.logo-text {
+    font-size: 26px;
+    font-weight: 700;
+
+    color: #2e9d63;
+}
+
+.sidebar {
+    padding: 20px 12px;
+}
+
+.sidebar a {
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    text-decoration: none;
+
+    color: #555;
+
+    padding: 13px 16px;
+
+    margin-bottom: 6px;
+
+    border-radius: 10px;
+
+    transition: 0.2s;
+}
+
+.sidebar a:hover {
+    background: #f0f7f3;
+    color: #2e9d63;
+}
+
+.sidebar a.active {
+    background: #2e9d63;
+    color: #ffffff;
+}
+
+.sidebar a h3 {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.sidebar .material-symbols-outlined {
+    font-size: 21px;
+}
+
+.sidebar .logout {
+    margin-top: 25px;
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+main {
+    margin-left: 245px;
+
+    width: calc(100% - 245px);
+
+    padding: 30px;
+}
+
+
+/* =====================================================
+   PAGE HEADER
+===================================================== */
+
+.page-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 25px;
+}
+
+.page-header h1 {
+    font-size: 28px;
+
+    margin-bottom: 7px;
+}
+
+.page-header p {
+    color: #777;
+
+    font-size: 14px;
+}
+
+.header-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+.profile {
+    background: #ffffff;
+
+    padding: 11px 18px;
+
+    border-radius: 10px;
+
+    border: 1px solid #e5e7eb;
+
+    font-size: 14px;
+
+    color: #555;
+}
+
+.print-btn {
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 0 15px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #2e9d63;
+
+    color: #ffffff;
+
+    cursor: pointer;
+
+    font-size: 13px;
+}
+
+.print-btn:hover {
+    background: #258553;
+}
+
+.print-btn .material-symbols-outlined {
+    font-size: 18px;
+}
+
+
+/* =====================================================
+   FILTER PANEL
+===================================================== */
+
+.filter-panel {
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    padding: 20px;
+
+    margin-bottom: 22px;
+}
+
+.date-filter {
+    display: flex;
+
+    align-items: end;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+}
+
+.date-field {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+}
+
+.date-field label {
+    font-size: 12px;
+
+    font-weight: 600;
+
+    color: #666;
+}
+
+.date-field input {
+    height: 40px;
+
+    width: 180px;
+
+    padding: 0 11px;
+
+    border: 1px solid #d9dde5;
+
+    border-radius: 8px;
+
+    outline: none;
+
+    font-size: 13px;
+}
+
+.date-field input:focus {
+    border-color: #2e9d63;
+}
+
+.date-filter button {
+    height: 40px;
+
+    border: none;
+
+    background: #2e9d63;
+
+    color: #ffffff;
+
+    padding: 0 18px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-size: 13px;
+}
+
+.date-filter button:hover {
+    background: #258553;
+}
+
+.reset {
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 16px;
+
+    border-radius: 8px;
+
+    background: #f1f3f5;
+
+    color: #555;
+
+    text-decoration: none;
+
+    font-size: 13px;
+}
+
+.reset:hover {
+    background: #e5e7eb;
+}
+
+
+/* =====================================================
+   SUMMARY CARDS
+===================================================== */
+
+.summary-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 16px;
+
+    margin-bottom: 22px;
+}
+
+.summary-card {
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    padding: 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+.summary-icon {
+    width: 48px;
+    height: 48px;
+
+    border-radius: 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+.summary-icon .material-symbols-outlined {
+    font-size: 24px;
+}
+
+
+/* Icon backgrounds */
+
+.users-icon {
+    background: #e9f5ef;
+    color: #2e9d63;
+}
+
+.tenant-icon {
+    background: #eef3ff;
+    color: #4169d8;
+}
+
+.landlord-icon {
+    background: #fff4df;
+    color: #b87800;
+}
+
+.property-icon {
+    background: #f1ebff;
+    color: #7652c9;
+}
+
+
+.summary-card span {
+    display: block;
+
+    color: #777;
+
+    font-size: 12px;
+
+    margin-bottom: 5px;
+}
+
+.summary-card strong {
+    display: block;
+
+    font-size: 23px;
+
+    color: #222;
+}
+
+
+/* =====================================================
+   REPORT SECTION
+===================================================== */
+
+.report-section {
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    padding: 22px;
+
+    margin-bottom: 22px;
+}
+
+.section-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+.section-header h2 {
+    font-size: 19px;
+
+    margin-bottom: 5px;
+}
+
+.section-header p {
+    font-size: 13px;
+
+    color: #888;
+}
+
+.total-label {
+    color: #777;
+
+    font-size: 13px;
+}
+
+.total-label strong {
+    color: #222;
+
+    font-size: 18px;
+}
+
+
+/* =====================================================
+   BOOKING STATUS
+===================================================== */
+
+.status-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 14px;
+}
+
+.status-card {
+    padding: 18px;
+
+    border-radius: 10px;
+
+    border: 1px solid #eeeeee;
+}
+
+.status-card span {
+    display: block;
+
+    font-size: 12px;
+
+    margin-bottom: 8px;
+}
+
+.status-card strong {
+    font-size: 25px;
+}
+
+
+/* Pending */
+
+.pending-card {
+    background: #fff9e8;
+}
+
+.pending-card span {
+    color: #9a6b00;
+}
+
+
+/* Confirmed */
+
+.confirmed-card {
+    background: #eaf8ef;
+}
+
+.confirmed-card span {
+    color: #21864b;
+}
+
+
+/* Rejected */
+
+.rejected-card {
+    background: #fff0f0;
+}
+
+.rejected-card span {
+    color: #b42318;
+}
+
+
+/* Cancelled */
+
+.cancelled-card {
+    background: #f3f3f3;
+}
+
+.cancelled-card span {
+    color: #666;
+}
+
+
+/* =====================================================
+   PAYMENT SUMMARY
+===================================================== */
+
+.payment-summary {
+    display: grid;
+
+    grid-template-columns:
+        2fr repeat(4, 1fr);
+
+    gap: 12px;
+}
+
+.revenue-card {
+    background: #eaf8ef;
+
+    border-radius: 10px;
+
+    padding: 20px;
+}
+
+.revenue-card span {
+    display: block;
+
+    font-size: 12px;
+
+    color: #43805c;
+
+    margin-bottom: 8px;
+}
+
+.revenue-card strong {
+    font-size: 23px;
+
+    color: #21864b;
+}
+
+.payment-status-item {
+    background: #f7f8fa;
+
+    border-radius: 10px;
+
+    padding: 20px;
+}
+
+.payment-status-item span {
+    display: block;
+
+    font-size: 12px;
+
+    color: #777;
+
+    margin-bottom: 8px;
+}
+
+.payment-status-item strong {
+    font-size: 22px;
+}
+
+
+/* =====================================================
+   TABLE
+===================================================== */
+
+.table-wrap {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+thead {
+    background: #f7f8fa;
+}
+
+th {
+    text-align: left;
+
+    padding: 13px 12px;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    color: #666;
+
+    text-transform: uppercase;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    white-space: nowrap;
+}
+
+td {
+    padding: 14px 12px;
+
+    font-size: 13px;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+tbody tr:hover {
+    background: #fafcfb;
+}
+
+
+/* =====================================================
+   PAYMENT METHOD
+===================================================== */
+
+.method {
+    display: inline-block;
+
+    background: #f1f4f6;
+
+    color: #555;
+
+    padding: 5px 9px;
+
+    border-radius: 6px;
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+
+/* =====================================================
+   AMOUNT
+===================================================== */
+
+.amount {
+    color: #2e9d63;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+/* =====================================================
+   PAYMENT STATUS
+===================================================== */
+
+.status {
+    display: inline-block;
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    font-size: 10px;
+
+    font-weight: 600;
+}
+
+.status.pending {
+    background: #fff4d6;
+    color: #9a6b00;
+}
+
+.status.completed {
+    background: #e4f7ec;
+    color: #21864b;
+}
+
+.status.failed {
+    background: #fde8e8;
+    color: #b42318;
+}
+
+.status.refunded {
+    background: #eee9ff;
+    color: #6741d9;
+}
+
+
+/* =====================================================
+   EMPTY
+===================================================== */
+
+.empty {
+    text-align: center;
+
+    padding: 35px;
+
+    color: #888;
+}
+
+
+/* =====================================================
+   REPORT NOTE
+===================================================== */
+
+.report-note {
+    margin-top: 5px;
+
+    margin-bottom: 25px;
+
+    padding: 13px 16px;
+
+    background: #f5f8f6;
+
+    border-left: 4px solid #2e9d63;
+
+    color: #666;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 1100px) {
+
+    .summary-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .status-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .payment-summary {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .revenue-card {
+        grid-column: span 2;
+    }
+
+}
+
+
+@media (max-width: 900px) {
+
+    aside {
+        width: 210px;
+
+        min-width: 210px;
+    }
+
+    main {
+        margin-left: 210px;
+
+        width: calc(100% - 210px);
+
+        padding: 20px;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    aside {
+        width: 70px;
+
+        min-width: 70px;
+    }
+
+    .logo-text {
+        font-size: 18px;
+    }
+
+    .top {
+        justify-content: center;
+
+        padding: 0;
+    }
+
+    .sidebar a {
+        justify-content: center;
+
+        padding: 13px 8px;
+    }
+
+    .sidebar a h3 {
+        display: none;
+    }
+
+    main {
+        margin-left: 70px;
+
+        width: calc(100% - 70px);
+
+        padding: 15px;
+    }
+
+    .page-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 15px;
+    }
+
+    .header-actions {
+        flex-wrap: wrap;
+    }
+
+    .summary-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+    .status-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+    .payment-summary {
+        grid-template-columns:
+            1fr;
+    }
+
+    .revenue-card {
+        grid-column: auto;
+    }
+
+    .date-filter {
+        align-items: stretch;
+
+        flex-direction: column;
+    }
+
+    .date-field input {
+        width: 100%;
+    }
+
+    .date-filter button,
+    .reset {
+        justify-content: center;
+    }
+
+}
+
+
+/* =====================================================
+   PRINT
+===================================================== */
+
+@media print {
+
+    aside,
+    .print-btn,
+    .filter-panel {
+        display: none !important;
+    }
+
+    main {
+        margin-left: 0;
+
+        width: 100%;
+
+        padding: 10px;
+    }
+
+    body {
+        background: #ffffff;
+    }
+
+    .report-section,
+    .summary-card {
+        box-shadow: none;
+    }
+
+}

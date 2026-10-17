@@ -1,0 +1,452 @@
+/* =====================================================
+   GENERAL
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f7fb;
+    color: #222;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+aside {
+    width: 245px;
+    min-width: 245px;
+    background: #ffffff;
+    border-right: 1px solid #e5e7eb;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.top {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    padding: 0 25px;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.logo-text {
+    font-size: 26px;
+    font-weight: 700;
+    color: #2e9d63;
+}
+
+.sidebar {
+    padding: 20px 12px;
+}
+
+.sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    text-decoration: none;
+    color: #555;
+
+    padding: 13px 16px;
+    margin-bottom: 6px;
+
+    border-radius: 10px;
+
+    transition: 0.2s;
+}
+
+.sidebar a:hover {
+    background: #f0f7f3;
+    color: #2e9d63;
+}
+
+.sidebar a.active {
+    background: #2e9d63;
+    color: #ffffff;
+}
+
+.sidebar a h3 {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.sidebar .material-symbols-outlined {
+    font-size: 21px;
+}
+
+.sidebar .logout {
+    margin-top: 25px;
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+main {
+    margin-left: 245px;
+    width: calc(100% - 245px);
+    padding: 30px;
+}
+
+
+/* =====================================================
+   PAGE HEADER
+===================================================== */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 25px;
+}
+
+.page-header h1 {
+    font-size: 28px;
+    margin-bottom: 7px;
+}
+
+.page-header p {
+    color: #777;
+    font-size: 14px;
+}
+
+.profile {
+    background: #ffffff;
+    padding: 11px 18px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    font-size: 14px;
+    color: #555;
+}
+
+
+/* =====================================================
+   PANEL
+===================================================== */
+
+.panel {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 22px;
+
+    border: 1px solid #e7e9ee;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.03);
+}
+
+
+/* =====================================================
+   FILTERS
+===================================================== */
+
+.filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+
+.filters input,
+.filters select {
+    height: 42px;
+
+    border: 1px solid #d9dde5;
+    border-radius: 8px;
+
+    padding: 0 13px;
+
+    font-size: 14px;
+    outline: none;
+    background: #ffffff;
+}
+
+.filters input {
+    width: 300px;
+}
+
+.filters select {
+    width: 160px;
+}
+
+.filters input:focus,
+.filters select:focus {
+    border-color: #2e9d63;
+}
+
+.filters button {
+    border: none;
+    background: #2e9d63;
+    color: #ffffff;
+
+    padding: 0 20px;
+
+    border-radius: 8px;
+    cursor: pointer;
+
+    font-size: 14px;
+}
+
+.filters button:hover {
+    background: #258553;
+}
+
+.reset {
+    display: flex;
+    align-items: center;
+
+    padding: 0 17px;
+
+    border-radius: 8px;
+
+    background: #f1f3f5;
+    color: #555;
+
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.reset:hover {
+    background: #e5e7eb;
+}
+
+
+/* =====================================================
+   TABLE
+===================================================== */
+
+.table-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1100px;
+}
+
+thead {
+    background: #f7f8fa;
+}
+
+th {
+    text-align: left;
+    padding: 14px 12px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    color: #666;
+    text-transform: uppercase;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+td {
+    padding: 15px 12px;
+
+    font-size: 13px;
+
+    border-bottom: 1px solid #eeeeee;
+    vertical-align: middle;
+}
+
+tbody tr:hover {
+    background: #fafcfb;
+}
+
+td strong {
+    display: block;
+    color: #333;
+    font-size: 13px;
+}
+
+td small {
+    display: block;
+    color: #888;
+    font-size: 11px;
+    margin-top: 4px;
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.status {
+    display: inline-block;
+
+    padding: 6px 11px;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+
+/* Pending */
+
+.status.pending {
+    background: #fff4d6;
+    color: #9a6b00;
+}
+
+
+/* Confirmed */
+
+.status.confirmed {
+    background: #e4f7ec;
+    color: #21864b;
+}
+
+
+/* Rejected */
+
+.status.rejected {
+    background: #fde8e8;
+    color: #b42318;
+}
+
+
+/* Cancelled */
+
+.status.cancelled {
+    background: #eeeeee;
+    color: #666;
+}
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+.message {
+    display: block;
+
+    max-width: 220px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    color: #555;
+}
+
+.no-message {
+    color: #999;
+    font-style: italic;
+    font-size: 12px;
+}
+
+
+/* =====================================================
+   EMPTY
+===================================================== */
+
+.empty {
+    text-align: center;
+    padding: 45px 20px;
+    color: #888;
+}
+
+
+/* =====================================================
+   NOTE
+===================================================== */
+
+.note {
+    margin-top: 18px;
+
+    padding: 12px 15px;
+
+    background: #f5f8f6;
+    border-left: 4px solid #2e9d63;
+
+    color: #666;
+
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 900px) {
+
+    aside {
+        width: 210px;
+        min-width: 210px;
+    }
+
+    main {
+        margin-left: 210px;
+        width: calc(100% - 210px);
+        padding: 20px;
+    }
+
+    .filters {
+        flex-wrap: wrap;
+    }
+
+    .filters input {
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    aside {
+        width: 70px;
+        min-width: 70px;
+    }
+
+    .logo-text {
+        font-size: 18px;
+    }
+
+    .top {
+        justify-content: center;
+        padding: 0;
+    }
+
+    .sidebar a {
+        justify-content: center;
+        padding: 13px 8px;
+    }
+
+    .sidebar a h3 {
+        display: none;
+    }
+
+    main {
+        margin-left: 70px;
+        width: calc(100% - 70px);
+        padding: 15px;
+    }
+
+    .page-header {
+        align-items: flex-start;
+        gap: 15px;
+        flex-direction: column;
+    }
+
+}
