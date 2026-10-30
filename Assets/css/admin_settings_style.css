@@ -1,0 +1,688 @@
+/* =====================================================
+   GENERAL
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f7fb;
+    color: #222;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+aside {
+    width: 245px;
+    min-width: 245px;
+
+    background: #ffffff;
+
+    border-right: 1px solid #e5e7eb;
+
+    position: fixed;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.top {
+    height: 80px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 25px;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+.logo-text {
+    font-size: 26px;
+    font-weight: 700;
+
+    color: #2e9d63;
+}
+
+.sidebar {
+    padding: 20px 12px;
+}
+
+.sidebar a {
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    text-decoration: none;
+
+    color: #555;
+
+    padding: 13px 16px;
+
+    margin-bottom: 6px;
+
+    border-radius: 10px;
+
+    transition: 0.2s;
+}
+
+.sidebar a:hover {
+    background: #f0f7f3;
+    color: #2e9d63;
+}
+
+.sidebar a.active {
+    background: #2e9d63;
+    color: #ffffff;
+}
+
+.sidebar a h3 {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.sidebar .material-symbols-outlined {
+    font-size: 21px;
+}
+
+.sidebar .logout {
+    margin-top: 25px;
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+main {
+    margin-left: 245px;
+
+    width: calc(100% - 245px);
+
+    padding: 30px;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.page-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 25px;
+}
+
+.page-header h1 {
+    font-size: 28px;
+
+    margin-bottom: 7px;
+}
+
+.page-header p {
+    color: #777;
+
+    font-size: 14px;
+}
+
+.profile {
+    background: #ffffff;
+
+    padding: 11px 18px;
+
+    border-radius: 10px;
+
+    border: 1px solid #e5e7eb;
+
+    font-size: 14px;
+
+    color: #555;
+}
+
+
+/* =====================================================
+   SETTINGS GRID
+===================================================== */
+
+.settings-grid {
+    display: grid;
+
+    grid-template-columns: 1.5fr 1fr;
+
+    gap: 22px;
+}
+
+
+/* =====================================================
+   SETTINGS CARD
+===================================================== */
+
+.settings-card {
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    padding: 25px;
+}
+
+.card-header {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding-bottom: 22px;
+
+    margin-bottom: 20px;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+.header-icon {
+    width: 45px;
+
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #eaf6ef;
+
+    color: #2e9d63;
+}
+
+.header-icon .material-symbols-outlined {
+    font-size: 23px;
+}
+
+.card-header h2 {
+    font-size: 18px;
+
+    margin-bottom: 5px;
+}
+
+.card-header p {
+    color: #888;
+
+    font-size: 12px;
+}
+
+
+/* =====================================================
+   SUCCESS MESSAGE
+===================================================== */
+
+.success-message {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 11px 13px;
+
+    margin-bottom: 18px;
+
+    border-radius: 8px;
+
+    background: #eaf7ef;
+
+    color: #23864d;
+
+    font-size: 13px;
+}
+
+.success-message .material-symbols-outlined {
+    font-size: 19px;
+}
+
+
+/* =====================================================
+   ERROR MESSAGE
+===================================================== */
+
+.error-message {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 11px 13px;
+
+    margin-bottom: 18px;
+
+    border-radius: 8px;
+
+    background: #fff0f0;
+
+    color: #c43d3d;
+
+    font-size: 13px;
+}
+
+.error-message .material-symbols-outlined {
+    font-size: 19px;
+}
+
+
+/* =====================================================
+   FORM
+===================================================== */
+
+.settings-form {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 18px;
+}
+
+.form-group {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+.form-group.full {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: #555;
+}
+
+.form-group input {
+    width: 100%;
+
+    height: 43px;
+
+    padding: 0 12px;
+
+    border: 1px solid #d9dde5;
+
+    border-radius: 8px;
+
+    outline: none;
+
+    font-size: 13px;
+
+    color: #333;
+
+    background: #ffffff;
+}
+
+.form-group input:focus {
+    border-color: #2e9d63;
+
+    box-shadow: 0 0 0 2px rgba(46, 157, 99, 0.08);
+}
+
+
+/* =====================================================
+   ROLE
+===================================================== */
+
+.role-display {
+    height: 43px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 0 12px;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 8px;
+
+    background: #f7f8fa;
+
+    color: #555;
+
+    font-size: 13px;
+}
+
+.role-display .material-symbols-outlined {
+    color: #2e9d63;
+
+    font-size: 19px;
+}
+
+
+/* =====================================================
+   FORM ACTION
+===================================================== */
+
+.form-actions {
+    grid-column: 1 / -1;
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    margin-top: 5px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid #eeeeee;
+}
+
+.form-actions button {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    height: 42px;
+
+    padding: 0 18px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #2e9d63;
+
+    color: #ffffff;
+
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+.form-actions button:hover {
+    background: #258553;
+}
+
+.form-actions .material-symbols-outlined {
+    font-size: 18px;
+}
+
+
+/* =====================================================
+   ACCOUNT INFORMATION
+===================================================== */
+
+.account-info {
+    border: 1px solid #eeeeee;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+}
+
+.info-row {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 14px;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    color: #888;
+
+    font-size: 12px;
+}
+
+.info-row strong {
+    font-size: 12px;
+
+    color: #444;
+
+    text-align: right;
+}
+
+.email-value {
+    max-width: 180px;
+
+    word-break: break-word;
+}
+
+.access-badge {
+    padding: 5px 9px;
+
+    border-radius: 20px;
+
+    background: #eaf6ef;
+
+    color: #23864d;
+
+    font-size: 10px;
+
+    font-weight: 600;
+}
+
+
+/* =====================================================
+   SECURITY NOTE
+===================================================== */
+
+.security-note {
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 18px;
+
+    padding: 14px;
+
+    background: #f5f8f6;
+
+    border-radius: 9px;
+}
+
+.security-note > .material-symbols-outlined {
+    color: #2e9d63;
+
+    font-size: 21px;
+}
+
+.security-note strong {
+    display: block;
+
+    font-size: 12px;
+
+    margin-bottom: 4px;
+}
+
+.security-note p {
+    color: #777;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+}
+
+
+/* =====================================================
+   SYSTEM CARD
+===================================================== */
+
+.system-card {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-top: 22px;
+
+    padding: 20px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+}
+
+.system-icon {
+    width: 45px;
+
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #eaf6ef;
+
+    color: #2e9d63;
+}
+
+.system-icon .material-symbols-outlined {
+    font-size: 22px;
+}
+
+.system-card h2 {
+    font-size: 15px;
+
+    margin-bottom: 5px;
+}
+
+.system-card p {
+    font-size: 12px;
+
+    color: #888;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 1000px) {
+
+    .settings-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 900px) {
+
+    aside {
+        width: 210px;
+
+        min-width: 210px;
+    }
+
+    main {
+        margin-left: 210px;
+
+        width: calc(100% - 210px);
+
+        padding: 20px;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    aside {
+        width: 70px;
+
+        min-width: 70px;
+    }
+
+    .logo-text {
+        font-size: 18px;
+    }
+
+    .top {
+        justify-content: center;
+
+        padding: 0;
+    }
+
+    .sidebar a {
+        justify-content: center;
+
+        padding: 13px 8px;
+    }
+
+    .sidebar a h3 {
+        display: none;
+    }
+
+    main {
+        margin-left: 70px;
+
+        width: calc(100% - 70px);
+
+        padding: 15px;
+    }
+
+    .page-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+    .settings-form {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full {
+        grid-column: auto;
+    }
+
+    .form-actions {
+        grid-column: auto;
+    }
+
+}
